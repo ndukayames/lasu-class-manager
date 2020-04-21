@@ -8,7 +8,7 @@ import 'rxjs-compat/add/operator/map';
 })
 export class DbopsService {
 
-  server:string = "http://www.nigairspacedata.com/api/"
+  server:string = "https://www.nigairspacedata.com/api/"
 
   constructor(private http: HttpClient) { }
 

@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: AssignmentPage
+  },
+  {
+    path: 'create-new',
+    loadChildren: () => import('./create-new/create-new.module').then( m => m.CreateNewPageModule)
   }
 ];
 

@@ -1,0 +1,131 @@
+
+<ion-content>
+  <ion-grid id="loginContainer" fixed>
+    <ion-row>
+      <ion-col *ngIf="incomplete_profile" size="12">
+        <ion-card>
+          <ion-card-content>
+            <ion-item>
+              <ion-label>Select Campus</ion-label>
+              <ion-select [(ngModel)]="selectedCampus" (ionChange)="getFaculties()" placeholder="Select campus">
+                <ion-select-option *ngFor="let campus of campuses" >{{campus}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+           </ion-card-content>
+           <ion-card-content>
+             <ion-item>
+               <ion-label>Select Faculty</ion-label>
+               <ion-select [(ngModel)]="selectedFaculty" (ionChange)="getDepartments()" placeholder="choose faculty">
+                 <ion-select-option *ngFor="let faculty of faculties">{{faculty.faculty_name}}</ion-select-option>
+               </ion-select>
+             </ion-item>
+           </ion-card-content>
+           <ion-card-content>
+            <ion-item>
+              <ion-label>Select Department</ion-label>
+              <ion-select [(ngModel)]="selectedDepartment"  placeholder="select department">
+                <ion-select-option *ngFor="let department of departments">{{department}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-card-content>
+            <ion-card-content>
+              <ion-item>
+                <ion-label>Courses</ion-label>
+                <ion-input placeholder="FORMAT - CSC205" (keypress)="ionChange($event)" [(ngModel)]="inputCourse"></ion-input>
+              </ion-item>
+            </ion-card-content>
+           <ion-button (click)="completeProfile()" expand="block" shape="round">
+            Complete Signup
+          </ion-button>
+          <ion-card-content *ngIf="courseListIsNotEmpty">
+            <ion-card-header>
+              <ion-card-title>Courses you've selected</ion-card-title>
+            </ion-card-header>
+            <ion-chip color="tertiary" mode="ios" *ngFor="let course of courseList">
+              <ion-label>{{course}}</ion-label>
+              <ion-icon name="person-circle"></ion-icon>
+            </ion-chip>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid class="loginContainer2" *ngIf="incomplete_profile===false" fixed>
+    <ion-row>
+      <ion-col size="12">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Welcome, {{user_name}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            This is your dashboard
+          </ion-card-content>
+            <ion-footer>
+              <ion-toolbar>
+                <ion-card-subtitle class="ion-float-left">Quick Actions</ion-card-subtitle>
+              </ion-toolbar>
+              <ion-list>
+                <ion-item slot="start">
+                  <ion-icon slot="start" name="aperture-sharp"></ion-icon>
+                  <ion-label  fill="clear" (click)="alert()">Schedule a class</ion-label>
+                </ion-item>
+                <ion-item slot="start">
+                  <ion-icon slot="start" name="book-sharp"></ion-icon>
+                  <ion-label>Create an assignment</ion-label>
+                </ion-item>
+                <ion-item slot="start">
+                  <ion-icon slot="start" name="code-download-sharp"></ion-icon>
+                  <ion-label>Spool Attendance</ion-label>
+                </ion-item>
+                <ion-item slot="start">
+                  <ion-icon slot="start" name="person-add-sharp"></ion-icon>
+                  <ion-label>Set HOC</ion-label>
+                </ion-item>
+              </ion-list>
+            </ion-footer>
+        </ion-card>
+       </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-list-header>
+          <ion-label>Classes for the week</ion-label>
+        </ion-list-header>
+        <ion-grid fixed>
+          <ion-row  style="border: 1px sold mediumblue;align-content: center;">
+            <ion-col size="4">
+              <ion-list>
+                <ion-item lines="full">
+                  <ion-label>Days</ion-label>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Monday</ion-label>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+            <ion-col size="4">
+              <ion-list>
+                <ion-item lines="full" class="ion-text-wrap">
+                  <ion-label class="ion-text-wrap">Class</ion-label>
+                </ion-item>
+                <ion-item class="ion-text-wrap">
+                  <ion-label class="ion-text-wrap">CSC205</ion-label>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+            <ion-col size="4">
+              <ion-list class="ion-text-wrap">
+                <ion-item lines="full">
+                  <ion-label>Time</ion-label>
+                </ion-item>
+                <ion-item>
+                  <ion-label>02:00 pm</ion-label>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  </ion-content>

@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>complete-profile-signup</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item-divider>
+    <ion-label>Academic Profile</ion-label>
+  </ion-item-divider>
+    <ion-item>
+      <ion-label position="floating">Select Campus</ion-label>
+      <ion-select (ionChange)=getFaculties() [(ngModel)]="selectedCampus" placeholder="Select campus">
+        <ion-select-option *ngFor="let campus of campuses" value="{{campus}}">{{campus}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Select Faculty</ion-label>
+      <ion-select (ionChange)="getDepartment()"  [(ngModel)]="selectedFaculty" placeholder="Select faculty">
+        <ion-select-option *ngFor="let faculty of faculties" value="{{faculty.faculty_name}}">{{faculty.faculty_name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Select Department</ion-label>
+      <ion-select [(ngModel)]="selectedDepartment" placeholder="Select department">
+        <ion-select-option *ngFor="let department of departments" value="{{department}}">{{department}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Level</ion-label>
+      <ion-input type="number" [(ngModel)]="level"></ion-input>
+    </ion-item>
+    
+<ion-grid fixed>
+  <ion-row>
+    <ion-col size="6" offset="3">
+      <ion-button color="medium" (click)="stud_profile_update()">
+        Update Profile
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+</ion-content>

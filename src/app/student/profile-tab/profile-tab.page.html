@@ -1,0 +1,30 @@
+
+  <ion-content>
+    <div id="loginContainer">
+      <ion-card fixed>
+        <ion-card-header>
+          <ion-card-title color="danger">Important Notice</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          Hi, {{name}}, kindly update your profile now, so you can start getting updates on class schedule, assignments and also sign attendance.
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </ion-content>
+<ion-tabs (ionTabsWillChange)="getTab($event)">
+  <ion-tab-bar color="warning" slot="bottom">
+    <ion-tab-button tab="attendance">
+      <ion-icon name="finger-print-sharp"></ion-icon>
+      <ion-label color="dark">Attendance</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="assignments">
+      <ion-icon name="reader-sharp"></ion-icon>
+      <ion-label>Assignment</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="profile">
+      <ion-icon name="person-circle-sharp"></ion-icon>
+      <ion-label >Profile</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
+

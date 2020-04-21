@@ -1,0 +1,413 @@
+-- Logs begin at Wed 2020-04-08 22:40:35 WAT, end at Sat 2020-04-11 20:41:40 WAT. --
+Apr 08 22:40:35 james-VPCS132GX systemd-timesyncd[774]: Synchronized to time server 91.189.89.199:123 (ntp.ubuntu.com).
+Apr 08 22:40:35 james-VPCS132GX gala[1415]: [0;1;39m[0;1;31m[0;1;39mUnable to fetch children: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface 'org.ayatana.bamf.view' on object at path /org/ayatana/bamf/application/1382123443[0m
+Apr 08 22:40:35 james-VPCS132GX gala[1415]: [0;1;39m[0;1;31m[0;1;39mFailed to fetch path: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface 'org.ayatana.bamf.application' on object at path /org/ayatana/bamf/application/1382123443[0m
+Apr 08 22:40:55 james-VPCS132GX systemd[1]: Starting Stop ureadahead data collection...
+Apr 08 22:40:55 james-VPCS132GX systemd[1]: Started Stop ureadahead data collection.
+Apr 08 22:41:04 james-VPCS132GX dbus-daemon[1135]: [session uid=1000 pid=1135] Activating via systemd: service name='org.gnome.zeitgeist.Engine' unit='zeitgeist.service' requested by ':1.45' (uid=1000 pid=1485 comm="wingpanel " label="unconfined")
+Apr 08 22:41:04 james-VPCS132GX systemd[1085]: Starting Zeitgeist activity log service...
+Apr 08 22:41:04 james-VPCS132GX dbus-daemon[1135]: [session uid=1000 pid=1135] Activating via systemd: service name='org.gnome.zeitgeist.SimpleIndexer' unit='zeitgeist-fts.service' requested by ':1.61' (uid=1000 pid=1796 comm="/usr/bin/zeitgeist-daemon " label="unconfined")
+Apr 08 22:41:04 james-VPCS132GX dbus-daemon[1135]: [session uid=1000 pid=1135] Successfully activated service 'org.gnome.zeitgeist.Engine'
+Apr 08 22:41:04 james-VPCS132GX systemd[1085]: Started Zeitgeist activity log service.
+Apr 08 22:41:04 james-VPCS132GX zeitgeist-daemon[1796]: [21:41:04.671313 WARNING] zeitgeist-daemon.vala:334: Failed to execute child process “zeitgeist-datahub” (No such file or directory)
+Apr 08 22:41:04 james-VPCS132GX zeitgeist-daemon[1796]: [21:41:04.671545 WARNING] zeitgeist-daemon.vala:127: Unable to parse version info!
+Apr 08 22:41:04 james-VPCS132GX systemd[1085]: Starting Zeitgeist full-text search indexer...
+Apr 08 22:41:04 james-VPCS132GX zeitgeist-daemon[1796]: [21:41:04.754319 WARNING] zeitgeist-daemon.vala:127: Unable to parse version info!
+Apr 08 22:41:05 james-VPCS132GX dbus-daemon[1135]: [session uid=1000 pid=1135] Successfully activated service 'org.gnome.zeitgeist.SimpleIndexer'
+Apr 08 22:41:05 james-VPCS132GX systemd[1085]: Started Zeitgeist full-text search indexer.
+Apr 08 22:41:05 james-VPCS132GX zeitgeist-daemon[1796]: [21:41:05.458003 WARNING] zeitgeist-daemon.vala:127: Unable to parse version info!
+Apr 08 22:41:05 james-VPCS132GX wingpanel[1485]: [0;1;39m[0;1;31m[0;1;39mDBusService.vala:64: Service registration suceeded[0m
+Apr 08 22:41:08 james-VPCS132GX wingpanel[1485]: [0;1;39m[0;1;31m[0;1;39mRelevancyService.vala:166: Pushing launch event: application://io.elementary.terminal.desktop [Terminal][0m
+Apr 08 22:41:08 james-VPCS132GX zeitgeist-fts[1804]: [0;1;39m[0;1;31m[0;1;39mUnable to get info on application://synapse.desktop[0m
+Apr 08 22:41:09 james-VPCS132GX io.elementary.t[1834]: [0;1;39m[0;1;31m[0;1;39mgtk_box_gadget_distribute: assertion 'size >= 0' failed in GtkNotebook[0m
+Apr 08 22:41:09 james-VPCS132GX io.elementary.t[1834]: [0;1;39m[0;1;31m[0;1;39mgtk_box_gadget_distribute: assertion 'size >= 0' failed in GtkNotebook[0m
+Apr 08 22:41:09 james-VPCS132GX io.elementary.t[1834]: [0;1;39m[0;1;31m[0;1;39mgtk_box_gadget_distribute: assertion 'size >= 0' failed in GtkNotebook[0m
+Apr 08 22:41:09 james-VPCS132GX gala[1415]: [0;1;39m[0;1;31m[0;1;39mclutter_actor_add_effect_with_name: assertion 'CLUTTER_IS_ACTOR (self)' failed[0m
+Apr 08 22:41:12 james-VPCS132GX pkexec[1898]: pam_unix(polkit-1:session): session opened for user root by (uid=1000)
+Apr 08 22:41:12 james-VPCS132GX pkexec[1898]: [0;1;39m[0;1;31m[0;1;39mjames: Executing command [USER=root] [TTY=unknown] [CWD=/home/james] [COMMAND=/usr/lib/gnome-settings-daemon/gsd-backlight-helper --set-brightness 6][0m
+Apr 08 22:41:12 james-VPCS132GX pkexec[1903]: pam_unix(polkit-1:session): session opened for user root by (uid=1000)
+Apr 08 22:41:12 james-VPCS132GX pkexec[1903]: [0;1;39m[0;1;31m[0;1;39mjames: Executing command [USER=root] [TTY=unknown] [CWD=/home/james] [COMMAND=/usr/lib/gnome-settings-daemon/gsd-backlight-helper --set-brightness 5][0m
+Apr 08 22:41:12 james-VPCS132GX pkexec[1908]: pam_unix(polkit-1:session): session opened for user root by (uid=1000)
+Apr 08 22:41:12 james-VPCS132GX pkexec[1908]: [0;1;39m[0;1;31m[0;1;39mjames: Executing command [USER=root] [TTY=unknown] [CWD=/home/james] [COMMAND=/usr/lib/gnome-settings-daemon/gsd-backlight-helper --set-brightness 5][0m
+Apr 08 22:41:12 james-VPCS132GX pkexec[1913]: pam_unix(polkit-1:session): session opened for user root by (uid=1000)
+Apr 08 22:41:12 james-VPCS132GX pkexec[1913]: [0;1;39m[0;1;31m[0;1;39mjames: Executing command [USER=root] [TTY=unknown] [CWD=/home/james] [COMMAND=/usr/lib/gnome-settings-daemon/gsd-backlight-helper --set-brightness 4][0m
+Apr 08 22:41:12 james-VPCS132GX pkexec[1918]: pam_unix(polkit-1:session): session opened for user root by (uid=1000)
+Apr 08 22:41:12 james-VPCS132GX pkexec[1918]: [0;1;39m[0;1;31m[0;1;39mjames: Executing command [USER=root] [TTY=unknown] [CWD=/home/james] [COMMAND=/usr/lib/gnome-settings-daemon/gsd-backlight-helper --set-brightness 4][0m
+Apr 08 22:41:12 james-VPCS132GX pkexec[1923]: pam_unix(polkit-1:session): session opened for user root by (uid=1000)
+Apr 08 22:41:12 james-VPCS132GX pkexec[1923]: [0;1;39m[0;1;31m[0;1;39mjames: Executing command [USER=root] [TTY=unknown] [CWD=/home/james] [COMMAND=/usr/lib/gnome-settings-daemon/gsd-backlight-helper --set-brightness 4][0m
+Apr 08 22:41:12 james-VPCS132GX pkexec[1928]: pam_unix(polkit-1:session): session opened for user root by (uid=1000)
+Apr 08 22:41:12 james-VPCS132GX pkexec[1928]: [0;1;39m[0;1;31m[0;1;39mjames: Executing command [USER=root] [TTY=unknown] [CWD=/home/james] [COMMAND=/usr/lib/gnome-settings-daemon/gsd-backlight-helper --set-brightness 4][0m
+Apr 08 22:41:21 james-VPCS132GX dbus-daemon[836]: [system] Activating via systemd: service name='org.freedesktop.PackageKit' unit='packagekit.service' requested by ':1.72' (uid=1000 pid=1932 comm="io.elementary.appcenter -s " label="unconfined")
+Apr 08 22:41:21 james-VPCS132GX systemd[1]: Starting PackageKit Daemon...
+Apr 08 22:41:21 james-VPCS132GX PackageKit[1940]: daemon start
+Apr 08 22:41:22 james-VPCS132GX dbus-daemon[836]: [system] Successfully activated service 'org.freedesktop.PackageKit'
+Apr 08 22:41:22 james-VPCS132GX systemd[1]: Started PackageKit Daemon.
+Apr 08 22:41:29 james-VPCS132GX PackageKit[1940]: get-packages transaction /714_ebcdcccd from uid 1000 finished with success after 2979ms
+Apr 08 22:41:46 james-VPCS132GX PackageKit[1940]: uid 1000 is trying to obtain org.freedesktop.packagekit.system-sources-refresh auth (only_trusted:0)
+Apr 08 22:41:46 james-VPCS132GX PackageKit[1940]: uid 1000 obtained auth for org.freedesktop.packagekit.system-sources-refresh
+Apr 08 22:41:47 james-VPCS132GX systemd-resolved[773]: [0;1;39m[0;1;31m[0;1;39mServer returned error NXDOMAIN, mitigating potential DNS violation DVE-2018-0001, retrying transaction with reduced feature level UDP.[0m
+Apr 08 22:41:47 james-VPCS132GX systemd-resolved[773]: [0;1;39m[0;1;31m[0;1;39mServer returned error NXDOMAIN, mitigating potential DNS violation DVE-2018-0001, retrying transaction with reduced feature level UDP.[0m
+Apr 08 22:41:47 james-VPCS132GX systemd-resolved[773]: [0;1;39m[0;1;31m[0;1;39mServer returned error NXDOMAIN, mitigating potential DNS violation DVE-2018-0001, retrying transaction with reduced feature level UDP.[0m
+Apr 08 22:41:47 james-VPCS132GX systemd-resolved[773]: [0;1;39m[0;1;31m[0;1;39mServer returned error NXDOMAIN, mitigating potential DNS violation DVE-2018-0001, retrying transaction with reduced feature level UDP.[0m
+Apr 08 22:41:47 james-VPCS132GX systemd-resolved[773]: [0;1;39m[0;1;31m[0;1;39mServer returned error NXDOMAIN, mitigating potential DNS violation DVE-2018-0001, retrying transaction with reduced feature level UDP.[0m
+Apr 08 22:41:47 james-VPCS132GX systemd-resolved[773]: [0;1;39m[0;1;31m[0;1;39mServer returned error NXDOMAIN, mitigating potential DNS violation DVE-2018-0001, retrying transaction with reduced feature level UDP.[0m
+Apr 08 22:41:47 james-VPCS132GX systemd-resolved[773]: [0;1;39m[0;1;31m[0;1;39mUsing degraded feature set (UDP) for DNS server 192.168.0.1.[0m
+Apr 08 22:42:30 james-VPCS132GX sudo[2742]: [0;1;39m[0;1;31m[0;1;39m   james : TTY=pts/1 ; PWD=/opt/lampp/htdocs/api ; USER=root ; COMMAND=/usr/bin/code . --user-data-dir=code[0m
+Apr 08 22:42:30 james-VPCS132GX sudo[2742]: pam_unix(sudo:session): session opened for user root by (uid=0)
+Apr 08 22:42:34 james-VPCS132GX PackageKit[1940]: refresh-cache transaction /715_ebdcacdd from uid 1000 finished with success after 48493ms
+Apr 08 22:42:38 james-VPCS132GX sudo[2742]: pam_unix(sudo:session): session closed for user root
+Apr 08 22:42:52 james-VPCS132GX PackageKit[1940]: get-updates transaction /716_ddeeccbd from uid 1000 finished with success after 11469ms
+Apr 08 22:42:53 james-VPCS132GX PackageKit[1940]: get-details transaction /717_ebbdbeca from uid 1000 finished with success after 797ms
+Apr 08 22:42:54 james-VPCS132GX PackageKit[1940]: search-name transaction /718_caaaaada from uid 1000 finished with success after 839ms
+Apr 08 22:42:55 james-VPCS132GX PackageKit[1940]: get-details transaction /719_ebbeddae from uid 1000 finished with success after 748ms
+Apr 08 22:42:56 james-VPCS132GX PackageKit[1940]: search-name transaction /720_cecaabed from uid 1000 finished with success after 812ms
+Apr 08 22:42:57 james-VPCS132GX gala[1415]: [0;1;39m[0;1;31m[0;1;39mclutter_actor_add_effect_with_name: assertion 'CLUTTER_IS_ACTOR (self)' failed[0m
+Apr 08 22:42:57 james-VPCS132GX PackageKit[1940]: get-details transaction /721_dacdbbab from uid 1000 finished with success after 958ms
+Apr 08 22:42:59 james-VPCS132GX PackageKit[1940]: search-name transaction /722_adeaaabd from uid 1000 finished with success after 871ms
+Apr 08 22:43:00 james-VPCS132GX PackageKit[1940]: get-details transaction /723_cababeea from uid 1000 finished with success after 799ms
+Apr 08 22:43:01 james-VPCS132GX PackageKit[1940]: search-name transaction /724_ddacdccc from uid 1000 finished with success after 887ms
+Apr 08 22:43:02 james-VPCS132GX PackageKit[1940]: get-details transaction /725_eacdcbed from uid 1000 finished with success after 787ms
+Apr 08 22:43:06 james-VPCS132GX PackageKit[1940]: search-name transaction /726_acdcbcaa from uid 1000 finished with success after 853ms
+Apr 08 22:43:11 james-VPCS132GX PackageKit[1940]: get-details transaction /727_baddeacc from uid 1000 finished with success after 800ms
+Apr 08 22:43:12 james-VPCS132GX PackageKit[1940]: search-name transaction /728_ddbbdaaa from uid 1000 finished with success after 893ms
+Apr 08 22:43:13 james-VPCS132GX PackageKit[1940]: get-details transaction /729_beecadda from uid 1000 finished with success after 877ms
+Apr 08 22:43:15 james-VPCS132GX PackageKit[1940]: search-name transaction /730_bacdcbac from uid 1000 finished with success after 1180ms
+Apr 08 22:43:16 james-VPCS132GX PackageKit[1940]: get-details transaction /731_beceaccb from uid 1000 finished with success after 1058ms
+Apr 08 22:43:17 james-VPCS132GX PackageKit[1940]: search-name transaction /732_cbbcadaa from uid 1000 finished with success after 1148ms
+Apr 08 22:43:19 james-VPCS132GX PackageKit[1940]: get-details transaction /733_ddbebcee from uid 1000 finished with success after 1208ms
+Apr 08 22:43:20 james-VPCS132GX PackageKit[1940]: search-name transaction /734_daaadeab from uid 1000 finished with success after 1316ms
+Apr 08 22:43:21 james-VPCS132GX PackageKit[1940]: get-details transaction /735_cddecdbc from uid 1000 finished with success after 863ms
+Apr 08 22:43:22 james-VPCS132GX PackageKit[1940]: search-name transaction /736_adcddede from uid 1000 finished with success after 883ms
+Apr 08 22:43:23 james-VPCS132GX PackageKit[1940]: get-details transaction /737_aebaceda from uid 1000 finished with success after 799ms
+Apr 08 22:43:24 james-VPCS132GX PackageKit[1940]: search-name transaction /738_bdeaccbe from uid 1000 finished with success after 844ms
+Apr 08 22:43:27 james-VPCS132GX PackageKit[1940]: get-details transaction /739_aaeadacc from uid 1000 finished with success after 827ms
+Apr 08 22:43:28 james-VPCS132GX PackageKit[1940]: search-name transaction /740_ddeebaac from uid 1000 finished with success after 848ms
+Apr 08 22:43:29 james-VPCS132GX PackageKit[1940]: get-details transaction /741_dedbbeec from uid 1000 finished with success after 1014ms
+Apr 08 22:43:30 james-VPCS132GX PackageKit[1940]: search-name transaction /742_bdeadaae from uid 1000 finished with success after 1029ms
+Apr 08 22:43:31 james-VPCS132GX PackageKit[1940]: get-details transaction /743_aaecbcde from uid 1000 finished with success after 885ms
+Apr 08 22:43:32 james-VPCS132GX PackageKit[1940]: search-name transaction /744_cbdaecae from uid 1000 finished with success after 937ms
+Apr 08 22:43:33 james-VPCS132GX PackageKit[1940]: get-details transaction /745_dabadcdb from uid 1000 finished with success after 892ms
+Apr 08 22:43:34 james-VPCS132GX PackageKit[1940]: search-name transaction /746_bdcdacbe from uid 1000 finished with success after 935ms
+Apr 08 22:43:35 james-VPCS132GX PackageKit[1940]: get-details transaction /747_dababbad from uid 1000 finished with success after 882ms
+Apr 08 22:43:37 james-VPCS132GX PackageKit[1940]: search-name transaction /748_ecbceaee from uid 1000 finished with success after 1046ms
+Apr 08 22:43:37 james-VPCS132GX PackageKit[1940]: get-details transaction /749_baecbaaa from uid 1000 finished with success after 953ms
+Apr 08 22:43:39 james-VPCS132GX PackageKit[1940]: search-name transaction /750_dddcaeab from uid 1000 finished with success after 1066ms
+Apr 08 22:43:40 james-VPCS132GX PackageKit[1940]: get-details transaction /751_bcdcaddd from uid 1000 finished with success after 993ms
+Apr 08 22:43:41 james-VPCS132GX PackageKit[1940]: search-name transaction /752_edcbaace from uid 1000 finished with success after 981ms
+Apr 08 22:43:42 james-VPCS132GX PackageKit[1940]: get-details transaction /753_ccecedee from uid 1000 finished with success after 816ms
+Apr 08 22:43:43 james-VPCS132GX PackageKit[1940]: search-name transaction /754_eaceebba from uid 1000 finished with success after 902ms
+Apr 08 22:43:44 james-VPCS132GX PackageKit[1940]: get-details transaction /755_bbaabdcc from uid 1000 finished with success after 915ms
+Apr 08 22:43:45 james-VPCS132GX PackageKit[1940]: search-name transaction /756_bcdbbeeb from uid 1000 finished with success after 1143ms
+Apr 08 22:43:46 james-VPCS132GX PackageKit[1940]: get-details transaction /757_dbaebbcb from uid 1000 finished with success after 883ms
+Apr 08 22:43:47 james-VPCS132GX PackageKit[1940]: search-name transaction /758_cdabddac from uid 1000 finished with success after 998ms
+Apr 08 22:43:48 james-VPCS132GX PackageKit[1940]: get-details transaction /759_ecccedae from uid 1000 finished with success after 989ms
+Apr 08 22:43:48 james-VPCS132GX kernel: perf: interrupt took too long (2507 > 2500), lowering kernel.perf_event_max_sample_rate to 79750
+Apr 08 22:43:49 james-VPCS132GX PackageKit[1940]: search-name transaction /760_bcedcbca from uid 1000 finished with success after 915ms
+Apr 08 22:43:50 james-VPCS132GX PackageKit[1940]: get-details transaction /761_dccbbcde from uid 1000 finished with success after 851ms
+Apr 08 22:43:51 james-VPCS132GX PackageKit[1940]: search-name transaction /762_cadcdcec from uid 1000 finished with success after 948ms
+Apr 08 22:43:52 james-VPCS132GX PackageKit[1940]: get-details transaction /763_abcaaccb from uid 1000 finished with success after 934ms
+Apr 08 22:43:52 james-VPCS132GX wingpanel[1485]: [0;1;39m[0;1;31m[0;1;39mgee_abstract_map_get: assertion 'self != NULL' failed[0m
+Apr 08 22:43:52 james-VPCS132GX wingpanel[1485]: [0;1;39m[0;1;31m[0;1;39mgee_abstract_map_set: assertion 'self != NULL' failed[0m
+Apr 08 22:44:09 james-VPCS132GX dbus-daemon[1135]: [session uid=1000 pid=1135] Activating service name='org.gnome.keyring.SystemPrompter' requested by ':1.26' (uid=1000 pid=1276 comm="/usr/bin/gnome-keyring-daemon --start --components" label="unconfined")
+Apr 08 22:44:09 james-VPCS132GX gcr-prompter[3220]: bus acquired: org.gnome.keyring.SystemPrompter
+Apr 08 22:44:09 james-VPCS132GX gcr-prompter[3220]: Gcr: registering prompter
+Apr 08 22:44:09 james-VPCS132GX gcr-prompter[3220]: bus acquired: org.gnome.keyring.PrivatePrompter
+Apr 08 22:44:09 james-VPCS132GX dbus-daemon[1135]: [session uid=1000 pid=1135] Successfully activated service 'org.gnome.keyring.SystemPrompter'
+Apr 08 22:44:09 james-VPCS132GX gcr-prompter[3220]: Gcr: received BeginPrompting call from callback /org/gnome/keyring/Prompt/p2@:1.26
+Apr 08 22:44:09 james-VPCS132GX gcr-prompter[3220]: Gcr: preparing a prompt for callback /org/gnome/keyring/Prompt/p2@:1.26
+Apr 08 22:44:09 james-VPCS132GX gcr-prompter[3220]: Gcr: creating new GcrPromptDialog prompt
+Apr 08 22:44:10 james-VPCS132GX gcr-prompter[3220]: Gcr: automatically selecting secret exchange protocol
+Apr 08 22:44:10 james-VPCS132GX gcr-prompter[3220]: [0;1;39m[0;1;31m[0;1;39mGtkDialog mapped without a transient parent. This is discouraged.[0m
+Apr 08 22:44:10 james-VPCS132GX gcr-prompter[3220]: Gcr: generating public key
+Apr 08 22:44:10 james-VPCS132GX gcr-prompter[3220]: Gcr: beginning the secret exchange: [sx-aes-1]\npublic=9nTsdcHusqjBxycKTF5VwJ6wGAhx4rH5rYLWb3HT4g6rnQQwG6FEOirB690/r9UQkYTa9FrG2yjIAdbN4BYbRNacqMVNcrB8ZF9D+GF+7MPS9IXIYJ9eMyIb6nXfVrfpV3kEpoatFdjbskZVcgJWTo++A0fT/qBWn9Fto/SGfd5Vodmha/FdA7fW+DOxPq3uqcwr1MQHPxLD4bFmANrrkZrPNGV3gwElG41iTy6pNdXOj8CYah4pUF1qAOzvHqdz\n
+Apr 08 22:44:10 james-VPCS132GX gcr-prompter[3220]: Gcr: calling the PromptReady method on /org/gnome/keyring/Prompt/p2@:1.26
+Apr 08 22:44:10 james-VPCS132GX gcr-prompter[3220]: acquired name: org.gnome.keyring.SystemPrompter
+Apr 08 22:44:10 james-VPCS132GX gcr-prompter[3220]: acquired name: org.gnome.keyring.PrivatePrompter
+Apr 08 22:44:10 james-VPCS132GX gcr-prompter[3220]: Gcr: returned from the PromptReady method on /org/gnome/keyring/Prompt/p2@:1.26
+Apr 08 22:44:10 james-VPCS132GX gcr-prompter[3220]: Gcr: received PerformPrompt call from callback /org/gnome/keyring/Prompt/p2@:1.26
+Apr 08 22:44:10 james-VPCS132GX gcr-prompter[3220]: Gcr: receiving secret exchange: [sx-aes-1]\npublic=O+LW18xiwVwEQGpWNdwMRSMFt7bqRwEUll6WvXFZVpQ6j0mmffpgDsKBLcpWBxm70NCAQh2WmDahPG/JtLOHyHYBHN6pS+AeQnP0a8/1SnFoP/onhXfPVuSLQV/iVq7WeDZQ7fcRAjMZLHu7wvonbDMjx/Jqyy4Y4IXNbq9h1+1Fzu8h59OSBlOkQ0fFV241Fm1v+su+ldh8oQbvivTGRbtdL+52X6GDBUsArgKOBjnHhQ3i18mqpHD5h3VtfQ0s\n
+Apr 08 22:44:10 james-VPCS132GX gcr-prompter[3220]: Gcr: deriving shared transport key
+Apr 08 22:44:10 james-VPCS132GX gcr-prompter[3220]: Gcr: deriving transport key
+Apr 08 22:44:10 james-VPCS132GX gcr-prompter[3220]: Gcr: starting password prompt for callback /org/gnome/keyring/Prompt/p2@:1.26
+Apr 08 22:44:36 james-VPCS132GX gcr-prompter[3220]: Gcr: completed password prompt for callback :1.26@/org/gnome/keyring/Prompt/p2
+Apr 08 22:44:36 james-VPCS132GX gcr-prompter[3220]: Gcr: encrypting data
+Apr 08 22:44:36 james-VPCS132GX gcr-prompter[3220]: Gcr: sending the secret exchange: [sx-aes-1]\npublic=9nTsdcHusqjBxycKTF5VwJ6wGAhx4rH5rYLWb3HT4g6rnQQwG6FEOirB690/r9UQkYTa9FrG2yjIAdbN4BYbRNacqMVNcrB8ZF9D+GF+7MPS9IXIYJ9eMyIb6nXfVrfpV3kEpoatFdjbskZVcgJWTo++A0fT/qBWn9Fto/SGfd5Vodmha/FdA7fW+DOxPq3uqcwr1MQHPxLD4bFmANrrkZrPNGV3gwElG41iTy6pNdXOj8CYah4pUF1qAOzvHqdz\nsecret=aI+xFB9M1gBJjTCsLZbYZA==\niv=RWWW6KV/Tgv2QoV7LTwEdg==\n
+Apr 08 22:44:36 james-VPCS132GX gcr-prompter[3220]: Gcr: calling the PromptReady method on /org/gnome/keyring/Prompt/p2@:1.26
+Apr 08 22:44:36 james-VPCS132GX gcr-prompter[3220]: Gcr: returned from the PromptReady method on /org/gnome/keyring/Prompt/p2@:1.26
+Apr 08 22:44:36 james-VPCS132GX gcr-prompter[3220]: Gcr: received PerformPrompt call from callback /org/gnome/keyring/Prompt/p2@:1.26
+Apr 08 22:44:36 james-VPCS132GX gcr-prompter[3220]: Gcr: stopping prompting for operation /org/gnome/keyring/Prompt/p2@:1.26
+Apr 08 22:44:36 james-VPCS132GX gcr-prompter[3220]: Gcr: closing the prompt
+Apr 08 22:44:36 james-VPCS132GX gcr-prompter[3220]: Gcr: stopping prompting for operation /org/gnome/keyring/Prompt/p2@:1.26
+Apr 08 22:44:36 james-VPCS132GX gcr-prompter[3220]: Gcr: couldn't find the callback for prompting operation /org/gnome/keyring/Prompt/p2@:1.26
+Apr 08 22:44:36 james-VPCS132GX gcr-prompter[3220]: Gcr: stopping prompting for operation /org/gnome/keyring/Prompt/p2@:1.26
+Apr 08 22:44:36 james-VPCS132GX gcr-prompter[3220]: Gcr: couldn't find the callback for prompting operation /org/gnome/keyring/Prompt/p2@:1.26
+Apr 08 22:44:36 james-VPCS132GX gcr-prompter[3220]: Gcr: stopping prompting for operation /org/gnome/keyring/Prompt/p2@:1.26
+Apr 08 22:44:36 james-VPCS132GX gcr-prompter[3220]: Gcr: couldn't find the callback for prompting operation /org/gnome/keyring/Prompt/p2@:1.26
+Apr 08 22:44:36 james-VPCS132GX gcr-prompter[3220]: Gcr: calling the PromptDone method on /org/gnome/keyring/Prompt/p2@:1.26, and ignoring reply
+Apr 08 22:44:36 james-VPCS132GX gnome-keyring-daemon[1276]: [0;1;39m[0;1;31m[0;1;39masked to register item /org/freedesktop/secrets/collection/Default_5fkeyring/1, but it's already registered[0m
+Apr 08 22:44:36 james-VPCS132GX gnome-keyring-d[1276]: [0;1;39m[0;1;31m[0;1;39masked to register item /org/freedesktop/secrets/collection/Default_5fkeyring/1, but it's already registered[0m
+Apr 08 22:44:39 james-VPCS132GX gala[1415]: [0;1;39m[0;1;31m[0;1;39mclutter_actor_add_effect_with_name: assertion 'CLUTTER_IS_ACTOR (self)' failed[0m
+Apr 08 22:44:40 james-VPCS132GX gnome-keyring-daemon[1276]: [0;1;39m[0;1;31m[0;1;39masked to register item /org/freedesktop/secrets/collection/Default_5fkeyring/1, but it's already registered[0m
+Apr 08 22:44:40 james-VPCS132GX gnome-keyring-d[1276]: [0;1;39m[0;1;31m[0;1;39masked to register item /org/freedesktop/secrets/collection/Default_5fkeyring/1, but it's already registered[0m
+Apr 08 22:44:46 james-VPCS132GX gcr-prompter[3220]: 10 second inactivity timeout, quitting
+Apr 08 22:44:46 james-VPCS132GX gcr-prompter[3220]: Gcr: unregistering prompter
+Apr 08 22:44:46 james-VPCS132GX gcr-prompter[3220]: Gcr: disposing prompter
+Apr 08 22:44:46 james-VPCS132GX gcr-prompter[3220]: Gcr: finalizing prompter
+Apr 08 22:46:02 james-VPCS132GX kernel: perf: interrupt took too long (3157 > 3133), lowering kernel.perf_event_max_sample_rate to 63250
+Apr 08 22:48:57 james-VPCS132GX PackageKit[1940]: daemon quit
+Apr 08 22:50:00 james-VPCS132GX kernel: perf: interrupt took too long (3954 > 3946), lowering kernel.perf_event_max_sample_rate to 50500
+Apr 08 22:54:44 james-VPCS132GX systemd[1]: Starting Cleanup of Temporary Directories...
+Apr 08 22:54:44 james-VPCS132GX systemd[1]: Started Cleanup of Temporary Directories.
+Apr 08 22:55:31 james-VPCS132GX dbus-daemon[836]: [system] Activating service name='io.elementary.logind.helper' requested by ':1.78' (uid=1000 pid=4013 comm="io.elementary.switchboard settings://power " label="unconfined") (using servicehelper)
+Apr 08 22:55:31 james-VPCS132GX dbus-daemon[836]: [system] Successfully activated service 'io.elementary.logind.helper'
+Apr 08 22:55:48 james-VPCS132GX io.elementary.s[4013]: [0;1;39m[0;1;31m[0;1;39mpango_layout_set_attributes: assertion 'layout != NULL' failed[0m
+Apr 08 22:55:48 james-VPCS132GX io.elementary.s[4013]: [0;1;39m[0;1;31m[0;1;39mpango_layout_set_font_description: assertion 'layout != NULL' failed[0m
+Apr 08 22:55:48 james-VPCS132GX io.elementary.s[4013]: [0;1;39m[0;1;31m[0;1;39mgtk_render_layout: assertion 'PANGO_IS_LAYOUT (layout)' failed[0m
+Apr 08 22:55:48 james-VPCS132GX io.elementary.s[4013]: [0;1;39m[0;1;31m[0;1;39mpango_layout_set_attributes: assertion 'layout != NULL' failed[0m
+Apr 08 22:55:48 james-VPCS132GX io.elementary.s[4013]: [0;1;39m[0;1;31m[0;1;39mpango_layout_set_font_description: assertion 'layout != NULL' failed[0m
+Apr 08 22:55:48 james-VPCS132GX io.elementary.s[4013]: [0;1;39m[0;1;31m[0;1;39mgtk_render_layout: assertion 'PANGO_IS_LAYOUT (layout)' failed[0m
+Apr 08 22:55:48 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:48 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:49 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:49 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:49 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:49 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:49 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:49 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:49 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:49 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:49 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:49 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:49 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:49 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:49 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:49 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:49 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:49 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:49 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:49 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:49 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:49 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:50 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:50 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:50 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:50 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:50 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:50 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:51 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:53 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:53 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:53 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:53 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:53 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:53 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:53 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:53 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:53 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:53 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:53 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:53 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:53 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:53 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:53 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:53 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:53 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:54 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:54 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:54 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:54 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:54 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:55 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:55 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:55 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:55 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:55 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:55 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:55 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:55 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:55 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:55 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:55 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:55 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:55 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:55 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:55 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:55 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:56 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:56 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:57 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 22:55:58 james-VPCS132GX gsd-color[1274]: [0;1;39m[0;1;31m[0;1;39munable to get EDID for xrandr-LVDS-1: unable to get EDID for output[0m
+Apr 08 23:00:38 james-VPCS132GX kernel: perf: interrupt took too long (4959 > 4942), lowering kernel.perf_event_max_sample_rate to 40250
+Apr 08 23:17:01 james-VPCS132GX CRON[4794]: pam_unix(cron:session): session opened for user root by (uid=0)
+Apr 08 23:17:01 james-VPCS132GX CRON[4795]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Apr 08 23:17:01 james-VPCS132GX CRON[4794]: pam_unix(cron:session): session closed for user root
+Apr 08 23:40:13 james-VPCS132GX gsd-housekeepin[1304]: [0;1;39m[0;1;31m[0;1;39mFailed to enumerate children of /tmp/systemd-private-5c0675b436f44bcc8fc3956f091c2621-colord.service-OoyZiI: Error opening directory '/tmp/systemd-private-5c0675b436f44bcc8fc3956f091c2621-colord.service-OoyZiI': Permission denied[0m
+Apr 08 23:40:13 james-VPCS132GX gsd-housekeepin[1304]: [0;1;39m[0;1;31m[0;1;39mFailed to enumerate children of /tmp/systemd-private-5c0675b436f44bcc8fc3956f091c2621-rtkit-daemon.service-7LaR7m: Error opening directory '/tmp/systemd-private-5c0675b436f44bcc8fc3956f091c2621-rtkit-daemon.service-7LaR7m': Permission denied[0m
+Apr 08 23:40:13 james-VPCS132GX gsd-housekeepin[1304]: [0;1;39m[0;1;31m[0;1;39mFailed to enumerate children of /tmp/systemd-private-5c0675b436f44bcc8fc3956f091c2621-apache2.service-4Y9pwb: Error opening directory '/tmp/systemd-private-5c0675b436f44bcc8fc3956f091c2621-apache2.service-4Y9pwb': Permission denied[0m
+Apr 08 23:40:13 james-VPCS132GX gsd-housekeepin[1304]: [0;1;39m[0;1;31m[0;1;39mFailed to enumerate children of /tmp/VSCode Crashes: Error opening directory '/tmp/VSCode Crashes': Permission denied[0m
+Apr 08 23:40:13 james-VPCS132GX gsd-housekeepin[1304]: [0;1;39m[0;1;31m[0;1;39mFailed to enumerate children of /tmp/systemd-private-5c0675b436f44bcc8fc3956f091c2621-ModemManager.service-j20AMG: Error opening directory '/tmp/systemd-private-5c0675b436f44bcc8fc3956f091c2621-ModemManager.service-j20AMG': Permission denied[0m
+Apr 08 23:40:13 james-VPCS132GX gsd-housekeepin[1304]: [0;1;39m[0;1;31m[0;1;39mFailed to enumerate children of /tmp/systemd-private-5c0675b436f44bcc8fc3956f091c2621-systemd-timesyncd.service-2AVuW2: Error opening directory '/tmp/systemd-private-5c0675b436f44bcc8fc3956f091c2621-systemd-timesyncd.service-2AVuW2': Permission denied[0m
+Apr 08 23:40:13 james-VPCS132GX gsd-housekeepin[1304]: [0;1;39m[0;1;31m[0;1;39mFailed to enumerate children of /tmp/systemd-private-5c0675b436f44bcc8fc3956f091c2621-systemd-resolved.service-exmTEp: Error opening directory '/tmp/systemd-private-5c0675b436f44bcc8fc3956f091c2621-systemd-resolved.service-exmTEp': Permission denied[0m
+Apr 08 23:40:13 james-VPCS132GX gsd-housekeepin[1304]: [0;1;39m[0;1;31m[0;1;39mFailed to enumerate children of /var/tmp/systemd-private-5c0675b436f44bcc8fc3956f091c2621-rtkit-daemon.service-Yr0HfA: Error opening directory '/var/tmp/systemd-private-5c0675b436f44bcc8fc3956f091c2621-rtkit-daemon.service-Yr0HfA': Permission denied[0m
+Apr 08 23:40:13 james-VPCS132GX gsd-housekeepin[1304]: [0;1;39m[0;1;31m[0;1;39mFailed to enumerate children of /var/tmp/systemd-private-5c0675b436f44bcc8fc3956f091c2621-colord.service-mcGnHW: Error opening directory '/var/tmp/systemd-private-5c0675b436f44bcc8fc3956f091c2621-colord.service-mcGnHW': Permission denied[0m
+Apr 08 23:40:13 james-VPCS132GX gsd-housekeepin[1304]: [0;1;39m[0;1;31m[0;1;39mFailed to enumerate children of /var/tmp/systemd-private-5c0675b436f44bcc8fc3956f091c2621-ModemManager.service-Ey4IYv: Error opening directory '/var/tmp/systemd-private-5c0675b436f44bcc8fc3956f091c2621-ModemManager.service-Ey4IYv': Permission denied[0m
+Apr 08 23:40:13 james-VPCS132GX gsd-housekeepin[1304]: [0;1;39m[0;1;31m[0;1;39mFailed to enumerate children of /var/tmp/systemd-private-5c0675b436f44bcc8fc3956f091c2621-apache2.service-wEj1Z9: Error opening directory '/var/tmp/systemd-private-5c0675b436f44bcc8fc3956f091c2621-apache2.service-wEj1Z9': Permission denied[0m
+Apr 08 23:40:13 james-VPCS132GX gsd-housekeepin[1304]: [0;1;39m[0;1;31m[0;1;39mFailed to enumerate children of /var/tmp/systemd-private-5c0675b436f44bcc8fc3956f091c2621-systemd-timesyncd.service-Ku4tAR: Error opening directory '/var/tmp/systemd-private-5c0675b436f44bcc8fc3956f091c2621-systemd-timesyncd.service-Ku4tAR': Permission denied[0m
+Apr 08 23:40:13 james-VPCS132GX gsd-housekeepin[1304]: [0;1;39m[0;1;31m[0;1;39mFailed to enumerate children of /var/tmp/systemd-private-5c0675b436f44bcc8fc3956f091c2621-systemd-resolved.service-mAbxie: Error opening directory '/var/tmp/systemd-private-5c0675b436f44bcc8fc3956f091c2621-systemd-resolved.service-mAbxie': Permission denied[0m
+Apr 08 23:41:29 james-VPCS132GX wpa_supplicant[850]: [0;1;39m[0;1;31m[0;1;39mwlp2s0: CTRL-EVENT-DISCONNECTED bssid=74:4a:a4:9e:39:f1 reason=4 locally_generated=1[0m
+Apr 08 23:41:29 james-VPCS132GX wpa_supplicant[850]: [0;1;39m[0;1;31m[0;1;39mwlp2s0: CTRL-EVENT-REGDOM-CHANGE init=CORE type=WORLD[0m
+Apr 08 23:41:29 james-VPCS132GX NetworkManager[848]: [0;1;39m[0;1;31m[0;1;39m<warn>  [1586385689.9296] sup-iface[0x5595de5e7240,wlp2s0]: connection disconnected (reason -4)[0m
+Apr 08 23:41:29 james-VPCS132GX NetworkManager[848]: <info>  [1586385689.9535] device (wlp2s0): supplicant interface state: completed -> disconnected
+Apr 08 23:41:30 james-VPCS132GX NetworkManager[848]: <info>  [1586385690.0349] device (wlp2s0): supplicant interface state: disconnected -> scanning
+Apr 08 23:41:45 james-VPCS132GX NetworkManager[848]: [0;1;39m[0;1;31m[0;1;39m<warn>  [1586385705.5391] device (wlp2s0): link timed out.[0m
+Apr 08 23:41:45 james-VPCS132GX NetworkManager[848]: <info>  [1586385705.5401] device (wlp2s0): state change: activated -> failed (reason 'ssid-not-found', sys-iface-state: 'managed')
+Apr 08 23:41:45 james-VPCS132GX NetworkManager[848]: <info>  [1586385705.5408] manager: NetworkManager state is now DISCONNECTED
+Apr 08 23:41:45 james-VPCS132GX NetworkManager[848]: [0;1;39m[0;1;31m[0;1;39m<warn>  [1586385705.6045] device (wlp2s0): Activation: failed for connection 'Nduks'[0m
+Apr 08 23:41:45 james-VPCS132GX dbus-daemon[836]: [system] Activating via systemd: service name='org.freedesktop.nm_dispatcher' unit='dbus-org.freedesktop.nm-dispatcher.service' requested by ':1.20' (uid=0 pid=848 comm="/usr/sbin/NetworkManager --no-daemon " label="unconfined")
+Apr 08 23:41:45 james-VPCS132GX NetworkManager[848]: <info>  [1586385705.6060] device (wlp2s0): state change: failed -> disconnected (reason 'none', sys-iface-state: 'managed')
+Apr 08 23:41:45 james-VPCS132GX avahi-daemon[816]: Withdrawing address record for fe80::2fec:cf1b:b581:6c29 on wlp2s0.
+Apr 08 23:41:45 james-VPCS132GX kernel: IPv6: ADDRCONF(NETDEV_UP): wlp2s0: link is not ready
+Apr 08 23:41:45 james-VPCS132GX avahi-daemon[816]: Leaving mDNS multicast group on interface wlp2s0.IPv6 with address fe80::2fec:cf1b:b581:6c29.
+Apr 08 23:41:45 james-VPCS132GX avahi-daemon[816]: Interface wlp2s0.IPv6 no longer relevant for mDNS.
+Apr 08 23:41:45 james-VPCS132GX nm-applet[1630]: [0;1;39m[0;1;31m[0;1;39mgtk_widget_destroy: assertion 'GTK_IS_WIDGET (widget)' failed[0m
+Apr 08 23:41:45 james-VPCS132GX nm-applet[1630]: [0;1;39m[0;1;31m[0;1;39mgtk_widget_destroy: assertion 'GTK_IS_WIDGET (widget)' failed[0m
+Apr 08 23:41:45 james-VPCS132GX nm-applet[1630]: [0;1;39m[0;1;31m[0;1;39mCan't set a parent on widget which has a parent[0m
+Apr 08 23:41:45 james-VPCS132GX systemd[1]: Starting Network Manager Script Dispatcher Service...
+Apr 08 23:41:45 james-VPCS132GX NetworkManager[848]: <info>  [1586385705.6402] dhcp4 (wlp2s0): canceled DHCP transaction, DHCP client pid 1436
+Apr 08 23:41:45 james-VPCS132GX NetworkManager[848]: <info>  [1586385705.6402] dhcp4 (wlp2s0): state changed bound -> done
+Apr 08 23:41:45 james-VPCS132GX avahi-daemon[816]: Withdrawing address record for 192.168.0.101 on wlp2s0.
+Apr 08 23:41:45 james-VPCS132GX avahi-daemon[816]: Leaving mDNS multicast group on interface wlp2s0.IPv4 with address 192.168.0.101.
+Apr 08 23:41:45 james-VPCS132GX avahi-daemon[816]: Interface wlp2s0.IPv4 no longer relevant for mDNS.
+Apr 08 23:41:45 james-VPCS132GX dbus-daemon[836]: [system] Successfully activated service 'org.freedesktop.nm_dispatcher'
+Apr 08 23:41:45 james-VPCS132GX systemd[1]: Started Network Manager Script Dispatcher Service.
+Apr 08 23:41:45 james-VPCS132GX nm-dispatcher[5181]: req:1 'down' [wlp2s0]: new request (2 scripts)
+Apr 08 23:41:45 james-VPCS132GX nm-dispatcher[5181]: req:1 'down' [wlp2s0]: start running ordered scripts...
+Apr 08 23:41:45 james-VPCS132GX nm-dispatcher[5181]: req:2 'connectivity-change': new request (2 scripts)
+Apr 08 23:41:45 james-VPCS132GX nm-applet[1630]: [0;1;39m[0;1;31m[0;1;39mgtk_widget_destroy: assertion 'GTK_IS_WIDGET (widget)' failed[0m
+Apr 08 23:41:45 james-VPCS132GX nm-applet[1630]: [0;1;39m[0;1;31m[0;1;39mgtk_widget_destroy: assertion 'GTK_IS_WIDGET (widget)' failed[0m
+Apr 08 23:41:45 james-VPCS132GX nm-applet[1630]: [0;1;39m[0;1;31m[0;1;39mCan't set a parent on widget which has a parent[0m
+Apr 08 23:41:45 james-VPCS132GX nm-applet[1630]: [0;1;39m[0;1;31m[0;1;39mgtk_widget_destroy: assertion 'GTK_IS_WIDGET (widget)' failed[0m
+Apr 08 23:41:45 james-VPCS132GX nm-applet[1630]: [0;1;39m[0;1;31m[0;1;39mgtk_widget_destroy: assertion 'GTK_IS_WIDGET (widget)' failed[0m
+Apr 08 23:41:45 james-VPCS132GX gsd-sharing[1262]: [0;1;39m[0;1;31m[0;1;39mFailed to StopUnit service: GDBus.Error:org.freedesktop.systemd1.NoSuchUnit: Unit gnome-remote-desktop.service not loaded.[0m
+Apr 08 23:41:45 james-VPCS132GX gsd-sharing[1262]: [0;1;39m[0;1;31m[0;1;39mFailed to StopUnit service: GDBus.Error:org.freedesktop.systemd1.NoSuchUnit: Unit vino-server.service not loaded.[0m
+Apr 08 23:41:45 james-VPCS132GX nm-applet[1630]: [0;1;39m[0;1;31m[0;1;39mCan't set a parent on widget which has a parent[0m
+Apr 08 23:41:45 james-VPCS132GX nm-applet[1630]: [0;1;39m[0;1;31m[0;1;39mgtk_widget_destroy: assertion 'GTK_IS_WIDGET (widget)' failed[0m
+Apr 08 23:41:45 james-VPCS132GX nm-applet[1630]: [0;1;39m[0;1;31m[0;1;39mgtk_widget_destroy: assertion 'GTK_IS_WIDGET (widget)' failed[0m
+Apr 08 23:41:45 james-VPCS132GX nm-applet[1630]: [0;1;39m[0;1;31m[0;1;39mCan't set a parent on widget which has a parent[0m
+Apr 08 23:41:45 james-VPCS132GX nm-dispatcher[5181]: req:2 'connectivity-change': start running ordered scripts...
+Apr 08 23:41:49 james-VPCS132GX NetworkManager[848]: <info>  [1586385709.4305] device (wlp2s0): supplicant interface state: scanning -> inactive
+Apr 08 23:42:13 james-VPCS132GX NetworkManager[848]: <info>  [1586385733.4802] manager: sleep: sleep requested (sleeping: no  enabled: yes)
+Apr 08 23:42:13 james-VPCS132GX NetworkManager[848]: <info>  [1586385733.4803] device (enp4s0): state change: unavailable -> unmanaged (reason 'sleeping', sys-iface-state: 'managed')
+Apr 08 23:42:13 james-VPCS132GX NetworkManager[848]: <info>  [1586385733.5173] device (wlp2s0): state change: disconnected -> unmanaged (reason 'sleeping', sys-iface-state: 'managed')
+Apr 08 23:42:13 james-VPCS132GX NetworkManager[848]: <info>  [1586385733.5322] manager: NetworkManager state is now ASLEEP
+Apr 08 23:42:13 james-VPCS132GX nm-applet[1630]: [0;1;39m[0;1;31m[0;1;39mgtk_widget_destroy: assertion 'GTK_IS_WIDGET (widget)' failed[0m
+Apr 08 23:42:13 james-VPCS132GX nm-applet[1630]: [0;1;39m[0;1;31m[0;1;39mgtk_widget_destroy: assertion 'GTK_IS_WIDGET (widget)' failed[0m
+Apr 08 23:42:13 james-VPCS132GX wingpanel[1485]: [0;1;39m[0;1;31m[0;1;39mDisplayWidget.vala:159: Unknown network state, cannot show the good icon: NETWORK_STATE_FAILED_WIRED[0m
+Apr 08 23:42:13 james-VPCS132GX nm-applet[1630]: [0;1;39m[0;1;31m[0;1;39mCan't set a parent on widget which has a parent[0m
+Apr 08 23:42:13 james-VPCS132GX nm-applet[1630]: [0;1;39m[0;1;31m[0;1;39mgtk_widget_destroy: assertion 'GTK_IS_WIDGET (widget)' failed[0m
+Apr 08 23:42:13 james-VPCS132GX nm-applet[1630]: [0;1;39m[0;1;31m[0;1;39mgtk_widget_destroy: assertion 'GTK_IS_WIDGET (widget)' failed[0m
+Apr 08 23:42:13 james-VPCS132GX wpa_supplicant[850]: [0;1;39m[0;1;31m[0;1;39mnl80211: deinit ifname=wlp2s0 disabled_11b_rates=0[0m
+Apr 08 23:42:13 james-VPCS132GX systemd[1]: Reached target Sleep.
+Apr 08 23:42:13 james-VPCS132GX systemd[1]: Starting Suspend...
+Apr 08 23:42:13 james-VPCS132GX systemd-sleep[5212]: Suspending system...
+Apr 08 23:42:13 james-VPCS132GX kernel: PM: suspend entry (deep)
+Apr 08 23:42:14 james-VPCS132GX kernel: PM: Syncing filesystems ... done.
+Apr 09 00:09:03 james-VPCS132GX kernel: Freezing user space processes ... (elapsed 0.002 seconds) done.
+Apr 09 00:09:03 james-VPCS132GX kernel: OOM killer disabled.
+Apr 09 00:09:03 james-VPCS132GX kernel: Freezing remaining freezable tasks ... (elapsed 0.001 seconds) done.
+Apr 09 00:09:03 james-VPCS132GX kernel: [0;1;39m[0;1;31m[0;1;39mSuspending console(s) (use no_console_suspend to debug)[0m
+Apr 09 00:09:03 james-VPCS132GX kernel: [0;1;39m[0;1;31m[0;1;39msd 0:0:0:0: [sda] Synchronizing SCSI cache[0m
+Apr 09 00:09:03 james-VPCS132GX kernel: [0;1;39m[0;1;31m[0;1;39msd 0:0:0:0: [sda] Stopping disk[0m
+Apr 09 00:09:03 james-VPCS132GX kernel: ACPI: EC: interrupt blocked
+Apr 09 00:09:03 james-VPCS132GX kernel: ACPI: Preparing to enter system sleep state S3
+Apr 09 00:09:03 james-VPCS132GX kernel: ACPI: EC: event blocked
+Apr 09 00:09:03 james-VPCS132GX kernel: ACPI: EC: EC stopped
+Apr 09 00:09:03 james-VPCS132GX kernel: PM: Saving platform NVS memory
+Apr 09 00:09:03 james-VPCS132GX kernel: Disabling non-boot CPUs ...
+Apr 09 00:09:03 james-VPCS132GX kernel: smpboot: CPU 1 is now offline
+Apr 09 00:09:03 james-VPCS132GX kernel: [0;1;39m[0;1;31m[0;1;39mIRQ 25: no longer affine to CPU2[0m
+Apr 09 00:09:03 james-VPCS132GX kernel: smpboot: CPU 2 is now offline
+Apr 09 00:09:03 james-VPCS132GX kernel: [0;1;39m[0;1;31m[0;1;39mIRQ 23: no longer affine to CPU3[0m
+Apr 09 00:09:03 james-VPCS132GX kernel: [0;1;39m[0;1;31m[0;1;39mIRQ 27: no longer affine to CPU3[0m
+Apr 09 00:09:03 james-VPCS132GX kernel: smpboot: CPU 3 is now offline
+Apr 09 00:09:03 james-VPCS132GX kernel: ACPI: Low-level resume complete
+Apr 09 00:09:03 james-VPCS132GX kernel: ACPI: EC: EC started
+Apr 09 00:09:03 james-VPCS132GX kernel: PM: Restoring platform NVS memory
+Apr 09 00:09:03 james-VPCS132GX kernel: Enabling non-boot CPUs ...
+Apr 09 00:09:03 james-VPCS132GX kernel: x86: Booting SMP configuration:
+Apr 09 00:09:03 james-VPCS132GX kernel: smpboot: Booting Node 0 Processor 1 APIC 0x1
+Apr 09 00:09:03 james-VPCS132GX kernel: [0;1;39m[0;1;31m[0;1;39m cache: parent cpu1 should not be sleeping[0m
+Apr 09 00:09:03 james-VPCS132GX kernel: CPU1 is up
+Apr 09 00:09:03 james-VPCS132GX kernel: smpboot: Booting Node 0 Processor 2 APIC 0x4
+Apr 09 00:09:03 james-VPCS132GX kernel: [0;1;39m[0;1;31m[0;1;39m cache: parent cpu2 should not be sleeping[0m
+Apr 09 00:09:03 james-VPCS132GX kernel: CPU2 is up
+Apr 09 00:09:03 james-VPCS132GX kernel: smpboot: Booting Node 0 Processor 3 APIC 0x5
+Apr 09 00:09:03 james-VPCS132GX kernel: [0;1;39m[0;1;31m[0;1;39m cache: parent cpu3 should not be sleeping[0m
+Apr 09 00:09:03 james-VPCS132GX kernel: CPU3 is up
+Apr 09 00:09:03 james-VPCS132GX kernel: ACPI: Waking up from system sleep state S3
+Apr 09 00:09:03 james-VPCS132GX kernel: ACPI: EC: interrupt unblocked
+Apr 09 00:09:03 james-VPCS132GX kernel: [0;1;39m[0;1;31m[0;1;39msdhci-pci 0000:03:00.0: MMC controller base frequency changed to 50Mhz.[0m
+Apr 09 00:09:03 james-VPCS132GX kernel: ACPI: EC: event unblocked
+Apr 09 00:09:03 james-VPCS132GX kernel: [0;1;39m[0;1;31m[0;1;39msd 0:0:0:0: [sda] Starting disk[0m
+Apr 09 00:09:03 james-VPCS132GX kernel: ata2: SATA link up 1.5 Gbps (SStatus 113 SControl 300)
+Apr 09 00:09:03 james-VPCS132GX kernel: ata2.00: configured for UDMA/100
+Apr 09 00:09:03 james-VPCS132GX kernel: [0;1;39m[0;1;31m[0;1;39msdhci-pci 0000:03:00.4: Will use DMA mode even though HW doesn't fully claim to support it.[0m
+Apr 09 00:09:03 james-VPCS132GX kernel: [0;1;39m[0;1;31m[0;1;39msdhci-pci 0000:03:00.0: Will use DMA mode even though HW doesn't fully claim to support it.[0m
+Apr 09 00:09:03 james-VPCS132GX kernel: OOM killer enabled.
+Apr 09 00:09:03 james-VPCS132GX kernel: Restarting tasks ... done.
+Apr 09 00:09:03 james-VPCS132GX kernel: video LNXVIDEO:00: Restoring backlight state
+Apr 09 00:09:03 james-VPCS132GX systemd-sleep[5212]: System resumed.
+Apr 09 00:09:03 james-VPCS132GX kernel: PM: suspend exit
+Apr 09 00:09:03 james-VPCS132GX kernel: [0;1;39m[0;1;31m[0;1;39mfirewire_core 0000:03:00.3: rediscovered device fw0[0m
+Apr 09 00:09:03 james-VPCS132GX kernel: usb 2-1.1: new high-speed USB device number 4 using ehci-pci
+Apr 09 00:09:03 james-VPCS132GX kernel: usb 2-1.1: New USB device found, idVendor=19d2, idProduct=0564
+Apr 09 00:09:03 james-VPCS132GX kernel: usb 2-1.1: New USB device strings: Mfr=1, Product=2, SerialNumber=2
+Apr 09 00:09:03 james-VPCS132GX kernel: usb 2-1.1: Product: ZTE-CDROM
+Apr 09 00:09:03 james-VPCS132GX kernel: usb 2-1.1: Manufacturer: ZTE
+Apr 09 00:09:03 james-VPCS132GX kernel: usb 2-1.1: SerialNumber: ZTE-CDROM
+Apr 09 00:09:03 james-VPCS132GX kernel: psmouse serio1: synaptics: queried max coordinates: x [..5644], y [..4728]
+Apr 09 00:09:04 james-VPCS132GX upowerd[1366]: [0;1;39m[0;1;31m[0;1;39mg_source_remove: assertion 'tag > 0' failed[0m
+Apr 09 00:09:05 james-VPCS132GX kernel: ata1: SATA link up 3.0 Gbps (SStatus 123 SControl 300)
+Apr 09 00:09:05 james-VPCS132GX kernel: ata1.00: ACPI cmd f5/00:00:00:00:00:a0 (SECURITY FREEZE LOCK) filtered out
+Apr 09 00:09:05 james-VPCS132GX kernel: ata1.00: ACPI cmd f5/00:00:00:00:00:a0 (SECURITY FREEZE LOCK) filtered out
+Apr 09 00:09:05 james-VPCS132GX kernel: ata1.00: configured for UDMA/133
+Apr 09 00:09:05 james-VPCS132GX mtp-probe[5303]: checking bus 2, device 4: "/sys/devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.1"
+Apr 09 00:09:05 james-VPCS132GX mtp-probe[5303]: bus: 2, device: 4 was not an MTP device
+Apr 09 00:09:05 james-VPCS132GX kernel: usb-storage 2-1.1:1.0: USB Mass Storage device detected
+Apr 09 00:09:05 james-VPCS132GX kernel: scsi host4: usb-storage 2-1.1:1.0
+Apr 09 00:09:05 james-VPCS132GX kernel: usbcore: registered new interface driver usb-storage
+Apr 09 00:09:05 james-VPCS132GX kernel: usbcore: registered new interface driver uas
+Apr 09 00:09:06 james-VPCS132GX systemd-sleep[5212]: /dev/sda:
+Apr 09 00:09:06 james-VPCS132GX systemd-sleep[5212]:  setting Advanced Power Management level to 0xfe (254)
+Apr 09 00:09:06 james-VPCS132GX systemd-sleep[5212]:  APM_level        = 254
+Apr 09 00:09:06 james-VPCS132GX systemd[1]: Started Suspend.
+Apr 09 00:09:06 james-VPCS132GX systemd[1]: sleep.target: Unit not needed anymore. Stopping.
+Apr 09 00:09:06 james-VPCS132GX systemd[1]: Stopped target Sleep.
+Apr 09 00:09:06 james-VPCS132GX systemd[1]: Reached target Suspend.
+Apr 09 00:09:06 james-VPCS132GX systemd[1]: suspend.target: Unit not needed anymore. Stopping.
+Apr 09 00:09:06 james-VPCS132GX systemd[1]: Stopped target Suspend.
+Apr 09 00:09:06 james-VPCS132GX systemd-logind[827]: Operation 'sleep' finished.
+Apr 09 00:09:06 james-VPCS132GX NetworkManager[848]: <info>  [1586387346.1262] manager: sleep: wake requested (sleeping: yes  enabled: yes)
+Apr 09 00:09:06 james-VPCS132GX NetworkManager[848]: <info>  [1586387346.1264] device (enp4s0): state change: unmanaged -> unavailable (reason 'managed', sys-iface-state: 'managed')
+Apr 09 00:09:06 james-VPCS132GX kernel: IPv6: ADDRCONF(NETDEV_UP): enp4s0: link is not ready
+Apr 09 00:09:06 james-VPCS132GX NetworkManager[848]: <info>  [1586387346.1488] device (wlp2s0): state change: unmanaged -> unavailable (reason 'managed', sys-iface-state: 'managed')
+Apr 09 00:09:06 james-VPCS132GX kernel: IPv6: ADDRCONF(NETDEV_UP): enp4s0: link is not ready
+Apr 09 00:09:06 james-VPCS132GX kernel: IPv6: ADDRCONF(NETDEV_UP): wlp2s0: link is not ready
+Apr 09 00:09:06 james-VPCS132GX kernel: iwlwifi 0000:02:00.0: Radio type=0x1-0x3-0x1
+Apr 09 00:09:06 james-VPCS132GX upowerd[1366]: [0;1;39m[0;1;31m[0;1;39mtreating change event as add on /sys/devices/LNXSYSTM:00/LNXSYBUS:00/PNP0C0A:00/power_supply/BAT1[0m
+Apr 09 00:09:06 james-VPCS132GX upowerd[1366]: [0;1;39m[0;1;31m[0;1;39munhandled action 'bind' on /sys/devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.1[0m
+Apr 09 00:09:06 james-VPCS132GX upowerd[1366]: [0;1;39m[0;1;31m[0;1;39munhandled action 'bind' on /sys/devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.1/2-1.1:1.0[0m
+Apr 09 00:09:06 james-VPCS132GX kernel: iwlwifi 0000:02:00.0: Radio type=0x1-0x3-0x1
+Apr 09 00:09:06 james-VPCS132GX kernel: IPv6: ADDRCONF(NETDEV_UP): wlp2s0: link is not ready
+Apr 09 00:09:06 james-VPCS132GX NetworkManager[848]: <info>  [1586387346.4866] manager: NetworkManager state is now DISCONNECTED
+Apr 09 00:09:06 james-VPCS132GX nm-applet[1630]: [0;1;39m[0;1;31m[0;1;39mCan't set a parent on widget which has a parent[0m
+Apr 09 00:09:06 james-VPCS132GX nm-applet[1630]: [0;1;39m[0;1;31m[0;1;39mgtk_widget_destroy: assertion 'GTK_IS_WIDGET (widget)' failed[0m
+Apr 09 00:09:06 james-VPCS132GX nm-applet[1630]: [0;1;39m[0;1;31m[0;1;39mgtk_widget_destroy: assertion 'GTK_IS_WIDGET (widget)' failed[0m
+Apr 09 00:09:06 james-VPCS132GX nm-applet[1630]: [0;1;39m[0;1;31m[0;1;39mCan't set a parent on widget which has a parent[0m
+Apr 09 00:09:06 james-VPCS132GX wpa_supplicant[850]: [0;1;39m[0;1;31m[0;1;39mdbus: fill_dict_with_properties dbus_interface=fi.w1.wpa_supplicant1.Interface dbus_property=Stations getter failed[0m
+Apr 09 00:09:06 james-VPCS132GX wpa_supplicant[850]: [0;1;31m[0;1;39m[0;1;31mdbus: wpa_dbus_get_object_properties: failed to get object properties: (none) none[0m
+Apr 09 00:09:06 james-VPCS132GX wpa_supplicant[850]: [0;1;31m[0;1;39m[0;1;31mdbus: Failed to construct signal[0m
+Apr 09 00:09:06 james-VPCS132GX wpa_supplicant[850]: [0;1;39m[0;1;31m[0;1;39mdbus: fill_dict_with_properties dbus_interface=fi.w1.wpa_supplicant1.Interface dbus_property=Stations getter failed[0m
+Apr 09 00:09:06 james-VPCS132GX NetworkManager[848]: <info>  [1586387346.5347] device (wlp2s0): supplicant interface state: starting -> ready
+Apr 09 00:09:06 james-VPCS132GX NetworkManager[848]: <info>  [1586387346.5348] device (wlp2s0): state change: unavailable -> disconnected (reason 'supplicant-available', sys-iface-state: 'managed')
+Apr 09 00:09:06 james-VPCS132GX nm-applet[1630]: [0;1;39m[0;1;31m[0;1;39mgtk_wid

@@ -1,7 +1,9 @@
 {
   "name": "my-demo-app",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {},
+    "cordova": {}
   },
-  "type": "angular"
+  "type": "angular",
+  "id": "875dc72a"
 }

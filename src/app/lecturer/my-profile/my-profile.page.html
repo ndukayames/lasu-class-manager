@@ -1,0 +1,81 @@
+<ion-content>
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>My profile</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+   <ion-list>
+     <ion-item>
+      <ion-icon slot="start" name="person-outline"></ion-icon>
+       <ion-label>username: {{user_name}} </ion-label>
+     </ion-item>
+     <ion-item>
+      <ion-icon slot="start" name="key-outline"></ion-icon>
+      <ion-label>password: {{password}} </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-icon slot="start" name="reader-outline"></ion-icon>
+      <ion-label>Campus: {{selectedCampus}} </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-icon slot="start" name="reader-outline"></ion-icon>
+      <ion-label>Faculty: {{selectedFaculty}} </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-icon slot="start" name="reader-outline"></ion-icon>
+      <ion-label>department: {{selectedDepartment}} </ion-label>
+    </ion-item>
+   </ion-list>
+  </ion-card-content>
+</ion-card>
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Edit Profile</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-list>
+      <ion-list-header>
+        <ion-label>Login Data</ion-label>
+      </ion-list-header>
+      <ion-item lines="inset">
+        <ion-icon slot="start" name="person-outline"></ion-icon>
+        <ion-label>Username</ion-label>
+        <ion-input readonly [(ngModel)]="user_name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon slot="start" name="key-outline"></ion-icon>
+        <ion-label>Password</ion-label>
+        <ion-input readonly [(ngModel)]="password"></ion-input>
+      </ion-item>
+      <ion-list-header>
+        <ion-label>Academic Profile</ion-label>
+      </ion-list-header>
+        <ion-item>
+          <ion-icon slot="start" name="reader-outline"></ion-icon>
+          <ion-label>Select campus</ion-label>
+          <ion-select (ionChange)="getFaculties()" [(ngModel)]="selectedCampus" placeholder="Select campus">
+            <ion-select-option *ngFor="let campus of campuses">{{campus}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-icon slot="start" name="reader-outline"></ion-icon>
+          <ion-label>Select faculty</ion-label>
+          <ion-select (ionChange)="getDepartments()" [(ngModel)]="selectedFaculty" placeholder="Select faculty">
+            <ion-select-option value="{{faculty.faculty_name}}" *ngFor="let faculty of faculties">{{faculty.faculty_name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-icon slot="start" name="reader-outline"></ion-icon>
+          <ion-label>Select department</ion-label>
+          <ion-select [(ngModel)]="selectedDepartment" placeholder="Select department">
+            <ion-select-option *ngFor="let department of departments">{{department}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      <ion-button (click)="update()" expand="block" color="medium" shape="round">
+        <ion-icon slot="start" name="cloud-upload-outline"></ion-icon>
+        update Profile
+      </ion-button>
+    </ion-list>
+  </ion-card-content>
+</ion-card>
+</ion-content>

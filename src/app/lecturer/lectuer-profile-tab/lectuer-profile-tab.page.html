@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{user_name}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopup($event)">
+        <ion-icon name="color-wand-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="dashboard">
+        <ion-icon name="list-sharp"></ion-icon>
+      <ion-label>Dashboard</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="attendance">
+        <ion-icon name="list-sharp"></ion-icon>
+      <ion-label>Attendance</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="assignment">
+        <ion-icon name="school-sharp"></ion-icon>
+        <ion-label>assignment</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="classes">
+        <ion-icon name="walk-sharp"></ion-icon>
+        <ion-label>Classes</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>   
+</ion-content>
+
+

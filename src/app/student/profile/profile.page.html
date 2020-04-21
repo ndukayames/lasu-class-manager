@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide='true' menu='profile'>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>My Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+<ion-menu disabled side="start" menuId="profile" contentId="main">
+  <ion-list>
+    <ion-menu-toggle>
+      <ion-item [routerLink]="['/student-profile-tab/profile']">
+        <ion-icon slot="start" name="happy"></ion-icon>
+        <ion-label>View Profile</ion-label>
+      </ion-item>
+      <ion-item [routerLink]="['/student-profile-tab/profile/edit-profile']">
+        <ion-icon slot="start" name="hammer"></ion-icon>
+        <ion-label>Edit Profile</ion-label>
+      </ion-item>
+      <ion-item *ngIf="inCompleteProfile" [routerLink]="['/student-profile-tab/profile/complete-registration']">
+        <ion-icon slot="start" name="help"></ion-icon>
+          <ion-label>Complete Profile</ion-label>
+      </ion-item>
+        <ion-item *ngIf="hoc" [routerLink]="['/student-profile-tab/hoc']">
+          <ion-icon slot="start" name="help"></ion-icon>
+            <ion-label>Register semester courses</ion-label>
+        </ion-item>
+    <ion-item [routerLink]="['/student-profile-tab/student-course-reg']">
+      <ion-icon  slot="start" name="list"></ion-icon>
+        <ion-label>Register Courses</ion-label>
+    </ion-item>
+    <ion-item [routerLink]="['/home']" (click)='logout()'>
+      <ion-icon slot="start" name="log-out"></ion-icon>
+        <ion-label>Logout</ion-label>
+    </ion-item>
+    </ion-menu-toggle>
+  </ion-list>
+</ion-menu>
+<ion-router-outlet id="main"></ion-router-outlet>
+<ion-grid fixed>
+  <ion-row>
+    <ion-col size="12">
+          <ion-card fixed>
+            <ion-card-header color="medium">
+              <ion-card-title>Hi, {{name}}, welcome to your profile</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              From here, you can register your courses for this semester, if you can't find any, contact your HOC to setup the semester you your level.
+            </ion-card-content>
+          </ion-card>
+    </ion-col>
+    <ion-col size="12">
+      <ion-card fixed>
+        <ion-card-header color="medium">
+          <ion-card-title>Registered Courses</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-chip *ngFor="let item of registered_courses" color="medium" mode="ios">
+            <ion-label (click)="goto(item)">{{item}}</ion-label>
+          </ion-chip>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+</ion-content>
+  
+  
+

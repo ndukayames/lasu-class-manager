@@ -1,0 +1,67 @@
+<!-- <ion-header>
+  <ion-toolbar color="danger">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Student Login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content>
+  <ion-grid [ngSwitch]="type" fixed id="loginContainer"> 
+      <ion-row>
+        <ion-col size="12">
+          <ion-segment color="warning" value="student" (ionChange) = "segment($event)">
+            <ion-segment-button value="student">
+              <ion-label>Student</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="lecturer">
+              <ion-label>Lecturer</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+          <ion-card *ngSwitchCase="'student'">
+            <ion-card-content>
+              <ion-item>
+                <ion-label color="dark" position="floating">
+                  <ion-icon name="pricetag-sharp"></ion-icon>
+                  Matric number
+                </ion-label>
+                <ion-input type="number" [(ngModel)]="matric_number"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label color="dark" position="floating">
+                  <ion-icon name="key-sharp"></ion-icon>
+                  password</ion-label>
+                <ion-input type="password" [(ngModel)]="password"></ion-input>
+              </ion-item>
+            </ion-card-content>
+              <ion-button style="margin-top: 10px;" color="medium" (click)="stud_login()" expand="block" shape="round">
+                <ion-icon slot="end" name="arrow-undo"></ion-icon>
+                login
+              </ion-button>
+          </ion-card>
+          <ion-card *ngSwitchCase="'lecturer'">
+            <ion-card-content>
+              <ion-item>
+                <ion-label color="dark" position="floating">
+                  <ion-icon name="pricetag-sharp"></ion-icon>
+                  Username
+                </ion-label>
+                <ion-input type="TEXT" [(ngModel)]="user_name"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label color="dark" position="floating">
+                  <ion-icon name="key-sharp"></ion-icon>
+                  Password</ion-label>
+                <ion-input type="password" [(ngModel)]="password"></ion-input>
+              </ion-item>
+            </ion-card-content>
+              <ion-button style="margin-top: 10px;" color="medium" (click)="lect_login()" expand="block" shape="round">
+                <ion-icon slot="end" name="arrow-undo"></ion-icon>
+                login
+              </ion-button>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+</ion-content>

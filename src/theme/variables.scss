@@ -4,6 +4,8 @@
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
+  $alert-md-content-max-height:400px !default;
+
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;

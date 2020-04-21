@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>hoc</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button color="warning"  defaultHref="student-profile-tab/profile"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-no-padding">
+  
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col size="12" *ngFor="let class of classes">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>{{class.course_code}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+             {{class.course_title}}
+            </ion-card-content>
+            <ion-footer>
+              <ion-toolbar>
+                  <ion-grid fixed>
+                    <ion-row>
+                      <ion-col size="6">
+                        <ion-button size="small" (click)="delete(class.course_code)" color="dark" expand="block">
+                          <ion-icon name="trash-outline"></ion-icon>
+                        </ion-button>
+                      </ion-col>
+                      <ion-col size="6">
+                        <ion-button size="small" [routerLink]="['/student-profile-tab/hoc/view/',class.course_code]" routerLinkActive="router-link-active"  color="medium" expand="block">
+                          <ion-icon name="eye-outline"></ion-icon>
+                        </ion-button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+              </ion-toolbar>
+            </ion-footer>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>  
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="gotoCreate()" color="medium">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

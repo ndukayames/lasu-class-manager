@@ -1,0 +1,36 @@
+   
+  <ion-button color="medium" fill="clear" class="ion-float-right" (click)="close()">
+    <ion-icon slot="icon-only" name="close-circle-sharp">
+    </ion-icon>
+  </ion-button>
+  <ion-grid id="loginContainer" fixed>
+    <ion-card color="light" *ngFor="let item of courseData" fixed>
+      <ion-card-header>
+        <ion-card-subtitle>{{item.course_code}}</ion-card-subtitle>
+        <ion-card-title>{{item.course_title}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item color="medium">
+           <ion-icon slot="start" name="time-sharp"></ion-icon>
+            <ion-label  class="ion-text-wrap">Time: {{item.class_time}}
+              <ion-label> every {{item.class_day}}</ion-label>
+             </ion-label>
+          </ion-item>
+          <ion-item color="light">
+            <ion-icon slot="start" name="people-circle-sharp"></ion-icon>
+            <ion-label class="ion-text-wrap">
+              Course lecturer: 
+             </ion-label>
+             <ion-chip  *ngFor="let lecturer of item.course_lecturer" color="dark">
+               <ion-label>{{lecturer}}</ion-label>
+             </ion-chip>
+          </ion-item>
+          <ion-item color="medium">
+           <ion-icon slot="start" name="location-sharp"></ion-icon>
+            <ion-label class="ion-text-wrap">Department: {{item.department}} </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </ion-grid>

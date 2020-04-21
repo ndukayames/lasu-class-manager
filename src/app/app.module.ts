@@ -8,14 +8,25 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+import { Device } from '@ionic-native/device/ngx';
+import { IonicStorageModule } from '@ionic/storage';
+import { PopoverComponent } from './home/popover/popover.component';
+import { LecPopComponent } from "./lecturer/lec-pop/lec-pop.component";
+import { DatePicker } from '@ionic-native/date-picker/ngx';
+
+
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  declarations: [AppComponent,PopoverComponent,LecPopComponent],
+  entryComponents: [PopoverComponent,LecPopComponent],
+  imports: [BrowserModule, IonicStorageModule.forRoot(), HttpClientModule, IonicModule.forRoot(), AppRoutingModule],
   providers: [
     StatusBar,
     SplashScreen,
+    Device,
+    DatePicker,
+    
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

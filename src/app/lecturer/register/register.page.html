@@ -1,0 +1,43 @@
+<ion-content>
+    <ion-grid fixed id="loginContainer"> 
+      <ion-row>
+        <ion-col size="12">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-subtitle color="danger">
+                <ion-icon name="person-add"></ion-icon>
+                Lecturer Registration</ion-card-subtitle>
+              <ion-card-title>Personal Data</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-item>
+                <ion-label color="danger" position="floating">
+                  <ion-icon name="person-sharp"></ion-icon>
+                  Ful name</ion-label>
+                <ion-input type="text" [(ngModel)]="full_name"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label color="danger" position="floating">
+                  <ion-icon name="pricetag-sharp"></ion-icon>
+                  User name
+                </ion-label>
+                <ion-input type="text" [(ngModel)]="user_name"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label color="danger" position="floating">
+                  <ion-icon name="key-sharp"></ion-icon>
+                  password</ion-label>
+                <ion-input type="password" [(ngModel)]="password"></ion-input>
+              </ion-item>
+            </ion-card-content>            
+            <ion-button style="margin-top: 10px;" color="danger" (click)="register()" expand="block" shape="round">
+              <ion-icon slot="end" name="arrow-redo-outline"></ion-icon>                Register
+            </ion-button>
+            <ion-button (click)="gotoLecLogin()" expand="block" shape="round">
+              Lecurer Login
+             </ion-button>
+          </ion-card>
+        </ion-col>
+       </ion-row>
+    </ion-grid>
+</ion-content>

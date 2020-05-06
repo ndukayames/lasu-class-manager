@@ -8,36 +8,32 @@ import { DbopsService } from './dbops.service';
   providedIn: 'root'
 })
 export class ProviderService {
-  constructor(private storage:Storage, private route:Router, private navCtrl: NavController, private dbops:DbopsService, private toastCtrl: ToastController, private loadingCtrl: LoadingController) { }
+  constructor(public storage:Storage, public route:Router, public navCtrl: NavController, public dbops:DbopsService, public toastCtrl: ToastController, public loadingCtrl: LoadingController) { }
   async doToast(message,position,time) {
     const toast = await this.toastCtrl.create({
-      header: 'Toast header',
       message: message,
       position: position,
       duration: time,
     });
     toast.present();
   }
-
+  loading
   async doLoading(m) {
-    const loading = await this.loadingCtrl.create({
+    this.loading = await this.loadingCtrl.create({
       message: m,
-      duration: 2000,
-      spinner: "bubbles"
+      spinner: "bubbles",
+      id: 'loader',
+      duration: 1000
     });
-    await loading.present();
+     this.loading.present();
+    
+    console.log('Loading dismissed!');
   }
   StudentloginStatus  = false;
   LecturerLoginStatus = false;
   user_login_info;
   registered_course_status = false;
-  async presentToast(msg){
-    const toast = await this.toastCtrl.create({
-      message   : msg,
-      duration  : 2000
-    });
-    toast.present()
-  }
+  notDepartmentCourse = false //used to validate if hoc is registering a department course or not
   campus = [
     {
       name: "ojo",
@@ -170,7 +166,7 @@ export class ProviderService {
       ]
     }
   ];
-
+//General School Stuff
   getAllCampus(){
     let campus_name = [];
     for (let index = 0; index < this.campus.length; index++) {
@@ -206,9 +202,8 @@ export class ProviderService {
     class_date: [],
     course_lecturer: [],
   }]
-studentData = this.storage.get('stud_loggedin_data').then(res=>{
-  return this.studentData =  res;
-})
+
+//Regular student stuff
   async get_student_login_data(){
     // Get student login data from storage
     // Mostly used by pages who needs update storage data
@@ -231,17 +226,17 @@ studentData = this.storage.get('stud_loggedin_data').then(res=>{
       this.dbops.postData(body, 'api.php').subscribe((res:any)=>{
         if(res.success === true){
             loading.dismiss();
-            this.presentToast(res.msg);
+            this.doToast(res.msg,"middle",1500);
             //redirect to login page
             this.route.navigateByUrl('home/login')
 
         }else{
           loading.dismiss();
-          this.presentToast(res.msg)
+          this.doToast(res.msg,"middle",1500);
         }
       },
       (err)=>{
-        this.presentToast("timeout")
+        this.doToast("timeout","middle",1500);
       }
       )
     })
@@ -250,7 +245,7 @@ studentData = this.storage.get('stud_loggedin_data').then(res=>{
     //Logs in a student, then create a loggedin_student data storage
     const loading = await this.loadingCtrl.create({
       message: 'Please wait...',
-      duration: 2000
+      // duration: 2000
     });
     await loading.present(); 
     return new Promise(async resolve=>{
@@ -261,16 +256,13 @@ studentData = this.storage.get('stud_loggedin_data').then(res=>{
       }
       let request:any = await this.dbops.postData(body, 'api.php').toPromise();
       if(request.success === true){
-        await this.storage.set('stud_loggedin_data', request.result);
-        this.presentToast(request.msg)
-        this.get_registered_courses();
-        this.route.navigateByUrl('student-profile-tab')
+        let a = await this.storage.set('stud_loggedin_data', request.result);
+        this.get_stud_data()
+        this.doToast(request.msg,"middle",1500)
+        this.route.navigateByUrl('/student-profile-tab')
         loading.dismiss();
-        await this.storage.keys().then(res=>{
-          console.log('storage data available on Login',res)
-        });
       }else{
-        this.presentToast(request.msg)
+        this.doToast(request.msg,"middle",1500);
         loading.dismiss();
       }
     })
@@ -278,11 +270,7 @@ studentData = this.storage.get('stud_loggedin_data').then(res=>{
   async get_stud_data(){
     let a = await this.storage.get('stud_loggedin_data');
     //gets student data from the server and returns user data from the server
-    const loading = await this.loadingCtrl.create({
-      message: 'Please wait...',
-      duration: 2000
-    });
-    await loading.present();
+    
     let body={
         function        : 'get_student_data',
         matric_number   : a.matric_number,
@@ -291,9 +279,9 @@ studentData = this.storage.get('stud_loggedin_data').then(res=>{
       let postData: any = await this.dbops.postData(body, 'api.php').toPromise()
       if(postData.success===true){
         await this.storage.set('stud_loggedin_data',postData.result)
-        loading.dismiss()
+        //get courses offered by a student
         this.get_student_course();
-        return this.storage.get('stud_loggedin_data');
+         return this.storage.get('stud_loggedin_data');
         
       }else{
         this.route.navigateByUrl('home/login')
@@ -303,7 +291,7 @@ studentData = this.storage.get('stud_loggedin_data').then(res=>{
     //function called in edit profile page used to edit student profile
     const loading = await this.loadingCtrl.create({
       message: 'Please wait...',
-      duration: 2000
+      // duration: 2000
     });
     await loading.present(); 
     return new Promise(resolve=>{
@@ -320,56 +308,175 @@ studentData = this.storage.get('stud_loggedin_data').then(res=>{
       this.dbops.postData(body, 'api.php').subscribe( async (res:any)=>{
         if(res.success === true){
             loading.dismiss();
-            this.presentToast(res.msg);
+            this.doToast(res.msg,"middle",1500);
+            this.get_stud_data();
             this.route.navigateByUrl('student-profile-tab/profile')
         }else{
           loading.dismiss();
-          this.presentToast(res.msg)
+          this.doToast(res.msg,"middle",1500);
         }
       },
       (err)=>{
-        this.presentToast("timeout")
+        this.doToast("timeout","middle",1500);
       }
       )
     })
   }
   async stud_logout(){
-    this.storage.clear();
-    // this.route.navigateByUrl('/home');
+    this.storage.keys().then(res=>{
+      res.forEach(element => {
+        this.storage.remove(element)
+        console.log(element + ' has been removed')
+      });
+      
+    })
+    this.route.navigateByUrl('/home');
   }
   async fetch_course_data(){
-    //function to get courses registered by an HOC
     const loading = await this.loadingCtrl.create({
-      message: 'Fetching Class data from server...',
-    })
+      message: 'Please wait o...',
+      // duration: 2000
+    });
+    await loading.present(); 
+    //function to get courses registered by an HOC
     let a = await this.storage.get('stud_loggedin_data');
     console.log(a)
-    let class_hoc =  a.full_name
-    let matric_number =  a.matric_number
+    let level =  a.level
+    let Hoc_department =  a.department
     let body={
-      function        : 'get_course_data',
-      hoc             : class_hoc,
-      matric_number   : matric_number
+      function        :  'get_course_data',
+      level             :  level,
+      hoc_department   : Hoc_department
     }
     let data: any = await this.dbops.postData(body, 'api.php').toPromise()
-    if(data.success===true){
-      console.log('success')
-      let fetch_data = await this.storage.set('hoc_course_data',data.result)
-      this.route.navigateByUrl('student-profile-tab/hoc')
-      loading.dismiss();
-      return fetch_data
+    if(data === null){
+      loading.dismiss()
+      console.log('didnt get stuffs from the server')
     }else{
-      console.log(data.msg)
-      loading.dismiss();
+      if(data.success===true){
+        console.log('success')
+        let fetch_data = await this.storage.set('hoc_course_data',data.result)
+        this.route.navigateByUrl('student-profile-tab/hoc')
+        loading.dismiss()
+        return fetch_data
+      }else{
+        console.log(data.msg)
+      }
+    }
+  }
+  async get_course_details_from_server(courseCode){
+    //haven't figured out why i created this function
+    let body ={
+      function : 'get_course_details_from_server',
+      courseCode
+    }
+    let request:any = await this.dbops.postData(body,'api.php').toPromise()
+    if(request === null){
+      this.doToast("Could not connect to server", "middle",2000)
+    }else{
+      if(request.success === true){
+        return request.result
+      }else{
+        console.log(request.msg)
+      }
+    }
+  }
+  async hoc_course_reg(Course_code,Course_title,Course_time,Course_lecturer,Course_hoc,Course_dept,class_day,hoc_mat_number){
+    let a = await this.storage.get('stud_loggedin_data');
+    let body={
+      function          : 'hoc_course_reg',
+      course_code       : Course_code,
+      course_title      : Course_title,
+      course_time       : Course_time,
+      level             : a.level,
+      course_lecturer   : Course_lecturer,
+      class_hoc         : Course_hoc,
+      department        : Course_dept,
+      class_day         : class_day,
+      matric_number     : hoc_mat_number,
+    }
+    //Course Reg for department course reg
+    console.log(body)
+    let request:any = await this.dbops.postData(body,'api.php').toPromise();
+    if(request === null){
+      console.log('couldnt get stuff from the server')
+    }
+    if(request.success === true){
+      this.fetch_course_data()
+    }else{
+      console.log(request.msg)
+    }
+  }
+  async hoc_non_dept_course_reg(hoc_name,hoc_department,original_course_department,class_day,course_time,course_lecturer,course_code,course_title){
+    let a = await this.storage.get('stud_loggedin_data');
+    let body = {
+      function: 'hoc_non_dept_course_reg',
+      hoc_name,hoc_department,original_course_department,class_day,course_time,course_lecturer,course_code,course_title,
+      level: a.level
+    }
+    console.log(body)
+    let request:any = await this.dbops.postData(body,'api.php').toPromise();
+    if(request === null){
+      console.log('failed to connect to server')
+    }else{
+      if(request.success === true){
+        this.fetch_course_data()
+        console.log(request.msg)
+      }else{
+        this.doToast(request.msg,"bottom",2000)
+        console.log(request.msg)
+      }
+    }
+  }
+  async get_hoc_lecturer(Department){
+
+    //gets the lecturers in hoc department, used to produce lecturers during signup
+    let body={
+      function: 'get_hoc_lecturer',
+      department: Department,
+    }
+    let request:any = await this.dbops.postData(body,'api.php').toPromise();
+    if(request.success === true){
+      console.log(request.msg)
+      await this.storage.set('hoc_lecturers',request.result)
+    }else{
+      console.log(request.msg,Department)
+    }
+  }
+  non_dpt_lec
+  async get_non_department_courses(Department){
+    console.log("started ...")
+    let a = await this.storage.get('stud_loggedin_data')
+    //for hoc registering external courses
+    let body={
+      function: 'get_non_department_courses',
+      department: Department,
+      level: a.level
+    }
+    let request:any = await this.dbops.postData(body,'api.php').toPromise();
+    if(!request){
+      console.log("request failed")
+      this.doToast("No courses found in this department", "middle",5000)
+    }else{
+      if(request.success === true){
+        console.log(request.msg)
+        this.non_dpt_lec = await this.storage.set('non_dept_course',request.result)
+      }else{
+        console.log(request.msg)
+      }
+      return this.non_dpt_lec
     }
   }
   async get_course_data(){
     return await this.storage.get('hoc_course_data');
   }
-  async delete_course(courseCode){
+  async delete_course(courseCode,hoc_department){
+    let a = await this.storage.get('stud_loggedin_data')
     let body={
       function: 'delete_course',
-      courseCode: courseCode
+      courseCode,
+      hoc_department,
+      level:a.level
     }
     let request:any = await this.dbops.postData(body, 'api.php').toPromise()
     console.log(request.msg);
@@ -377,28 +484,33 @@ studentData = this.storage.get('stud_loggedin_data').then(res=>{
   }
   async get_student_course(){
     //function to fetch courses related to student's department
-    this.doLoading("Fetching info from server...")
+    //server collects all registered courses even from external courses
     let a = await this.storage.get('stud_loggedin_data');
     let body = {
       function : 'check_available_course',
-      department: a.department
+      department: a.department,
+      level:  a.level
     }
     let request:any = await this.dbops.postData(body, 'api.php').toPromise();
-    if(request.success === true){
-      this.loadingCtrl.dismiss()
-      this.storage.set('student_course_data', request.result)
-      let courseData = await this.storage.get('student_course_data');
-      return courseData;
+    if(request === null){
+      console.log("error connecting to the server")
     }else{
-      this.loadingCtrl.dismiss()
-      console.log(request.msg)
+      if(request.success === true){
+        this.storage.set('student_course_data', request.result)
+        let courseData = await this.storage.get('student_course_data');
+        // this.route.navigateByUrl('student-profile-tab/profile')
+        return courseData;
+      }else{
+        console.log(request.msg)
+      }
     }
+    
   }
   async  register_course(course){
     this.doLoading("sending data to serve...")
     let a = await this.storage.get('stud_loggedin_data');
     let body = {
-      function      :   'register_course',
+      function      :   'student_register_course',
       department    :   a.department,
       courses       :   course,
       matric_number :   a.matric_number
@@ -417,20 +529,25 @@ studentData = this.storage.get('stud_loggedin_data').then(res=>{
     let a = await this.storage.get('stud_loggedin_data');
     let body = {
       function    : 'get_registered_courses',
-      matric_number : a.matric_number
+      matric_number : a.matric_number,
+      level:  a.level
     }
     let request:any = await this.dbops.postData(body, 'api.php').toPromise();
-    if(request.success === true){
-      let courses = await this.storage.set('registered_courses', request.result)
-      console.log(courses)
-      this.doToast(request.msg,'middle',2000)
-      return courses;
+    if(request === null){
+      console.log('problem with the server concerning get_registered_courses')
     }else{
-      console.log(request.msg)
+      if(request.success === true){
+        let courses = await this.storage.set('registered_courses', request.result)
+        this.doToast(request.msg,'middle',2000)
+        return courses;
+      }else{
+        console.log(request.msg)
+      }
     }
+   
   }
   async unregister_course(removedCourse,courses){
-
+    //deprecated function
     let a = await this.storage.get('stud_loggedin_data');
     let body = {
       function: 'unregister_course',
@@ -449,6 +566,8 @@ studentData = this.storage.get('stud_loggedin_data').then(res=>{
   }
   //=====================================================================
   //Lecturer stuffs
+  incomplete_profile = true //manages the state of lecturer's complete profile
+
   async get_lecturer_data(){
     this.doLoading("please wait")
     //get campus,faculty and department details for the lecturer
@@ -464,14 +583,51 @@ studentData = this.storage.get('stud_loggedin_data').then(res=>{
       this.doToast(request.msg,'top',2000)
       await this.storage.set('lecturer_academic_data', request.result)
       this.loadingCtrl.dismiss()
-      let a = await this.storage.get('loggedin_lecturer_data')
-      console.log(a)
     }else{
       this.doToast(request.msg, 'bottom',3000)
       this.loadingCtrl.dismiss()
     }
   }
-  async complete_lecturer_signup(Campus,Faculty,Department,courses){
+  async get_lecturer_courses(lecturer){
+    //get unique courses registered
+    let body = {
+      function : 'get_lecturer_courses',
+      lecturer
+    }
+    let request:any = await this.dbops.postData(body,'api.php').toPromise()
+    if(request === null){
+      console.log('could not communicate with server')
+    }else{
+      if(request.success === true){
+        console.log('could communicate with server')
+      let a = await this.storage.set('unique_lecturers_courses',request.result)
+    }else{
+      console.log(request.msg)
+    }
+    }
+  }
+
+  async get_all_offering_my_course(lecturer,courseCode){
+    //can't find where i used this function
+    let body = {
+      function: 'get_all_offering_my_course',
+      lecturer,
+      courseCode
+    }
+    let request:any = await this.dbops.postData(body,'api.php').toPromise()
+    if(request === null){
+      console.log(body,'failed to connect')
+    }else{
+      if(request.success === true){
+        console.log(request.msg)
+        let a = await this.storage.set('teee',request.result)
+        console.log(a)
+      }else{
+        console.log(request.msg)
+      }
+    }
+  }
+  async complete_lecturer_signup(Campus,Faculty,Department){
     //registers the academic data for the lecturer
     let a = await this.storage.get('loggedin_lecturer_data')
     let body = {
@@ -480,7 +636,6 @@ studentData = this.storage.get('stud_loggedin_data').then(res=>{
       campus       : Campus,
       faculty      : Faculty,
       department   : Department,
-      courseList   : courses,
       complete     : 1
     }
     let request:any = await this.dbops.postData(body,'api.php').toPromise();
@@ -489,6 +644,7 @@ studentData = this.storage.get('stud_loggedin_data').then(res=>{
       await this.get_lecturer_data();
       let data = await this.storage.get('lecturer_academic_data');
       console.log(data)
+      this.checkLecuturerProfile()
     }else{
       this.doToast(request.msg, 'bottom', 2000)
     }
@@ -501,16 +657,33 @@ studentData = this.storage.get('stud_loggedin_data').then(res=>{
         password      : Password
       }
       let request:any = await this.dbops.postData(body,'api.php').toPromise();
-      if (request.success === true){
-        await this.storage.set('loggedin_lecturer_data', request.result);
-        await this.get_lecturer_data(); 
-        this.route.navigateByUrl('lectuer-profile-tab');
-        this.loadingCtrl.dismiss();
-
+      if(request === null){
+        console.log("failed to connect to server")
       }else{
-        this.doToast("Login failed, try again","middle",200)
-        this.loadingCtrl.dismiss();
+        if (request.success === true){
+          await this.storage.set('loggedin_lecturer_data', request.result);
+          let a = await this.storage.get('loggedin_lecturer_data')
+          await this.get_lecturer_data(); 
+          await this.get_lecturer_courses(a.full_name)
+          this.route.navigateByUrl('lecturer-profile-tab');
+          this.loadingCtrl.dismiss();
+  
+        }else{
+          this.doToast("Login failed, try again","middle",200)
+          this.loadingCtrl.dismiss();
+        }
       }
+      
+  }
+  async checkLecuturerProfile(){
+    let data = await this.storage.get('lecturer_academic_data')
+    if(data.complete == '1'){
+      this.incomplete_profile = false
+      console.log(data.complete +' testing incomplete profile' + this.incomplete_profile)
+    }else if(data.complete == null || data.complete == '0'){
+      console.log('testing incomplete profile null')
+      this.incomplete_profile = true
+    }
   }
   async update_lecturer_profile(User_name,SelectedCampus,SelectedFaculty,SelectedDepartment){
     let body = {

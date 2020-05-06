@@ -27,12 +27,12 @@
                   <ion-grid fixed>
                     <ion-row>
                       <ion-col size="6">
-                        <ion-button size="small" (click)="delete(class.course_code)" color="dark" expand="block">
+                        <ion-button size="small" (click)="delete(class.course_code,class.my_hoc_department)" color="dark" expand="block">
                           <ion-icon name="trash-outline"></ion-icon>
                         </ion-button>
                       </ion-col>
                       <ion-col size="6">
-                        <ion-button size="small" [routerLink]="['/student-profile-tab/hoc/view/',class.course_code]" routerLinkActive="router-link-active"  color="medium" expand="block">
+                        <ion-button size="small" [routerLink]="['/student-profile-tab/hoc/view/',class.course_code]" color="medium" expand="block">
                           <ion-icon name="eye-outline"></ion-icon>
                         </ion-button>
                       </ion-col>
@@ -45,8 +45,12 @@
       </ion-row>
     </ion-grid>  
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="gotoCreate()" color="medium">
+    <ion-fab-button color="medium">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
+    <ion-fab-list side="top">
+     <ion-fab-button (click)="gotoCreate()"><ion-icon name="library-outline"></ion-icon></ion-fab-button>
+     <ion-fab-button (click)="gotoCreateNonDept()"><ion-icon name="library-sharp"></ion-icon></ion-fab-button>
+    </ion-fab-list>
   </ion-fab>
 </ion-content>

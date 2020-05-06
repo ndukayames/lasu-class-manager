@@ -15,7 +15,7 @@ import { PopoverComponent } from './home/popover/popover.component';
 import { LecPopComponent } from "./lecturer/lec-pop/lec-pop.component";
 import { DatePicker } from '@ionic-native/date-picker/ngx';
 
-
+// const config: SocketIoConfig = { url: 'http://localhost:3001/', options: {}};
 
 @NgModule({
   declarations: [AppComponent,PopoverComponent,LecPopComponent],

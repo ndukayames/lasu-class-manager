@@ -8,6 +8,9 @@ import { ProfilePageRoutingModule } from './profile-routing.module';
 
 import { ProfilePage } from './profile.page';
 import { ViewPageModule } from '../student-course-reg/view/view.module';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+
+
 
 @NgModule({
   imports: [
@@ -15,7 +18,7 @@ import { ViewPageModule } from '../student-course-reg/view/view.module';
     FormsModule,
     IonicModule,
     ProfilePageRoutingModule,
-    ViewPageModule
+    ViewPageModule,
   ],
   declarations: [ProfilePage]
 })

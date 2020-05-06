@@ -59,6 +59,11 @@ const routes: Routes = [
           }
         ]
       },
+      {
+        path: '',
+        redirectTo: '/student-profile-tab',
+        pathMatch: 'full'
+      }
     ]
   }
 ];

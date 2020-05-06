@@ -36,7 +36,7 @@ const routes: Routes = [
     loadChildren: () => import('./student/student-course-reg/student-course-reg.module').then( m => m.StudentCourseRegPageModule)
   },
   {
-    path: 'lectuer-profile-tab',
+    path: 'lecturer-profile-tab',
     loadChildren: () => import('./lecturer/lectuer-profile-tab/lectuer-profile-tab.module').then( m => m.LectuerProfileTabPageModule)
   },
   {
@@ -62,6 +62,10 @@ const routes: Routes = [
   {
     path: 'dashboard',
     loadChildren: () => import('./lecturer/dashboard/dashboard.module').then( m => m.DashboardPageModule)
+  },
+  {
+    path: 'socket',
+    loadChildren: () => import('./socket/socket.module').then( m => m.SocketPageModule)
   },
   
  

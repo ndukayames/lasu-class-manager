@@ -10,7 +10,7 @@
 <ion-content>
   <ion-grid fixed>
     <ion-row>
-      <ion-card *ngIf="thereAreNoCourses">
+      <ion-card *ngIf="thereAreNoCourses === true">
         <ion-card-header>
           <ion-card-title>Courses are not available to you</ion-card-title>
         </ion-card-header>
@@ -48,7 +48,7 @@
         </ion-card>
       </ion-col>
       <ion-col size="12">
-        <ion-button color="warning" (click)="complete()" expand="full" fill="solid" shape="round">
+        <ion-button *ngIf="thereAreNoCourses === false" color="warning" (click)="complete()" expand="full" fill="solid" shape="round">
           Complete
         </ion-button>
       </ion-col>

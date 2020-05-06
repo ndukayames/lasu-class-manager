@@ -24,12 +24,19 @@ export class ViewPage implements OnInit {
       'dismissed': true
     });
   }
+  course_deleted;
   async ionViewWillEnter(){
     let student_course_data = await this.storage.get('student_course_data');
-    let courseData = await student_course_data.find(res=>{
-      return res.course_code === this.course
-    })
-    this.courseData.push(courseData);
-    console.log("course data",this.courseData,this.course)
+    if(student_course_data === null){
+      this.course_deleted = true;
+      console.log("course has been deleted")
+    }else{
+      let courseData = await student_course_data.find(res=>{
+        return res.course_code === this.course
+      })
+      this.courseData.push(courseData);
+      console.log("course data",this.courseData,this.course)
+    }
+    
   }
 }

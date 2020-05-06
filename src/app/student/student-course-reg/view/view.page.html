@@ -13,8 +13,8 @@
         <ion-list>
           <ion-item color="medium">
            <ion-icon slot="start" name="time-sharp"></ion-icon>
-            <ion-label  class="ion-text-wrap">Time: {{item.class_time}}
-              <ion-label> every {{item.class_day}}</ion-label>
+            <ion-label  class="ion-text-wrap">Time: {{item.class_time | date:'shortTime'}} every {{item.class_day}}
+              <ion-label> </ion-label>
              </ion-label>
           </ion-item>
           <ion-item color="light">
@@ -34,3 +34,4 @@
       </ion-card-content>
     </ion-card>
   </ion-grid>
+  <ion-card-title *ngIf="course_deleted === true">This course has been deleted</ion-card-title>

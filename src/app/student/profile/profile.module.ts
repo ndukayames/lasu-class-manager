@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -8,6 +8,10 @@ import { ProfilePageRoutingModule } from './profile-routing.module';
 
 import { ProfilePage } from './profile.page';
 import { ViewPageModule } from '../student-course-reg/view/view.module';
+// import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+
+
 
 @NgModule({
   imports: [
@@ -15,8 +19,10 @@ import { ViewPageModule } from '../student-course-reg/view/view.module';
     FormsModule,
     IonicModule,
     ProfilePageRoutingModule,
-    ViewPageModule
+    ViewPageModule,
+    NgxDatatableModule
   ],
-  declarations: [ProfilePage]
+  declarations: [ProfilePage],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ProfilePageModule {}

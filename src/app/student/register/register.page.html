@@ -36,13 +36,10 @@
                 
             </ion-card>
             <ion-button *ngSwitchCase="'student'" style="margin-top: 10px;" color="medium" (click)="stud_register()" expand="block" shape="round">
-              <ion-icon slot="end" name="arrow-redo-outline"></ion-icon>                Register
-            </ion-button>
-            <ion-button *ngSwitchCase="'student'" color="warning" (click)="gotoStudLogin()" expand="block" shape="round">
-              Student Login
-             </ion-button>
+              <ion-icon slot="end" name="arrow-redo-outline"></ion-icon>Register</ion-button>
+            <ion-button *ngSwitchCase="'student'" color="warning" (click)="gotoStudLogin()" expand="block" shape="round">Student Login</ion-button>
+
             <ion-card *ngSwitchCase="'lecturer'">
-              
               <ion-card-content>
                 <ion-item>
                   <ion-label color="dark" position="floating">

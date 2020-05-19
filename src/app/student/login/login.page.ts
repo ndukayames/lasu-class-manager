@@ -40,6 +40,7 @@ async presentToast(msg){
       this.presentToast("Your password is required")
     }
     else{
+     await this.storage.clear();
      this.prvdr.stud_login(this.matric_number,this.password)
     }
   }
@@ -57,11 +58,8 @@ async presentToast(msg){
   }
  async  ngOnInit() {
     this.type = 'student'
-    let xy = await this.storage.keys()
-    console.log(xy)
-  }
-  ionViewDidLeave(){
-    console.log('data present as at login')
+    let token = await this.storage.get('access_token');
+    console.log(token)
   }
   segment(ev){
     this.type = ev.detail.value

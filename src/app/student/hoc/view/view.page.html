@@ -1,43 +1,35 @@
 <ion-header>
-  <ion-toolbar color="medium">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="student-profile-tab/hoc"></ion-back-button>
-    </ion-buttons>
-    <ion-title>{{title}}</ion-title>
+  <ion-toolbar>
+    <ion-title>create {{course}} class</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-grid id="loginContainer" fixed>
-    <ion-card color="light" *ngFor="let item of courseData" fixed>
-      <ion-card-header>
-        <ion-card-subtitle>{{item.course_code}}</ion-card-subtitle>
-        <ion-card-title>{{item.course_title}}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-list>
-          <ion-item color="medium">
-           <ion-icon slot="start" name="time-sharp"></ion-icon>
-            <ion-label  class="ion-text-wrap">Time: {{item.class_time}}
-              <ion-label> every {{item.class_day}}</ion-label>
-             </ion-label>
-          </ion-item>
-          <ion-item color="light">
-            <ion-icon slot="start" name="people-circle-sharp"></ion-icon>
-            <ion-label class="ion-text-wrap">
-              Course lecturer: 
-             </ion-label>
-             <ion-chip  *ngFor="let lecturer of item.course_lecturer" color="medium" mode="ios">
-               <ion-label>{{lecturer}}</ion-label>
-             </ion-chip>
-          </ion-item>
-          <ion-item color="medium">
-           <ion-icon slot="start" name="location-sharp"></ion-icon>
-            <ion-label class="ion-text-wrap">Department: {{item.department}} </ion-label>
-          </ion-item>
-        </ion-list>
-      </ion-card-content>
-    </ion-card>
-  </ion-grid>
- 
+<ion-card *ngFor="let class of courseData">
+  <ion-card-header>
+    <ion-img src="../../../assets/images/classroom.jpg"></ion-img>
+    <ion-card-subtitle>{{class.course_code}}</ion-card-subtitle>
+    <ion-card-title>{{class.course_title}}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item>
+      <ion-label>Start Time: </ion-label>
+      <ion-label class="ion-text-wrap" slot="end">{{class.course_time | date:'shortTime'}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>select end time</ion-label>
+      <ion-datetime slot="end" [(ngModel)]="endTime" display-format="hh:mm a"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>Select class lecturer</ion-label>
+      <ion-select [(ngModel)]="selectedLecturer" placeholder="Select ...">
+        <ion-select-option *ngFor="let lecturer of class.course_lecturer">{{lecturer}}</ion-select-option>
+      </ion-select>
+
+    </ion-item>
+    <ion-button (click)="schedule()" expand="block" fill="clear" shape="round">
+      Schedule a class
+    </ion-button>
+  </ion-card-content>
+</ion-card>
 </ion-content>

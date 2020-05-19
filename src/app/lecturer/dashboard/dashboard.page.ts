@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProviderService } from 'src/app/shared/provider.service';
 import { Storage } from '@ionic/storage';
+import * as moment from 'moment'
+
 
 @Component({
   selector: 'app-dashboard',
@@ -20,7 +22,12 @@ export class DashboardPage implements OnInit {
   user_name;
   courseList = []
   inputCourse;
-  incomplete_profile = true;
+  incomplete_profile;
+  rows = []
+
+
+
+  myUniqueCourses = [];
   getFaculties(){
     this.faculties = this.prvdr.getFaculty(this.selectedCampus)
     console.log(this.faculties)
@@ -28,9 +35,10 @@ export class DashboardPage implements OnInit {
   getDepartments(){
     this.departments = this.prvdr.getDepartment(this.selectedCampus,this.selectedFaculty)
   }
-  completeProfile(){
-    this.prvdr.complete_lecturer_signup(this.selectedCampus,this.selectedFaculty,this.selectedDepartment,this.courseList.toString())
+  async completeProfile(){
+    this.prvdr.complete_lecturer_signup(this.selectedCampus,this.selectedFaculty,this.selectedDepartment)
     console.log(this.selectedCampus,this.selectedFaculty,this.selectedDepartment,this.courseList.toString())
+    await this.prvdr.checkLecuturerProfile()
   }
   ionChange(ev){
     if(ev.key=="Enter"||ev.code=="Enter"){
@@ -53,21 +61,22 @@ export class DashboardPage implements OnInit {
   }
   async ngOnInit() {
     this.campuses = this.prvdr.getAllCampus();
-    this.data = await this.storage.get('lecturer_academic_data')
-    
+    this.data = await this.storage.get('lecturer_academic_data')  
   }
   async ionViewWillEnter(){
-    await this.prvdr.get_lecturer_data();
-    this.data = await this.storage.get('lecturer_academic_data')
-    if(this.data.complete === "1"){
-      this.incomplete_profile = false;
-    }
-    else if(this.data.complete === null){
-      this.incomplete_profile = true;
-    }
-    console.log('lecturer_academic_data',this.data)
+    await this.prvdr.checkLecuturerProfile()
+    this.incomplete_profile = this.prvdr.incomplete_profile;
     let a = await this.storage.get('loggedin_lecturer_data')
-    console.log(a)
     this.user_name = a.user_name
+    this.myUniqueCourses = await this.storage.get('unique_lecturers_courses')
+    this.myUniqueCourses.forEach(element =>{
+      let {class_day,course_code,course_time} = element
+      course_time = moment(course_time).format('hh:mm a')
+      this.rows.push({class_day,course_code,course_time})
+      this.rows = [...this.rows]
+    })
+  }
+  ionViewWillLeave(){
+    this.rows.length = 0
   }
 }

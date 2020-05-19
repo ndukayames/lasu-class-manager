@@ -14,6 +14,15 @@ const routes: Routes = [
     {
       path: 'my-profile',
       loadChildren: () => import('../my-profile/my-profile.module').then(m=>m.MyProfilePageModule)
+    },
+    {
+      path: '',
+      redirectTo: '/lecturer-profile-tab',
+      pathMatch: 'full'
+    },
+    {
+      path: 'classes',
+      loadChildren: () => import('./classes/classes.module').then( m => m.ClassesPageModule)
     }
   ]
   }

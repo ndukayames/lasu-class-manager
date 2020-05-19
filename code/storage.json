@@ -14,10 +14,10 @@
             "backupPath": "/opt/lampp/htdocs/api/demo-app/my-demo-app/code/Backups/bbda503f29a81c1f3cb92b125cdf5c36",
             "uiState": {
                 "mode": 0,
-                "x": 171,
-                "y": 63,
+                "x": 185,
+                "y": 237,
                 "width": 1024,
-                "height": 705
+                "height": 480
             }
         },
         "openedWindows": []
@@ -170,7 +170,7 @@
                                 },
                                 {
                                     "id": "workbench.action.openGlobalKeybindings",
-                                    "label": "&&Keyboard Shortcuts"
+                                    "label": "Keyboard Shortcuts"
                                 },
                                 {
                                     "id": "workbench.extensions.action.showRecommendedKeymapExtensions",
@@ -429,7 +429,8 @@
                                 },
                                 {
                                     "id": "workbench.action.togglePanel",
-                                    "label": "Show &&Panel"
+                                    "label": "Show &&Panel",
+                                    "checked": true
                                 },
                                 {
                                     "id": "vscode.menubar.separator"
@@ -749,7 +750,7 @@
                     },
                     {
                         "id": "workbench.action.gotoSymbol",
-                        "label": "Go to &&Symbol in File..."
+                        "label": "Go to &&Symbol in Editor..."
                     },
                     {
                         "id": "editor.action.revealDefinition",
@@ -923,8 +924,7 @@
                     },
                     {
                         "id": "workbench.action.terminal.split",
-                        "label": "&&Split Terminal",
-                        "enabled": false
+                        "label": "&&Split Terminal"
                     },
                     {
                         "id": "vscode.menubar.separator"

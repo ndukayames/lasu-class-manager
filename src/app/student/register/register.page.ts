@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides, ToastController, LoadingController, Platform } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { ToastController, LoadingController, Platform } from '@ionic/angular';
 import { DbopsService } from 'src/app/shared/dbops.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { Device } from '@ionic-native/device/ngx';
 import { ProviderService } from 'src/app/shared/provider.service';
 
@@ -15,28 +15,12 @@ export class RegisterPage implements OnInit {
   gotoStudLogin(){
     this.route.navigateByUrl('/home/login') 
   }
-  selectedCampu(){
-    console.log(this.selectedCampus)
-    this.faculties = this.prvdr.getFaculty(this.selectedCampus)
-    console.log(this.faculties)
-  }
-  selectedFacult(){
-    this.departments = this.prvdr.getDepartment(this.selectedCampus, this.selectedFaculty);
-    console.log(this.departments)
-  }
 full_name:string;
 matric_number:number;
 password:string;
-campuses;
 
-selectedCampus;
 lectid;
 selectedLectid;
-faculties;
-selectedFaculty;
-departments;
-selectedDepartment;
-course;
 async presentToast(msg){
   const toast = await this.toastCtrl.create({
     message: msg,
@@ -60,6 +44,7 @@ async presentToast(msg){
     }
   }
   async lect_register(){
+    let token =  await this.storage.get('login_access_token')
     console.log("register working")
     if(!this.lectid){
       this.presentToast("Your username is required")
@@ -83,7 +68,7 @@ async presentToast(msg){
           user_name: this.lectid,
           password: this.password,
         }
-        this.dbops.postData(body, 'api.php').subscribe((res:any)=>{
+        this.dbops.postData(token,body, 'api.php').subscribe((res:any)=>{
           if(res.success === true){
               loading.dismiss();
               this.prvdr.get_lecturer_data()
@@ -104,12 +89,9 @@ async presentToast(msg){
     }
   }
 
-  constructor(private toastCtrl:ToastController, private loadingCtrl:LoadingController, private dbops: DbopsService, private route:Router, private device:Device, private platform: Platform, private prvdr:ProviderService ) {}
+  constructor(private toastCtrl:ToastController, private loadingCtrl:LoadingController, private dbops: DbopsService, private route:Router, private prvdr:ProviderService,  private storage:Storage ) {}
+
   type = 'student';
-  ionViewWillEnter() {
-    // this.type = 'student'
-    // this.campuses = this.prvdr.getAllCampus()   
-  }
   ngOnInit(){}
   segment(ev){
     this.type = ev.detail.value;

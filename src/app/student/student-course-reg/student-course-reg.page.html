@@ -10,7 +10,7 @@
 <ion-content>
   <ion-grid fixed>
     <ion-row>
-      <ion-card *ngIf="thereAreNoCourses">
+      <ion-card *ngIf="thereAreNoCourses === true; else elseBlock">
         <ion-card-header>
           <ion-card-title>Courses are not available to you</ion-card-title>
         </ion-card-header>
@@ -18,40 +18,41 @@
           Contact your HOC to register this semester's courses
         </ion-card-content>
       </ion-card>
-    
-      <ion-col size="12" *ngFor="let class of available_courses">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>{{class.course_code}}</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-           {{class.course_title}}
-          </ion-card-content>
-          <ion-footer>
-            <ion-toolbar>
-                <ion-grid fixed>
-                  <ion-row>
-                    <ion-col size="6">
-                      <ion-button [color]="add_color" size="small" (click)="add($event,class.course_code)" expand="block">
-                        <ion-icon name="checkmark-done-sharp"></ion-icon>
-                      </ion-button>
-                    </ion-col>
-                    <ion-col size="6">
-                      <ion-button [color]="view_color" size="small" (click)="open(class.course_code)" routerLinkActive="router-link-active"  expand="block">
-                        <ion-icon name="information-circle-sharp"></ion-icon>
-                      </ion-button>
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
-            </ion-toolbar>
-          </ion-footer>
-        </ion-card>
-      </ion-col>
-      <ion-col size="12">
-        <ion-button color="warning" (click)="complete()" expand="full" fill="solid" shape="round">
-          Complete
-        </ion-button>
-      </ion-col>
+      <ng-template #elseBlock>
+        <ion-col *ngFor="let class of available_courses" size="12">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>{{class.course_code}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+             {{class.course_title}}
+            </ion-card-content>
+            <ion-footer>
+              <ion-toolbar>
+                  <ion-grid fixed>
+                    <ion-row>
+                      <ion-col size="6">
+                        <ion-button [color]="add_color" size="small" (click)="add($event,class.course_code)" expand="block">
+                          <ion-icon name="checkmark-done-sharp"></ion-icon>
+                        </ion-button>
+                      </ion-col>
+                      <ion-col size="6">
+                        <ion-button [color]="view_color" size="small" (click)="open(class.course_code)" routerLinkActive="router-link-active"  expand="block">
+                          <ion-icon name="information-circle-sharp"></ion-icon>
+                        </ion-button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+              </ion-toolbar>
+            </ion-footer>
+          </ion-card>
+        </ion-col>
+        <ion-col size="12">
+          <ion-button color="medium" (click)="complete()" expand="full" fill="solid">
+            Complete
+          </ion-button>
+        </ion-col>
+      </ng-template>
     </ion-row>
   </ion-grid>  
 </ion-content>

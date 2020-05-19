@@ -3,7 +3,6 @@ import { Storage } from '@ionic/storage';
 import { ProviderService } from 'src/app/shared/provider.service';
 import { ModalController, IonRouterOutlet } from '@ionic/angular';
 import { ViewPage } from './view/view.page';
-import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-student-course-reg',
@@ -12,9 +11,10 @@ import { RouterOutlet } from '@angular/router';
 })
 export class StudentCourseRegPage implements OnInit {
 
-  constructor(private storage:Storage, private prvdr:ProviderService, private modalController: ModalController, private routerOutlet:IonRouterOutlet) { }
+  constructor(private prvdr:ProviderService, private modalController: ModalController, private routerOutlet:IonRouterOutlet) { }
+  
   available_courses;
-  thereAreNoCourses = false;
+  thereAreNoCourses;
   btn_color = 'danger'
   add_color = 'dark'
   view_color = 'medium'
@@ -44,6 +44,14 @@ export class StudentCourseRegPage implements OnInit {
     }
 
   async ngOnInit() {
+    // this.thereAreNoCourses = false;
+    // let student_course_data = await this.prvdr.get_student_course()
+    // console.log(student_course_data)
+    // this.available_courses = student_course_data
+    // if(student_course_data === null || !student_course_data){
+    //   console.log(student_course_data)
+    //   this.thereAreNoCourses = true;
+    // }
   }
   async open(courseCode){
     const modal = await this.modalController.create({
@@ -58,11 +66,15 @@ export class StudentCourseRegPage implements OnInit {
   }
   
   async ionViewWillEnter(){
-    let student_course_data = await this.storage.get('student_course_data');
-    console.log(student_course_data)
-    this.available_courses = student_course_data
-    if(student_course_data === null || student_course_data === ""){
+    this.ngOnInit()
+    this.thereAreNoCourses = false;
+    let student_course_data = await this.prvdr.get_student_course()
+    // console.log(student_course_data)
+    if(student_course_data === null || !student_course_data){
+      console.log(student_course_data)
       this.thereAreNoCourses = true;
+    }else{
+      this.available_courses = student_course_data
     }
   }
 }

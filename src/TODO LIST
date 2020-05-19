@@ -1,0 +1,18 @@
+TODO LIST
+1. Remove password from the app and only request for password when needed [done]
+
+2. Learn how to get objects from array instead of always using array[index].objectProperty [done]
+
+3. Fix the unregister_course API, add SELECT
+
+4. Make student see ongoing class for courses they registered [done]
+
+5. Realtime updating of logins/logouts variables [done]
+
+6. Realtime updating of ongoing classes [done]
+
+7. Stop getting registered courses from the server and instead take it from the stud_loggedin_data storage
+
+8. Create a component for no ongoing classes and no registered courses in the classes page [done]
+
+9. Create a class info page where lecturers can see history of classes, get attendance log from each class, get     assignments and know the lecturer that took that course.

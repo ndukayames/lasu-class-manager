@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProviderService } from 'src/app/shared/provider.service';
 import { Storage } from '@ionic/storage';
-import { DbopsService } from 'src/app/shared/dbops.service';
-import { DatePicker } from '@ionic-native/date-picker/ngx';
-import { Router } from '@angular/router';
-import { LoadingController, ToastController } from '@ionic/angular';
-
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-create',
@@ -16,43 +12,25 @@ export class CreatePage implements OnInit {
   course_title;
   course_code;
   class_date;
-  class_lecturer;
-  class_lecturers = [];
-  class_lecturers_string
+  selected_class_lecturer:string[]; //selected lecturers are stored here
+  hoc_department_lecturer = []; //holds lecturer's in hoc department
+  class_lecturers_string //hold strings version of the selected_class_lecturer variable,w hich will be sent to the server
   class_hoc;
   deparment;
-  selecting_lecturer = false;
   matric_number;
-  constructor(private prvdr:ProviderService,private dbops:DbopsService, private storage:Storage, private datePicker:DatePicker, private route:Router, private loadingCtrl:LoadingController, private toastCtrl:ToastController) { }
+  notDepartmentCourse = this.prvdr.notDepartmentCourse//checkbox value, if the registration process is for in house course or not
+  campuses;selectedCampus;faculties;selectedFaculty;departments;selectedDepartment;
+  non_dept_courses = [] //holder for non departmental courses
 
+  constructor(
+    private prvdr:ProviderService,
+    private storage:Storage, 
+    private toastCtrl:ToastController) {
+      this.campuses = this.prvdr.getAllCampus();
+    }
   class_day;
   class_days=['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-
-  onChange(ev){
-    if(ev.code==='Enter' || ev.key==='Enter'){
-      if(!this.class_lecturer){
-        this.prvdr.doToast("please enter a course", "bottom", 2000)
-        this.selecting_lecturer = false
-      }else{
-        this.selecting_lecturer = true;
-        this.class_lecturers.push(this.class_lecturer)
-        this.class_lecturer = '';
-      }
-      
-    }
-  }
-  removeLecturer(lecturer){
-    this.class_lecturers = this.class_lecturers.filter(lec=>{
-      return lec !== lecturer;
-    })
-    if(this.class_lecturers.length < 1){
-      this.selecting_lecturer = false;
-    }
-  }
-  async ConvertDate(date){
-     date = await new Date(date).toLocaleTimeString();
-     return date;
-  }
+  
   async presentToastWithOptions(m) {
     const toast = await this.toastCtrl.create({
       header: 'Toast header',
@@ -63,63 +41,63 @@ export class CreatePage implements OnInit {
     });
     toast.present();
   }
+  loading
+  
 async createClass(){
-  this.class_date = await this.ConvertDate(this.class_date);
-  const loading = await this.loadingCtrl.create({
-    message: 'Creating Class...',
-    duration: 2000
+  if(this.notDepartmentCourse === true){
+    //This functions creates a new course
+    //Creates a new course to the registered_courses table if the course is a department course
+    //Creates a new course instance of another course if the registration is for another department course
+    if(!this.selectedCourseData){
+      
+    }else{
+      this.prvdr.hoc_non_dept_course_reg(this.class_hoc,this.deparment,this.selectedCourseData[0].department,this.selectedCourseData[0].class_day,this.selectedCourseData[0].class_time,this.selectedCourseData[0].course_lecturer.toString(),this.selectedCourseData[0].course_code,this.selectedCourseData[0].course_title)
+    }
+      
+  }else{
+    this.class_lecturers_string = this.selected_class_lecturer.toString()
+    if(!this.course_title||!this.course_code||!this.class_date||this.class_date === "Invalid Date"||!this.class_lecturers_string||!this.class_day){
+      this.prvdr.loadingCtrl.dismiss();
+      this.presentToastWithOptions("some fields are empty")
+    }else{
+      console.log(this.notDepartmentCourse,this.class_date)
+      this.prvdr.hoc_course_reg(this.course_code,this.course_title,this.class_date,this.class_lecturers_string,this.class_hoc,this.deparment,this.class_day,this.matric_number)
+      this.prvdr.loadingCtrl.dismiss();
+    }
+  }
+}
+selected_course;selectedCourseData
+
+get(ev){
+  //get the non department course to register
+  this.selectedCourseData = this.non_dept_courses.filter(res=>{
+    return res.course_code === this.selected_course
   })
-  await loading.present();
-  this.class_lecturers_string = this.class_lecturers.toString()
-  if(!this.course_title||!this.course_code||!this.class_date||!this.class_lecturers_string||!this.class_day){
-    loading.dismiss();
-    this.presentToastWithOptions("some fields are empty")
-  }else{
-    console.log(this.class_date)
-  let body={
-    function          : 'new_class',
-    course_code       : this.course_code,
-    course_title      : this.course_title,
-    course_time       : this.class_date,
-    course_lecturer   : this.class_lecturers_string,
-    class_hoc         : this.class_hoc,
-    department        : this.deparment,
-    class_day         : this.class_day,
-    matric_number     : this.matric_number
-  }
-  console.log(body)
-  let update: any = await this.dbops.postData(body,'api.php').toPromise()
-  if(update.success===true){
-    await this.prvdr.fetch_course_data();
-    this.route.navigateByUrl('student-profile-tab/hoc')
-    this.presentToastWithOptions('course registered successfully')
-    console.log('class added success')
-    loading.dismiss();
-    this.course_title = '';
-    this.course_code = '';
-    this.class_date  = '';
-    this.class_lecturer = '';
-    this.class_lecturers = [];
-    this.class_lecturers_string = ''
-    this.class_hoc;
-    this.deparment;
-    this.selecting_lecturer = false;
-    this.matric_number;
-  }else{
-    this.presentToastWithOptions(update.msg)
-    loading.dismiss();
-  }
-  }
+}
+
+getFaculties(){
+  this.faculties = this.prvdr.getFaculty(this.selectedCampus)
+}
+getDepartments(){
+  this.departments = this.prvdr.getDepartment(this.selectedCampus,this.selectedFaculty)
+}
+async get_non_department_courses(){
+  console.log(this.selectedDepartment)
+  this.non_dept_courses = await this.prvdr.get_non_department_courses(this.selectedDepartment);
+  console.log("isn this wfunsd",this.non_dept_courses)
 }
 
   ngOnInit() {}
+
   async ionViewWillEnter(){
-    let a = await this.prvdr.get_student_login_data()
-    console.log(a)
+    let a = await this.storage.get('stud_loggedin_data')
     this.class_hoc      = a.full_name
     this.deparment      = a.department
     this.matric_number  = a.matric_number
-    
+    await this.prvdr.get_hoc_lecturer(this.deparment)
+    let hoc_lecturers = await this.storage.get('hoc_lecturers')
+    if(hoc_lecturers === null) {
+    }
+    this.hoc_department_lecturer = hoc_lecturers
   }
-
 }

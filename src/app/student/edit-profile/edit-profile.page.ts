@@ -23,22 +23,17 @@ ddis = true;
 matric_number;
 password: any = '';
 full_name = '';
-course = '';
-level = '';
+level;
  
   constructor(
     private prvdr       :ProviderService,
-    private dbops       : DbopsService,
     private storage     : Storage, 
-    private route       : Router, 
     private toastCtrl   : ToastController, 
-    private loadingCtrl : LoadingController,
     ){
       this.campuses = this.prvdr.getAllCampus();
     }
   getFaculties(){
-    let temp        = this.prvdr.getFaculty(this.selectedCampus);
-    this.faculties  = temp    
+    this.faculties  = this.prvdr.getFaculty(this.selectedCampus);   
   }
   getDepartment(){
     this.departments = this.prvdr.getDepartment(this.selectedCampus, this.selectedFaculty)
@@ -50,9 +45,10 @@ level = '';
     });
     toast.present()
   }
+  
   async ngOnInit() {
-    let data
     let aa = await this.storage.get('stud_loggedin_data')
+    console.log(aa)
     this.matric_number      = aa.matric_number;
     this.full_name          = aa.full_name;
     this.password           = aa.password;
@@ -62,9 +58,6 @@ level = '';
     this.level              = aa.level;
   }
 
-  async ionViewWillEnter(){
-    this.ngOnInit()  
-  }
   async stud_profile_update(){
     console.log(this.password)
     console.log("process started")

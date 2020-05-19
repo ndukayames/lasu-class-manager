@@ -34,17 +34,20 @@ departmentCourse = true
   }
   async ionViewWillEnter(){
     let data = await this.pvdr.fetch_course_data()
-    console.log(data)
-    data.filter(res=>{
-      if(res.my_hoc_department == res.original_course_department){
-        res.isItDept = true
-      }else{
-        res.isItDept = false
-      }
-    })
-    
-    console.log(data)
+    if(data === null){
+      console.log('no courses registered, register some courses')
+    }else{
+      console.log(data)
+      data.filter(res=>{
+        if(res.my_hoc_department == res.original_course_department){
+          res.isItDept = true
+        }else{
+          res.isItDept = false
+        }
+      })
+    }
     let a = await this.pvdr.get_student_login_data()
+    console.log(a)
     this.classes = data;
   }
 }

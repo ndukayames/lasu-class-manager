@@ -14,7 +14,7 @@ export class StudentCourseRegPage implements OnInit {
   constructor(private prvdr:ProviderService, private modalController: ModalController, private routerOutlet:IonRouterOutlet) { }
   
   available_courses;
-  thereAreNoCourses = false;
+  thereAreNoCourses;
   btn_color = 'danger'
   add_color = 'dark'
   view_color = 'medium'
@@ -43,7 +43,16 @@ export class StudentCourseRegPage implements OnInit {
       
     }
 
-  async ngOnInit() {}
+  async ngOnInit() {
+    // this.thereAreNoCourses = false;
+    // let student_course_data = await this.prvdr.get_student_course()
+    // console.log(student_course_data)
+    // this.available_courses = student_course_data
+    // if(student_course_data === null || !student_course_data){
+    //   console.log(student_course_data)
+    //   this.thereAreNoCourses = true;
+    // }
+  }
   async open(courseCode){
     const modal = await this.modalController.create({
       component: ViewPage,
@@ -57,11 +66,15 @@ export class StudentCourseRegPage implements OnInit {
   }
   
   async ionViewWillEnter(){
+    this.ngOnInit()
+    this.thereAreNoCourses = false;
     let student_course_data = await this.prvdr.get_student_course()
-    console.log(student_course_data)
-    this.available_courses = student_course_data
-    if(student_course_data === null || student_course_data === ""){
+    // console.log(student_course_data)
+    if(student_course_data === null || !student_course_data){
+      console.log(student_course_data)
       this.thereAreNoCourses = true;
+    }else{
+      this.available_courses = student_course_data
     }
   }
 }

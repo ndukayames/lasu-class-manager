@@ -36,6 +36,7 @@ export class CompleteProfileSignupPage implements OnInit {
   }
 
   async stud_profile_update(){
+    let token =  await this.storage.get('login_access_token')
     console.log("process started")
     let xy:any = await this.prvdr.get_student_login_data();
     this.matric_number = xy.matric_number;
@@ -58,7 +59,7 @@ export class CompleteProfileSignupPage implements OnInit {
           level:this.level,
           complete_profile: 1
         }
-        this.dbops.postData(body, 'api.php').subscribe((res:any)=>{
+        this.dbops.postData(token,body, 'api.php').subscribe((res:any)=>{
           if(res.success === true){
               loading.dismiss();
               this.presentToast(res.msg);

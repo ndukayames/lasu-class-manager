@@ -16,6 +16,8 @@ $RECYCLE.BIN/
 *.log
 log.txt
 npm-debug.log*
+/src/TODO LIST
+/src/I'll keep log of all my hacks in devs here
 
 /.idea
 /.ionic

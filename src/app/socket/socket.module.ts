@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { SocketPageRoutingModule } from './socket-routing.module';
 
 import { SocketPage } from './socket.page';
-import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+// import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 
 // const config: SocketIoConfig = { url: 'http://localhost:3001/my-namespace', options: {} };
 

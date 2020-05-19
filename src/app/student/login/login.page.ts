@@ -58,6 +58,8 @@ async presentToast(msg){
   }
  async  ngOnInit() {
     this.type = 'student'
+    let token = await this.storage.get('access_token');
+    console.log(token)
   }
   segment(ev){
     this.type = ev.detail.value

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProviderService } from 'src/app/shared/provider.service';
 import { Storage } from '@ionic/storage';
-
+import * as moment from 'moment'
 
 
 @Component({
@@ -23,6 +23,9 @@ export class DashboardPage implements OnInit {
   courseList = []
   inputCourse;
   incomplete_profile;
+  rows = []
+
+
 
   myUniqueCourses = [];
   getFaculties(){
@@ -66,7 +69,14 @@ export class DashboardPage implements OnInit {
     let a = await this.storage.get('loggedin_lecturer_data')
     this.user_name = a.user_name
     this.myUniqueCourses = await this.storage.get('unique_lecturers_courses')
-    console.log(this.myUniqueCourses)
-    console.log(this.incomplete_profile)
+    this.myUniqueCourses.forEach(element =>{
+      let {class_day,course_code,course_time} = element
+      course_time = moment(course_time).format('hh:mm a')
+      this.rows.push({class_day,course_code,course_time})
+      this.rows = [...this.rows]
+    })
+  }
+  ionViewWillLeave(){
+    this.rows.length = 0
   }
 }

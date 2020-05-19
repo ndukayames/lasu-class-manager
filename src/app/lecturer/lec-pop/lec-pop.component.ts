@@ -12,7 +12,7 @@ export class LecPopComponent implements OnInit {
 
   constructor(private route : Router, private popoverController: PopoverController,private storage:Storage) { }
   goto(){
-    this.route.navigateByUrl('/lectuer-profile-tab/my-profile')
+    this.route.navigateByUrl('lecturer-profile-tab/my-profile')
     this.popoverController.dismiss()
     this.popoverController.dismiss()
   }

@@ -10,7 +10,7 @@
 
 <ion-content>
   
-  <div *ngIf="notDepartmentCourse === false">
+  <div *ngIf="notDepartmentCourse === false; else elseBlock">
     <ion-item>
       <ion-label position="floating">Course Title</ion-label>
       <ion-input [(ngModel)]="course_title"></ion-input>
@@ -37,32 +37,35 @@
     </ion-item>
   </div>
 
-  <div *ngIf="notDepartmentCourse === true">
-    <ion-item>
-      <ion-label position="floating">Select course's campus</ion-label>
-      <ion-select [(ngModel)]="selectedCampus" (ionChange)="getFaculties()" placeholder="Select...">
-        <ion-select-option *ngFor="let campus of campuses">{{campus}}</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Select course's Faculty</ion-label>
-      <ion-select [(ngModel)]="selectedFaculty" (ionChange)="getDepartments()" placeholder="Select...">
-        <ion-select-option *ngFor="let faculty of faculties">{{faculty.faculty_name}}</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Select course's Department</ion-label>
-      <ion-select (ionChange)="get_non_department_courses()" [(ngModel)]="selectedDepartment" placeholder="Select...">
-        <ion-select-option *ngFor="let department of departments">{{department}}</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Select Course</ion-label>
-      <ion-select (ionChange)="get($event)" [(ngModel)]="selected_course" placeholder="Select course">
-        <ion-select-option value="{{course.course_code}}"  *ngFor="let course of non_dept_courses" >{{course.course_title}}</ion-select-option>
-      </ion-select>
-    </ion-item>
-  </div>
+  <ng-template #elseBlock>
+    <div>
+      <ion-item>
+        <ion-label position="floating">Select course's campus</ion-label>
+        <ion-select [(ngModel)]="selectedCampus" (ionChange)="getFaculties()" placeholder="Select...">
+          <ion-select-option *ngFor="let campus of campuses">{{campus}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Select course's Faculty</ion-label>
+        <ion-select [(ngModel)]="selectedFaculty" (ionChange)="getDepartments()" placeholder="Select...">
+          <ion-select-option *ngFor="let faculty of faculties">{{faculty.faculty_name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Select course's Department</ion-label>
+        <ion-select (ionChange)="get_non_department_courses()" [(ngModel)]="selectedDepartment" placeholder="Select...">
+          <ion-select-option *ngFor="let department of departments">{{department}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Select Course</ion-label>
+        <ion-select (ionChange)="get($event)" [(ngModel)]="selected_course" placeholder="Select course">
+          <ion-select-option value="{{course.course_code}}"  *ngFor="let course of non_dept_courses" >{{course.course_title}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+  </ng-template>
+  
   
   <ion-grid fixed>
     <ion-row>

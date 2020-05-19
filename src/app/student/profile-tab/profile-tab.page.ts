@@ -14,11 +14,11 @@ export class ProfileTabPage implements OnInit {
   name;
 
 
-  constructor(private storage: Storage) {}
+  constructor(private storage: Storage, private prvdr:ProviderService) {}
   async ngOnInit() {}
   
   async ionViewWillEnter(){
-    let a = await this.storage.get('stud_loggedin_data')
+    let a = await this.prvdr.get_stud_data()
     this.name = a.full_name
   }
 }

@@ -13,27 +13,27 @@
     <ion-menu-toggle>
       <ion-item [routerLink]="['/student-profile-tab/profile']">
         <ion-icon slot="start" name="happy"></ion-icon>
-        <ion-label>View Profile</ion-label>
+        <ion-label class="ion-text-wrap">View Profile</ion-label>
       </ion-item>
       <ion-item [routerLink]="['/student-profile-tab/profile/edit-profile']">
         <ion-icon slot="start" name="hammer"></ion-icon>
-        <ion-label>Edit Profile</ion-label>
+        <ion-label class="ion-text-wrap">Edit Profile</ion-label>
       </ion-item>
       <ion-item *ngIf="inCompleteProfile" [routerLink]="['/student-profile-tab/profile/complete-registration']">
         <ion-icon slot="start" name="help"></ion-icon>
-          <ion-label>Complete Profile</ion-label>
+          <ion-label class="ion-text-wrap">Complete Profile</ion-label>
       </ion-item>
         <ion-item *ngIf="hoc" [routerLink]="['/student-profile-tab/hoc']">
           <ion-icon slot="start" name="help"></ion-icon>
-            <ion-label>Register semester courses</ion-label>
+            <ion-label class="ion-text-wrap">Register semester courses</ion-label>
         </ion-item>
     <ion-item [routerLink]="['/student-profile-tab/student-course-reg']">
       <ion-icon  slot="start" name="list"></ion-icon>
-        <ion-label>Register Courses</ion-label>
+        <ion-label class="ion-text-wrap">Register Courses</ion-label>
     </ion-item>
     <ion-item [routerLink]="['/home']" (click)='logout()'>
       <ion-icon slot="start" name="log-out"></ion-icon>
-        <ion-label>Logout</ion-label>
+        <ion-label class="ion-text-wrap">Logout</ion-label>
     </ion-item>
     </ion-menu-toggle>
   </ion-list>
@@ -43,52 +43,73 @@
   <ion-row>
     <ion-col size="12">
       <ion-card fixed>
-        <ion-card-header color="medium">
-          <ion-card-title>Registered Courses</ion-card-title>
+        <ion-card-header color="light">
+          <ion-card-subtitle>Registered Courses</ion-card-subtitle>
         </ion-card-header>
-        <ion-card-content>
+        <ion-card-content *ngIf="isRegisteredCourses; else elseBlock1">
           <ion-chip *ngFor="let item of registered_courses" color="medium">
             <ion-label (click)="goto(item)">{{item}}</ion-label>
           </ion-chip>
         </ion-card-content>
+        <ng-template #elseBlock1>
+          <ion-card-content color="light">
+            <ion-note>You have no registered courses yet!</ion-note> 
+          </ion-card-content>
+        </ng-template>
       </ion-card>
     </ion-col>
     <ion-col size="12">
-      <ion-list-header>
-        <ion-label>Ongoing Classes</ion-label>
-        <ion-badge color="secondary">{{onGoingClasses.length}}</ion-badge>
-      </ion-list-header>
-      <ion-list>
-          <ion-item-sliding *ngFor="let classes of ogc">
-              <ion-item>
-                <ion-label class="ion-text-wrap">
-                  <ion-text color="primary">
-                    <h3>{{classes.course_code}}</h3>
-                  </ion-text>
-                  <p>{{classes.course_title}}</p>
-                </ion-label>
-              </ion-item>
-              <ion-item-options side="end">
-                <ion-item-option color="secondary" (click)="joinClass(classes.hoc,classes.course_code)">Join
-                  <ion-icon slot="bottom" name="enter"></ion-icon>
-                </ion-item-option>
-              </ion-item-options>
-              <ion-item-options *ngIf="hoc" side="start">
-                <ion-item-option color="secondary" (click)="endClass(classes.hoc,classes.course_code)">end
-                  <ion-icon slot="bottom" name="enter"></ion-icon>
-                </ion-item-option>
-              </ion-item-options>
-          </ion-item-sliding>
-      </ion-list>
+      <ion-card id="ongoingclasses">
+        <ion-card-header>
+          <ion-item lines="none">
+          <ion-card-subtitle color="dark">ongoing classes</ion-card-subtitle>
+            <ion-badge slot="end" color="secondary">{{ogc.length}}</ion-badge>
+          </ion-item>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list *ngIf="isOngoingClass; else elseBlock2">
+            <ion-item-sliding *ngFor="let classes of ogc">
+                <ion-item>
+                  <ion-label class="ion-text-wrap">
+                    <ion-text color="primary">
+                      <h3>{{classes.course_code}}</h3>
+                    </ion-text>
+                    <p>{{classes.course_title}}</p>
+                  </ion-label>
+                </ion-item>
+                <ion-item-options side="end">
+                  <ion-item-option color="secondary" (click)="joinClass(classes.hoc,classes.course_code)">Join
+                    <ion-icon slot="bottom" name="enter"></ion-icon>
+                  </ion-item-option>
+                </ion-item-options>
+                <ion-item-options *ngIf="hoc" side="start">
+                  <ion-item-option color="secondary" (click)="endClass(classes.hoc,classes.course_code)">end
+                    <ion-icon slot="bottom" name="enter"></ion-icon>
+                  </ion-item-option>
+                </ion-item-options>
+            </ion-item-sliding>
+        </ion-list>
+        <ng-template #elseBlock2>
+          <ion-list>
+            <ion-item lines="none">
+              <ion-label>No on going class for now!</ion-label>
+            </ion-item>
+          </ion-list>
+        </ng-template>
+        </ion-card-content>
+      </ion-card>
      </ion-col> 
+     <ion-col size="12">
+      <ngx-datatable class="material striped" [ngClass]="tablestyle" [rows]="rows" [columnMode]="'force'" [rowHeight]="50" [headerHeight]="50" 
+      [footerHeight]="50">
+        <ngx-datatable-column name= "Day" prop="class_day"></ngx-datatable-column>
+        <ngx-datatable-column name= "Class" prop="course_code"></ngx-datatable-column>
+        <ngx-datatable-column name= "Time" prop="class_time"></ngx-datatable-column>
+      </ngx-datatable>
+     </ion-col>
   </ion-row>
-  <ion-button (click)="join1()" expand="block" fill="clear" shape="round">
-    join 1
-  </ion-button>
-  <ion-button (click)="join2()" expand="block" fill="clear" shape="round">
-    join 2
-  </ion-button>
 </ion-grid>
+
 </ion-content>
   
   

@@ -12,3 +12,7 @@ TODO LIST
 6. Realtime updating of ongoing classes [done]
 
 7. Stop getting registered courses from the server and instead take it from the stud_loggedin_data storage
+
+8. Create a component for no ongoing classes and no registered courses in the classes page [done]
+
+9. Create a class info page where lecturers can see history of classes, get attendance log from each class, get     assignments and know the lecturer that took that course.

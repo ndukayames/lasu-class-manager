@@ -16,6 +16,7 @@ selectedLecturer
 endTime: string | number | Date;
 
 async schedule(){
+  let token =  await this.storage.get('login_access_token')
   //schedule a class
   let endDate:any = new Date(this.endTime).getHours()
   let newStartDate = new Date(this.courseData[0].course_time).getHours()
@@ -33,7 +34,7 @@ async schedule(){
     lecturers: this.selectedLecturer,
     date_started: new Date(),
   }
-  let request:any = await this.prvdr.dbops.postData(body,'api.php').toPromise()
+  let request:any = await this.prvdr.dbops.postData(token,body,'api.php').toPromise()
   if(request===null){
     console.log('error reaching server')
   }else{

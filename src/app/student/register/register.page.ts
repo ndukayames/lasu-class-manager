@@ -44,6 +44,7 @@ async presentToast(msg){
     }
   }
   async lect_register(){
+    let token =  await this.storage.get('login_access_token')
     console.log("register working")
     if(!this.lectid){
       this.presentToast("Your username is required")
@@ -67,7 +68,7 @@ async presentToast(msg){
           user_name: this.lectid,
           password: this.password,
         }
-        this.dbops.postData(body, 'api.php').subscribe((res:any)=>{
+        this.dbops.postData(token,body, 'api.php').subscribe((res:any)=>{
           if(res.success === true){
               loading.dismiss();
               this.prvdr.get_lecturer_data()
@@ -88,7 +89,7 @@ async presentToast(msg){
     }
   }
 
-  constructor(private toastCtrl:ToastController, private loadingCtrl:LoadingController, private dbops: DbopsService, private route:Router, private prvdr:ProviderService ) {}
+  constructor(private toastCtrl:ToastController, private loadingCtrl:LoadingController, private dbops: DbopsService, private route:Router, private prvdr:ProviderService,  private storage:Storage ) {}
 
   type = 'student';
   ngOnInit(){}

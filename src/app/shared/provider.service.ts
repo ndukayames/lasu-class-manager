@@ -4,12 +4,14 @@ import { Router } from '@angular/router';
 import { NavController, ToastController, LoadingController } from '@ionic/angular';
 import { DbopsService } from './dbops.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Socket } from 'ngx-socket-io';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProviderService {
-  constructor(public storage:Storage, public route:Router, public navCtrl: NavController, public dbops:DbopsService, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public jwt:JwtHelperService) { }
+  constructor(public storage:Storage, public route:Router, public navCtrl: NavController, public dbops:DbopsService, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public jwt:JwtHelperService, public socket:Socket) { }
   async doToast(message,position,time) {
     const toast = await this.toastCtrl.create({
       message: message,
@@ -528,6 +530,7 @@ export class ProviderService {
       console.log("error connecting to the server")
     }else{
       if(request.success === true){
+        console.log(request.result)
         this.storage.set('student_course_data', request.result)
         await this.storage.get('student_course_data');
         // console.log(courseData,request.result)
@@ -599,6 +602,79 @@ export class ProviderService {
       console.log(request.msg)
     }
   }
+
+  async get_classes(){
+    let token = await this.storage.get('login_access_token')
+    let datass = await this.storage.get('stud_loggedin_data')
+    let body = {
+      function: 'get_class',
+      department: datass.department,
+      level: datass.level
+    }
+      let response:any = await this.dbops.postData(token,body,'api.php').toPromise()
+      if(response === null){
+        console.log('could not reach server')
+      }else{
+        if(response.success){
+          if(response.result === null){
+            console.log('reached server buh I didn\'t get any results')
+          }
+          else{
+            return response.result
+          }
+        }
+      }
+    }
+    async get_other_classes(courseCode){
+      let token = await this.storage.get('login_access_token')
+      let datass = await this.storage.get('stud_loggedin_data')
+      let body = {
+        function: 'get_other_class',
+        level: datass.level,
+        courseCode
+      }
+        let response:any = await this.dbops.postData(token,body,'api.php').toPromise()
+        if(response === null){
+          console.log('could not reach server')
+        }else{
+          if(response.success){
+            if(response.result === null){
+              console.log('reached server buh I didn\'t get any results')
+            }
+            else{
+              console.log(response.result)
+              return response.result
+            }
+          }
+        }
+      }
+    
+    async leaveClass(courseCode){
+      this.socket.emit('leave_class',courseCode)
+    }
+    async endClass(hoc,courseCode){
+      let token = await this.storage.get('login_access_token')
+      let datass = await this.storage.get('stud_loggedin_data')
+      let body = {
+       function: 'end_class',
+       course_code: courseCode,
+       department: datass.department,
+       level: datass.level
+      }
+      console.log(body, 'get_student_course',token)
+      let response:any = await this.dbops.postData(token,body,'api.php').toPromise()
+      if(response === null){
+       console.log('invalid response from server')
+      }else{
+       if(response.success === true){
+         console.log(response.msg)
+         this.socket.emit('end_class',hoc,(courseCode))
+         this.doToast("class ended","middle",2000)
+       }else{
+        console.log(response.msg)
+       }
+      }
+    }
   //=====================================================================
   //Lecturer stuffs
   incomplete_profile = true //manages the state of lecturer's complete profile
@@ -775,4 +851,28 @@ export class ProviderService {
       }
     }
   }
+  async get_lect_other_classes(courseCode){
+    console.log(courseCode)
+    let token = await this.storage.get('login_access_token')
+    let datass = await this.storage.get('loggedin_lecturer_data')
+    let body = {
+      function: 'get_lect_other_classes',
+      lecturer: datass.full_name,
+      courseCode
+    }
+      let response:any = await this.dbops.postData(token,body,'api.php').toPromise()
+      if(response === null){
+        console.log('could not reach server')
+      }else{
+        if(response.success){
+          if(response.result === null){
+            console.log('reached server buh I didn\'t get any results')
+          }
+          else{
+            console.log(response)
+            return response.result
+          }
+        }
+      }
+    }
 }

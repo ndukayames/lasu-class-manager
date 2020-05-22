@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon slot="start" name="arrow-back-outline" (click) = "closeModal()"></ion-icon>
+    <ion-title>On Going Class - {{courseCode}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div id="loginContainer">
+    <ion-card>
+      <ion-card-header>
+        <img src="../../../../assets/images/on going class.jpg" alt="on going classes">
+        <ion-card-subtitle>{{courseCode}}</ion-card-subtitle>
+        <ion-card-title>{{courseTitle}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item-divider>
+          <ion-label>Course Info</ion-label>
+        </ion-item-divider>
+        <ion-item>
+          <ion-label class="ion-text-wrap">
+            Departments in this class: 
+            <ion-chip *ngFor="let item of allcourses" color="medium" mode="ios">
+              <ion-label>
+                {{item.department}}
+              </ion-label>
+            </ion-chip>
+          </ion-label>
+        </ion-item>
+      </ion-card-content>
+      <ion-footer>
+        <ion-toolbar>
+          <ion-grid fixed>
+              <ion-row>
+                <ion-col size="12">
+                  <ion-button (click)="postAssignment()" expand="block" fill="clear">
+                    Post Assignment
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+          </ion-grid>
+        </ion-toolbar>
+      </ion-footer>
+    </ion-card>
+  </div>
+  
+</ion-content>

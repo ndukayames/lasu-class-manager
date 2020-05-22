@@ -1,9 +1,10 @@
 import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
 import { ProviderService } from 'src/app/shared/provider.service';
-import { PopoverController, DomController } from '@ionic/angular';
+import { PopoverController, DomController, ModalController } from '@ionic/angular';
 import { MoreDetailsComponent } from './more-details/more-details.component';
 import * as moment from 'moment';
 import { element } from 'protractor';
+import { ClassMoreDetailsComponent } from './class-more-details/class-more-details.component';
 
 @Component({
   selector: 'app-classes',
@@ -16,18 +17,19 @@ export class ClassesPage implements OnInit {
   is_Next_lecture = false
   next_class = []
   next_lecture = []
-  constructor(private prvdr:ProviderService, private popoverController: PopoverController) { }
+  constructor(private prvdr:ProviderService, private modalController: ModalController) { }
   ongoingclass:any[] = []
    myUniqueCourses:any[]
   public tests = new Array(20);
   ngOnInit() {}
-  async moreDetails(ev){
-    const popover = await this.popoverController.create({
-      component: MoreDetailsComponent,
-      event: ev,
-      translucent: true
+  async moreDetails(courseCode,courseTitle){
+    const modal = await this.modalController.create({
+      component: ClassMoreDetailsComponent,
+      componentProps: {
+        courseCode,courseTitle
+      }
     });
-    return await popover.present();
+    return await modal.present();
   }
   
   async ionViewWillEnter() {

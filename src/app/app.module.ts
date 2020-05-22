@@ -18,15 +18,18 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { JwtModule } from "@auth0/angular-jwt";
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { MoreDetailsComponent } from './lecturer/lectuer-profile-tab/classes/more-details/more-details.component';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { OngoingClassComponent } from './student/profile/ongoing-class/ongoing-class.component';
+import { ClassMoreDetailsComponent } from './lecturer/lectuer-profile-tab/classes/class-more-details/class-more-details.component';
 
-
-// const config: SocketIoConfig = { url: 'http://localhost:3001/', options: {}};
+const config: SocketIoConfig = { url: 'https://boiling-chamber-50498.herokuapp.com/', options: {} };
 
 @NgModule({
-  declarations: [AppComponent,PopoverComponent,LecPopComponent,MoreDetailsComponent],
+  declarations: [AppComponent,PopoverComponent,LecPopComponent,MoreDetailsComponent, OngoingClassComponent,ClassMoreDetailsComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  entryComponents: [PopoverComponent,LecPopComponent,MoreDetailsComponent],
+  entryComponents: [PopoverComponent,LecPopComponent,MoreDetailsComponent,OngoingClassComponent,ClassMoreDetailsComponent],
   imports: [
+    SocketIoModule.forRoot(config),
     NgxDatatableModule,
     BrowserModule, 
     IonicStorageModule.forRoot(), 

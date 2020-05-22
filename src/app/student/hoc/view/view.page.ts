@@ -16,36 +16,47 @@ selectedLecturer
 endTime: string | number | Date;
 
 async schedule(){
-  let token =  await this.storage.get('login_access_token')
-  //schedule a class
-  let endDate:any = new Date(this.endTime).getHours()
-  let newStartDate = new Date(this.courseData[0].course_time).getHours()
-  let duration =  endDate - newStartDate + 'hours'
-  this.courseData[0].duration = duration
-  this.courseData[0].event = 'started'
-  let body = {
-    function: 'set_class',
-    course_code: this.courseData[0].course_code,
-    course_title: this.courseData[0].course_title,
-    duration: duration,
-    hoc:  this.courseData[0].hoc_name,
-    level: this.courseData[0].level,
-    department: this.courseData[0].my_hoc_department,
-    lecturers: this.selectedLecturer,
-    date_started: new Date(),
-  }
-  let request:any = await this.prvdr.dbops.postData(token,body,'api.php').toPromise()
-  if(request===null){
-    console.log('error reaching server')
+  if(!this.endTime && !this.selectedLecturer){
+    this.prvdr.doToast("some fields are empty","bottom",2000)
   }else{
-    if(request.success ===true){
-      console.log(request.msg)
-      this.prvdr.route.navigateByUrl('student-profile-tab/profile')
+    let token =  await this.storage.get('login_access_token')
+  //schedule a class
+    let endDate:any = new Date(this.endTime).getHours()
+    let newStartDate = new Date(this.courseData[0].course_time).getHours()
+    let duration:any =  endDate - newStartDate + 'hours'
+    this.courseData[0].duration = duration
+    this.courseData[0].event = 'started'
+    if(Math.sign(endDate - newStartDate) === -1 || endDate - newStartDate === 0){
+      console.log(endDate - newStartDate)
+      this.prvdr.doToast("Class Duration Should Be At Least 1hour","bottom",2000)
     }else{
-      console.log(request.msg)
-      this.prvdr.doToast(request.msg,'bottom',2000)
+      let body = {
+        function: 'set_class',
+        course_code: this.courseData[0].course_code,
+        course_title: this.courseData[0].course_title,
+        duration: duration,
+        hoc:  this.courseData[0].hoc_name,
+        level: this.courseData[0].level,
+        department: this.courseData[0].my_hoc_department,
+        lecturers: this.selectedLecturer,
+        date_started: new Date(),
+      }
+      let request:any = await this.prvdr.dbops.postData(token,body,'api.php').toPromise()
+      if(request===null){
+        console.log('error reaching server')
+      }else{
+        if(request.success ===true){
+          console.log(endDate - newStartDate)
+          this.prvdr.route.navigateByUrl('student-profile-tab/profile')
+        }else{
+          this.prvdr.doToast(request.msg,'bottom',2000)
+        }
+      }
     }
   }
+  
+  
+  
 }
   constructor(private activatedRoute:ActivatedRoute, private prvdr: ProviderService, private storage:Storage) { }
   

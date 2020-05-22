@@ -16,3 +16,7 @@ TODO LIST
 8. Create a component for no ongoing classes and no registered courses in the classes page [done]
 
 9. Create a class info page where lecturers can see history of classes, get attendance log from each class, get     assignments and know the lecturer that took that course.
+
+10. Fix database duplicates of scheduling classses, also fix input errors in the schedule class page, don't allow users submit empty fields
+
+11. Find a way to instantly show on going classes as soon as it's been posted

@@ -43,22 +43,20 @@ export class ProfilePage implements OnInit {
 
   async ngOnInit(){
         this.socket.fromEvent('joined_classroom').subscribe((res:any)=>{
-          this.prvdr.doToast("Joined Class with #ID " + res.id,"bottom",2000)
+          this.prvdr.doToast("Joined Class with #ID ","bottom",2000)
         })
         this.socket.fromEvent('left_class').subscribe((res:any)=>{
           this.prvdr.doToast("You left the class at " + res.timeleft, "middle",2000)
         })
         this.socket.fromEvent('class_ended').subscribe((res:any)=>{
           console.log(res)
-          this.ogc = this.ogc.filter(response=>{
-            if(response.hoc === res.hoc && response.course_code === res.courseCode){
-              this.prvdr.doToast(res.message,'middle',2000)
-              return response.hoc !== res.hoc
-            }else if(response.hoc !== res.hoc && response.course_code === res.courseCode){
-              console.log("this is a class, buh not my class")
-              return this.ogc
+          this.ogc.forEach(courses=>{
+            if(courses.course_code === res.courseCode && res.hoc === courses.hoc){
+              this.prvdr.doToast(res.courseCode + " ended","bottom",2000)
+              this.getOngoingClass()
             }
-         })
+          })
+          this.check_if_in_class()
         })
   }
 
@@ -105,6 +103,7 @@ export class ProfilePage implements OnInit {
    async endClass(hoc,courseCode){
      this.prvdr.endClass(hoc,courseCode)     
      this.myslid.closeOpened()
+    //  this.getOngoingClass()
    }
 
   async logout(){
@@ -150,7 +149,23 @@ export class ProfilePage implements OnInit {
         })
   }
   
-
+  async getOngoingClass(){
+    this.ogc = []
+    this.onGoingClasses = await this.prvdr.get_classes()
+    console.log(this.onGoingClasses)
+    this.registered_courses.forEach(course=>{
+      let onGoingClasses = this.onGoingClasses.filter(res=>{
+        return res.course_code === course
+      })
+      this.ogc.push(...onGoingClasses)
+      if(this.ogc.length !== 0){
+        console.log(this.ogc)
+        this.isOngoingClass = true;
+      }else{
+        this.isOngoingClass = false;
+      }
+    })
+  }
   async ionViewWillEnter(){
     let datas:any = await this.storage.get('stud_loggedin_data')
     this.name = datas.full_name;
@@ -178,7 +193,14 @@ export class ProfilePage implements OnInit {
       try {
         this.registered_courses.forEach(async courses=>{
           if(this.onGoingClasses === undefined){
-            //
+            console.log("no classes")
+            let courseData = await this.storage.get('student_course_data');
+            let classes = courseData.filter(res=>{
+              res.class_time = moment(res.class_time).format("hh:mm a")
+              return res.course_code === courses
+            })
+            this.rows.push(...classes)
+            this.rows = [...this.rows]
           }else{
             let onGoingClasses = this.onGoingClasses.filter(res=>{
               return res.course_code === courses
@@ -217,8 +239,8 @@ export class ProfilePage implements OnInit {
       return await modal.present();
     }
   ionViewWillLeave(){
-    this.onGoingClasses.length = 0
-    this.rows.length = 0
-    this.ogc.length = 0
+    this.rows.length = 0;
+    this.ogc.length = 0;
   }
+
 }

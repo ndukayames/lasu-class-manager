@@ -30,6 +30,7 @@ async schedule(){
       console.log(endDate - newStartDate)
       this.prvdr.doToast("Class Duration Should Be At Least 1hour","bottom",2000)
     }else{
+      let datass = await this.storage.get('stud_loggedin_data')
       let body = {
         function: 'set_class',
         course_code: this.courseData[0].course_code,
@@ -40,6 +41,7 @@ async schedule(){
         department: this.courseData[0].my_hoc_department,
         lecturers: this.selectedLecturer,
         date_started: new Date(),
+        matric_number: datass.matric_number
       }
       let request:any = await this.prvdr.dbops.postData(token,body,'api.php').toPromise()
       if(request===null){

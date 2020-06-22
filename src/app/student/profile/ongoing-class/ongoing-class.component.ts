@@ -20,13 +20,39 @@ classStatus:string
     });
   }
 
+  async markAttendance(course_code,department,date_started,h,event,joined){
+    console.log(this.markAttendance)
+    if(event === '0' && joined === true){
+      let token = await this.storage.get('login_access_token')
+      let datass = await this.storage.get('stud_loggedin_data')
+      let body = {
+        function: 'mark_attendance',
+        course_code,department,date_started,h,
+        matric_number: datass.matric_number     
+       }
+       console.log('body')
+       let request:any = await this.prvdr.dbops.postData(token,body,'api.php').toPromise()
+       if(!request){
+        console.log('Error')
+       }else {
+        if(request.success === true){
+          console.log(request)
+          this.prvdr.doToast('Attendance submitted','middle',2000)
+        }else if(request.success === false){
+          console.log(request)
+         this.prvdr.doToast(request.msg,'middle',2000)
+        }
+       }
+    }
+  }
+
   async ngOnInit() {
     let datass = await this.storage.get('stud_loggedin_data')
     this.ogcDepartment = await this.prvdr.get_other_classes(this.ogc[0].course_code)
     this.ogcDepartment = this.ogcDepartment.filter(res=>{
       return res.department !== datass.department
     })
-    console.log(this.ogcDepartment)
+    console.log(this.ogc)
   }
 
   async ionViewWillEnter(){
@@ -40,7 +66,10 @@ classStatus:string
       this.classStatus = "Canceled"
     }
   }
-
+  async endClass(hoc,courseCode,date_started){
+    this.prvdr.endClass(hoc,courseCode,date_started)     
+   //  this.getOngoingClass()
+  }
   async joinClass(){
     let datass = await this.storage.get('stud_loggedin_data');
     let onGoingClasses = await this.storage.get('ongoingclass')

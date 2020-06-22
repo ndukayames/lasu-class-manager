@@ -25,10 +25,14 @@ export class LectuerProfileTabPage implements OnInit {
   async ngOnInit() {}
   user_name
   async ionViewWillEnter(){
-    let b = await this.storage.get('lecturer_academic_data')
+    try {
+      let b = await this.storage.get('lecturer_academic_data')
     let a = await this.storage.get('loggedin_lecturer_data')
     this.user_name = a.user_name
     console.log(b)
+    } catch (error) {
+      
+    }
   }
 
 }

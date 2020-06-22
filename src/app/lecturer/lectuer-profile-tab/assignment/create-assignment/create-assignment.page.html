@@ -1,0 +1,43 @@
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Create Assignment</ion-card-subtitle>
+      <ion-card-title class="ion-text-wrap">{{course_code}} - {{course_title}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      
+      <ion-item class="fields">
+        <ion-label>Select Course</ion-label>
+        <ion-select (ionChange)="getTitle(selected_course)"  #selected_course>
+          <ion-select-option *ngFor="let course of course_data">
+            {{course.course_code}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item class="fields">
+        <ion-label position="floating">Title</ion-label>
+        <ion-input></ion-input>
+      </ion-item>
+      <ion-item class="fields">
+        <ion-label position="floating">Question</ion-label>
+          <ion-textarea auto-grow='true' enterkeyhint="next" placeholder="Enter more information here..."></ion-textarea>
+      </ion-item>
+      <ion-item class="fields">
+        <ion-label position="floating">Level</ion-label>
+        <ion-input type="number" placeholder="numbers only"></ion-input>
+      </ion-item>
+      <ion-item class="fields">
+        <ion-label>Due Date</ion-label>
+        <ion-datetime display-format="DD.MM.YYYY HH:mm"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-icon lazy="true" slot="start" name="image"></ion-icon>
+        <ion-label slot="start">Upload Image</ion-label>
+          <ion-button (click)="uploadFile()" expand="block" fill="clear" shape="round">
+            Click me
+          </ion-button>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon slot="start" name="arrow-back-outline" (click) = "closeModal()"></ion-icon>
+    <ion-title>{{courseCode}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div>
+    <ion-virtual-scroll [ngClass]="{'putMiddle': theView}" [items]="items">
+      <ion-card  *virtualItem="let item; let itemBounds = bounds;">
+      <ion-card-content>
+        <ion-item (click)="openorhide(item,item.identifier)" detail lines="none">
+          <ion-label [ngClass]="{'canceled': item.event === '2', 'ended':item.event ==='1'}" class="ion-text-wrap">
+            <ion-text>
+              <h3>{{ item.date | date:'fullDate'}}</h3>
+            </ion-text>
+            <p>{{item.course_title}}</p>
+          </ion-label>
+        </ion-item>
+        <div *ngIf="item.theView">
+          <ion-label>Class Info</ion-label>
+          <ion-item>
+            <ion-label>Status: {{item.events}}</ion-label>
+          </ion-item>
+        <ion-item>
+          <ion-label>Lecturer: {{item.lecturer}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Attendance: {{item.attendance}} </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Assignment:</ion-label>
+        </ion-item>
+        <ion-item *ngIf="hoc">
+          <ion-label>Attendance log: </ion-label>
+          <ion-button *ngIf="item.event === '1'" (click)="openDepartmentAttendance(item.date,courseCode)" size="small">
+            Click me
+          </ion-button>
+          <ion-button *ngIf="item.event === '0'" (click)="openDepartmentAttendanceOngoing(courseCode)" size="small">
+            Click me
+          </ion-button>
+        </ion-item>
+        </div>
+      </ion-card-content>
+      </ion-card>
+    </ion-virtual-scroll>
+  </div>
+  
+</ion-content>

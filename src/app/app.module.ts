@@ -21,13 +21,17 @@ import { MoreDetailsComponent } from './lecturer/lectuer-profile-tab/classes/mor
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { OngoingClassComponent } from './student/profile/ongoing-class/ongoing-class.component';
 import { ClassMoreDetailsComponent } from './lecturer/lectuer-profile-tab/classes/class-more-details/class-more-details.component';
+import { ClassHistoryComponent } from './student/profile/class-history/class-history.component';
+import { LecClassHistoryComponent } from './lecturer/lectuer-profile-tab/classes/class-history/lect-class-history.component';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
 
-const config: SocketIoConfig = { url: 'https://boiling-chamber-50498.herokuapp.com/', options: {} };
+
+const config: SocketIoConfig = { url: 'https://nigairspacedata.com/', options: {} };
 
 @NgModule({
-  declarations: [AppComponent,PopoverComponent,LecPopComponent,MoreDetailsComponent, OngoingClassComponent,ClassMoreDetailsComponent],
+  declarations: [AppComponent,PopoverComponent,LecPopComponent,MoreDetailsComponent, OngoingClassComponent,ClassMoreDetailsComponent,ClassHistoryComponent,LecClassHistoryComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  entryComponents: [PopoverComponent,LecPopComponent,MoreDetailsComponent,OngoingClassComponent,ClassMoreDetailsComponent],
+  entryComponents: [PopoverComponent,LecPopComponent,MoreDetailsComponent,OngoingClassComponent,ClassMoreDetailsComponent,ClassHistoryComponent,LecClassHistoryComponent],
   imports: [
     SocketIoModule.forRoot(config),
     NgxDatatableModule,
@@ -41,9 +45,10 @@ const config: SocketIoConfig = { url: 'https://boiling-chamber-50498.herokuapp.c
     }),
   ],
   providers: [
-    StatusBar,
+    StatusBar, 
     SplashScreen,
     Device,
+    ImagePicker,
     DatePicker,
     JwtHelperService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

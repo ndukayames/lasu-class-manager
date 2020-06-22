@@ -67,8 +67,16 @@ const routes: Routes = [
     path: 'socket',
     loadChildren: () => import('./socket/socket.module').then( m => m.SocketPageModule)
   },
-  
- 
+  {
+    path: 'classes',
+    children: [{
+      path: '',
+      loadChildren: () => import('./lecturer/lectuer-profile-tab/classes/classes.module').then( m => m.ClassesPageModule)
+    },{
+      path: ':department_in_this_class',
+      loadChildren: () => import('./lecturer/classes/departments-in-this-class/departments-in-this-class.module').then(m=>m.DepartmentsInThisClassPageModule)
+    }]
+  },
 ];
 
 @NgModule({

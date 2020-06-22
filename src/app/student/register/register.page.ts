@@ -4,6 +4,7 @@ import { DbopsService } from 'src/app/shared/dbops.service';
 import { Router } from '@angular/router';
 import { Device } from '@ionic-native/device/ngx';
 import { ProviderService } from 'src/app/shared/provider.service';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-register',

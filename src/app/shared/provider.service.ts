@@ -5,6 +5,7 @@ import { NavController, ToastController, LoadingController } from '@ionic/angula
 import { DbopsService } from './dbops.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Socket } from 'ngx-socket-io';
+import * as moment from 'moment';
 
 
 @Injectable({
@@ -300,7 +301,7 @@ export class ProviderService {
           this.doToast('can\'t get resources from server','middle',2000)
         }else{
           if(pD.success===true){
-            const decodedToken = this.jwt.decodeToken(pD.result)
+            const decodedToken = await this.jwt.decodeToken(pD.result)
             const {data} = decodedToken
             await this.storage.set('stud_loggedin_data', data)
             //get courses offered by a student
@@ -736,6 +737,92 @@ export class ProviderService {
         }
       }
     }
+    async get_ongoing_classID(courseCode){
+      //for students
+      //this function collects all student's course from storage, picks the one it's interested in and look it up on the db to get it's ID if it's on going
+      let token =  await this.storage.get('login_access_token')
+      let courseData =  await this.storage.get('student_course_data') //get student course data from storage
+      let theCourse  = courseData.find(courseInfo=>{
+        return courseCode == courseInfo.course_code
+      })
+      let body = {
+        function: 'get_class_id',
+        course_code: theCourse.course_code,
+        course_department: theCourse.department
+      }
+      console.log(body)
+      let response:any = await this.dbops.postData(token,body,'api.php').toPromise()
+      if(response === null){
+        this.doToast("no response from server","middle",2000)
+      }else{
+        if(response.success === true){
+          console.log(response.result,response.msg)
+          return response.result
+        }else if(response.success === false){
+          this.doToast("null request","middle",2000)
+        }
+      }
+    }
+    async checkOngoingClass(courseCode){
+      //this function checks on going class via class_ID
+      //it checks if a class has already been started by the MAIN HOC.
+      let token =  await this.storage.get('login_access_token')
+      //
+      let courseData =  await this.storage.get('student_course_data') //get student course data from storage
+      let theCourse  = courseData.find(courseInfo=>{
+        return courseCode == courseInfo.course_code
+      }) //filters out the selected course from all courses, registered by the HOC
+      // console.log(theCourse)
+          let body = {
+            function: 'check_ongoing_class',
+            class_id: await this.get_ongoing_classID(theCourse.course_code),
+            course_department: theCourse.department
+          }
+          console.log(body)
+          let request:any = await this.dbops.postData(token,body,'api.php').toPromise()
+          if(request === null){
+            this.doToast("no response from server","middle",2000)
+          }else{
+            if(request.success === true){
+              console.log(request.result,await this.get_ongoing_classID(theCourse.course_code))
+              await this.storage.set('ogc_id',request.result) //get on going class details that'd be used to extract details for hoc join class function
+              return true
+            }else if(request.success === false){
+              return false
+            }
+          }
+    }
+     get_class_id(courseCode){
+      return courseCode + '/' + moment().dayOfYear() + '/' + moment().year();
+    }
+    async hoc_join_class(courseCode){
+      let token =  await this.storage.get('login_access_token')
+      let data = await this.storage.get('ogc_id')
+      let stud_data = await this.storage.get('stud_loggedin_data')
+      let body = {
+        function: 'hoc_join_class',
+        department: stud_data.department,
+        course_code: courseCode,
+        class_id: data[0].class_id,
+        matric_number: stud_data.matric_number,
+        hoc: stud_data.full_name,
+        duration: data[0].duration,
+        lecturers: data[0].course_lecturer,
+        level: stud_data.level,
+        date_started: data[0].date,
+        course_title: data[0].course_title
+      }
+      let request:any = await this.dbops.postData(token,body,'api.php').toPromise();
+      if(request){
+        if(request.success === true){
+          this.doToast(request.msg,'middle',1000)
+        }else{
+          this.doToast(request.msg,'middle',1000)
+        }
+      }else{
+        this.doToast('could not connect to server','middle',1000)
+      }
+    }
   //=====================================================================
   //Lecturer stuffs
   incomplete_profile = true //manages the state of lecturer's complete profile
@@ -978,5 +1065,35 @@ export class ProviderService {
         console.log(response.msg)
        }
       }
+    }
+    async uploadAssignmentService(course_code,in_class,class_id,image_url,description,url,start_date,end_date,level){
+      let token = await this.storage.get('login_access_token')
+      let datass = await this.storage.get('loggedin_lecturer_data')
+      let body = {
+        function: 'upload_assignment',
+        course_code,
+        in_class,
+        class_id,
+        image_url,
+        description,
+        url,
+        start_date,
+        end_date,
+        level,
+        lecturer: datass.full_name
+      }
+      console.log(body)
+      let response:any = await this.dbops.postData(token,body,'api.php').toPromise()
+      if(response === null){
+        console.log('invalid response from server')
+       }else{
+        if(response.success === true){
+          console.log(response.msg)
+          this.doToast("assignment sent","middle",2000)
+          this.route.navigateByUrl('lecturer-profile-tab')
+        }else{
+         console.log(response.msg)
+        }
+       }
     }
 }

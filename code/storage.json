@@ -888,7 +888,7 @@
                                     "label": "&&Function Breakpoint..."
                                 },
                                 {
-                                    "id": "editor.debug.action.toggleLogPoint",
+                                    "id": "editor.debug.action.addLogPoint",
                                     "label": "&&Logpoint..."
                                 }
                             ]

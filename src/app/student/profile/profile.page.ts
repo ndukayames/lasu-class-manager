@@ -50,7 +50,6 @@ export class ProfilePage implements OnInit {
           this.prvdr.doToast("You left the class at " + res.timeleft, "middle",2000)
         })
         this.socket.fromEvent('class_ended').subscribe((res:any)=>{
-          console.log(res)
           this.ogc.forEach(courses=>{
             if(courses.course_code === res.courseCode && res.hoc === courses.hoc){
               this.prvdr.doToast(res.courseCode + " ended","bottom",2000)
@@ -282,7 +281,7 @@ export class ProfilePage implements OnInit {
             this.rows.push(...classes)
             this.rows = [...this.rows]
             await this.storage.set('ongoingclass',this.ogc)
-            this.check_if_in_class()
+            await this.check_if_in_class()
           }
         });
       } catch (error) {

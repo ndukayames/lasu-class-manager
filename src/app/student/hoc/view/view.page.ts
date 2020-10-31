@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProviderService } from 'src/app/shared/provider.service';
 import { Storage } from '@ionic/storage';
+import * as moment from 'moment'
 
 @Component({
   selector: 'app-view',
@@ -12,7 +13,10 @@ export class ViewPage implements OnInit {
 course;
 title = this.activatedRoute.snapshot.paramMap.get("courseCode")
 courseData = [];
+class_started:boolean
+classID; //stores class id from ongoing classes online
 selectedLecturer
+myDeptCourse:boolean; //used to check if the viewed course belongs to the HOC
 endTime: string | number | Date;
 
 async schedule(){
@@ -31,6 +35,7 @@ async schedule(){
       this.prvdr.doToast("Class Duration Should Be At Least 1hour","bottom",2000)
     }else{
       let datass = await this.storage.get('stud_loggedin_data')
+      this.classID = this.courseData[0].course_code + '/' + moment().dayOfYear() + '/' + moment().year();
       let body = {
         function: 'set_class',
         course_code: this.courseData[0].course_code,
@@ -40,8 +45,9 @@ async schedule(){
         level: this.courseData[0].level,
         department: this.courseData[0].my_hoc_department,
         lecturers: this.selectedLecturer,
-        date_started: new Date(),
-        matric_number: datass.matric_number
+        date_started: this.courseData[0].course_time,
+        matric_number: datass.matric_number,
+        class_id: this.classID
       }
       let request:any = await this.prvdr.dbops.postData(token,body,'api.php').toPromise()
       if(request===null){
@@ -56,19 +62,45 @@ async schedule(){
       }
     }
   }
-  
-  
-  
 }
+
+async join_class(){
+  let checker = await this.prvdr.checkOngoingClass(this.course)
+  console.log(checker)
+  if(checker){
+    this.prvdr.hoc_join_class(this.course)
+  }
+}
+
   constructor(private activatedRoute:ActivatedRoute, private prvdr: ProviderService, private storage:Storage) { }
+
+  async isClassOn(){
+    let finder = await this.prvdr.get_ongoing_classID(this.course)
+    if(finder){
+      this.class_started = true
+    }else{
+      this.class_started = false
+    }
+    console.log(this.myDeptCourse)
+  }
   
   ngOnInit() {}
+  
   async ionViewWillEnter(){
-    this.course = this.activatedRoute.snapshot.paramMap.get("courseCode")
+    this.course = this.activatedRoute.snapshot.paramMap.get("courseCode") //get the course code of the selected course
+    let student_data = await this.storage.get('stud_loggedin_data')
     let all_student_course_data = await this.storage.get('hoc_course_data');
     let courseData = all_student_course_data.find(res=>{
       return res.course_code === this.course
     })
+    if(courseData.isItDept){
+      this.myDeptCourse = true;
+    }else{
+      this.myDeptCourse = false;
+    }
     this.courseData.push(courseData);
+    await this.isClassOn()
+    console.log(this.class_started,this.myDeptCourse,this.course)
+    console.log(this.myDeptCourse)
   }
 }

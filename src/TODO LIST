@@ -25,8 +25,21 @@ TODO LIST
 
 13. lecturer Get class attendance for all courses [done]
 
+14. Let other HOCs post class with MAIN HOC data and class ID reference
+
 
 ===================================================================
 IMPROVEMENTS?HACKS
 
 1. Use "SELECT IN"
+2. Instead of different HOCs to create a class, the main HOC will create, then the other HOCs will join the class with the click of a button and the details will be sent to the database, as if they sent the details
+
+NEXT THING TO do
+
+I'm trying to setup a system that disallows other HOCs to schedule a class until the main HOC does, at the moment i've been able to disable all options to schedule a class for external HOC, now main HOCs can't create a class too because i've hidden the view should in case the class hasn't started
+
+Now I have to open up the menu for main HOCs to schedule a class and still hide it from external HOC
+
+Fix New class reflection on the dashboard as soon as it's created for both users
+fix attendance marking
+fix the new class function as a whole

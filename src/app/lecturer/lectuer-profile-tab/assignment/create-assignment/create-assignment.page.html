@@ -1,5 +1,5 @@
 
-<ion-content>
+<ion-content padding>
   <ion-card>
     <ion-card-header>
       <ion-card-subtitle>Create Assignment</ion-card-subtitle>
@@ -17,26 +17,46 @@
       </ion-item>
       <ion-item class="fields">
         <ion-label position="floating">Title</ion-label>
-        <ion-input></ion-input>
+        <ion-input [(ngModel)]="assignment_title"></ion-input>
       </ion-item>
       <ion-item class="fields">
-        <ion-label position="floating">Question</ion-label>
-          <ion-textarea auto-grow='true' enterkeyhint="next" placeholder="Enter more information here..."></ion-textarea>
+        <ion-label position="floating">Content</ion-label>
+          <ion-textarea auto-grow='true' enterkeyhint="next" placeholder="Enter more information here..." [(ngModel)]="assignment_content"></ion-textarea>
+      </ion-item>
+      <ion-item class="fields">
+        <ion-label position="floating">External URL</ion-label>
+        <ion-input [(ngModel)]="assignment_url" type="URL" placeholder="eg.. https://example.tcom"></ion-input>
       </ion-item>
       <ion-item class="fields">
         <ion-label position="floating">Level</ion-label>
-        <ion-input type="number" placeholder="numbers only"></ion-input>
+        <ion-input [(ngModel)]="level_for" type="number" placeholder="numbers only"></ion-input>
       </ion-item>
       <ion-item class="fields">
         <ion-label>Due Date</ion-label>
-        <ion-datetime display-format="DD.MM.YYYY HH:mm"></ion-datetime>
+        <ion-datetime [(ngModel)]="due_date" display-format="DD.MM.YYYY HH:mm"></ion-datetime>
       </ion-item>
-      <ion-item>
-        <ion-icon lazy="true" slot="start" name="image"></ion-icon>
-        <ion-label slot="start">Upload Image</ion-label>
-          <ion-button (click)="uploadFile()" expand="block" fill="clear" shape="round">
-            Click me
+      <ion-item class="fields">
+        <ion-label>Upload Images</ion-label>
+        <ion-button fill="clear" expand="full" (click)="selectImage()">
+          <ion-icon slot="start" name="camera"></ion-icon>
+          Select Image</ion-button>
+      </ion-item>
+      <!-- <ion-item class="fields">
+        <!-- <ion-input #imgfile type="file" placeholder="Awesome Input" (ionChange) ="preview()"></ion-input> -->
+      <!-- </ion-item>  -->
+      <ion-item *ngIf="imageURL">
+        <div class="imgContainer">
+          <img [src]="imageURL" height="200" *ngIf="imageURL">
+          <ion-button class="clearbtn" (click) = "clearImg()">
+            <ion-icon name="trash-bin-sharp"></ion-icon>
           </ion-button>
+        </div>
+      </ion-item>
+      <ion-item class="fields">
+        <ion-button class="clearbtn" (click) = "submitAssignment()">
+          <ion-icon name="checkmark-done-outline"></ion-icon>
+          Submit Assignment
+        </ion-button>      
       </ion-item>
     </ion-card-content>
   </ion-card>

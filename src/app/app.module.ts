@@ -23,14 +23,19 @@ import { OngoingClassComponent } from './student/profile/ongoing-class/ongoing-c
 import { ClassMoreDetailsComponent } from './lecturer/lectuer-profile-tab/classes/class-more-details/class-more-details.component';
 import { ClassHistoryComponent } from './student/profile/class-history/class-history.component';
 import { LecClassHistoryComponent } from './lecturer/lectuer-profile-tab/classes/class-history/lect-class-history.component';
-import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { Camera } from '@ionic-native/camera/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { FilePath } from '@ionic-native/file-path/ngx';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
+
 
 
 const config: SocketIoConfig = { url: 'https://nigairspacedata.com/', options: {} };
 
 @NgModule({
-  declarations: [AppComponent,PopoverComponent,LecPopComponent,MoreDetailsComponent, OngoingClassComponent,ClassMoreDetailsComponent,ClassHistoryComponent,LecClassHistoryComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  declarations: [AppComponent,PopoverComponent,LecPopComponent,MoreDetailsComponent, OngoingClassComponent,ClassMoreDetailsComponent,ClassHistoryComponent,LecClassHistoryComponent,],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA], 
   entryComponents: [PopoverComponent,LecPopComponent,MoreDetailsComponent,OngoingClassComponent,ClassMoreDetailsComponent,ClassHistoryComponent,LecClassHistoryComponent],
   imports: [
     SocketIoModule.forRoot(config),
@@ -48,9 +53,13 @@ const config: SocketIoConfig = { url: 'https://nigairspacedata.com/', options: {
     StatusBar, 
     SplashScreen,
     Device,
-    ImagePicker,
+    File,
+    Camera,
     DatePicker,
     JwtHelperService,
+    WebView,
+    FilePath,
+    FileTransfer,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

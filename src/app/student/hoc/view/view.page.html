@@ -1,34 +1,42 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
     <ion-title>create {{course}} class</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-<ion-card *ngFor="let class of courseData">
+<ion-card [ngClass]="{'putMiddle': class_started === false || myDeptCourse === true }" *ngFor="let class of courseData">
   <ion-card-header>
     <ion-img src="../../../assets/images/classroom.jpg"></ion-img>
     <ion-card-subtitle>{{class.course_code}}</ion-card-subtitle>
+    <ion-card-subtitle *ngIf="class_started === true && myDeptCourse === false">Class started by main HOC already</ion-card-subtitle>
+    <ion-card-subtitle *ngIf="class_started === true && myDeptCourse === true">Class started already</ion-card-subtitle>
     <ion-card-title>{{class.course_title}}</ion-card-title>
   </ion-card-header>
-  <ion-card-content>
+  <ion-card-content *ngIf="class_started === true || myDeptCourse === true">
     <ion-item>
       <ion-label>Start Time: </ion-label>
       <ion-label class="ion-text-wrap" slot="end">{{class.course_time | date:'shortTime'}}</ion-label>
     </ion-item>
     <ion-item>
       <ion-label>select end time</ion-label>
-      <ion-datetime slot="end" [(ngModel)]="endTime" display-format="hh:mm a"></ion-datetime>
+      <ion-datetime [disabled] = 'myDeptCourse === false && class_started === true' slot="end" [(ngModel)]="endTime" display-format="hh:mm a"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label>Select class lecturer</ion-label>
-      <ion-select [(ngModel)]="selectedLecturer" placeholder="Select ...">
+      <ion-select [disabled] = 'myDeptCourse === false && class_started === true' [(ngModel)]="selectedLecturer" placeholder="Select ...">
         <ion-select-option *ngFor="let lecturer of class.course_lecturer">{{lecturer}}</ion-select-option>
       </ion-select>
 
     </ion-item>
-    <ion-button (click)="schedule()" expand="block" fill="clear" shape="round">
+    <ion-button [disabled] = 'false' *ngIf="myDeptCourse === true" (click)="schedule()" expand="block" fill="clear" shape="round">
       Schedule a class
+    </ion-button>
+    <ion-button *ngIf="class_started === true && myDeptCourse === false" (click)="join_class()" expand="block" fill="clear" shape="round">
+      Join the class
     </ion-button>
   </ion-card-content>
 </ion-card>

@@ -1,0 +1,18 @@
+ion-virtual-scroll{
+    contain: none !important;
+}
+.putMiddle{
+    transform: translateX(-55%) translateY(-60%);
+    top: 50%;
+    left: 50%;
+    position: absolute;
+}
+ion-virtual-scroll{
+    contain: none !important;
+}
+.canceled{
+   --color: chocolate;
+}
+.ended{
+    --color: red;
+}

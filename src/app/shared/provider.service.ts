@@ -1,15 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { NavController, ToastController, LoadingController } from '@ionic/angular';
 import { DbopsService } from './dbops.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Socket } from 'ngx-socket-io';
+import * as moment from 'moment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProviderService {
-  constructor(public storage:Storage, public route:Router, public navCtrl: NavController, public dbops:DbopsService, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public jwt:JwtHelperService) { }
+  constructor(public storage:Storage, public route:Router, public navCtrl: NavController, public dbops:DbopsService, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public jwt:JwtHelperService, public socket:Socket) { }
   async doToast(message,position,time) {
     const toast = await this.toastCtrl.create({
       message: message,
@@ -298,7 +301,7 @@ export class ProviderService {
           this.doToast('can\'t get resources from server','middle',2000)
         }else{
           if(pD.success===true){
-            const decodedToken = this.jwt.decodeToken(pD.result)
+            const decodedToken = await this.jwt.decodeToken(pD.result)
             const {data} = decodedToken
             await this.storage.set('stud_loggedin_data', data)
             //get courses offered by a student
@@ -528,6 +531,7 @@ export class ProviderService {
       console.log("error connecting to the server")
     }else{
       if(request.success === true){
+        console.log(request.result) 
         this.storage.set('student_course_data', request.result)
         await this.storage.get('student_course_data');
         // console.log(courseData,request.result)
@@ -599,6 +603,226 @@ export class ProviderService {
       console.log(request.msg)
     }
   }
+
+  async get_classes(){
+    let token = await this.storage.get('login_access_token')
+    let datass = await this.storage.get('stud_loggedin_data')
+    let body = {
+      function: 'get_class',
+      department: datass.department,
+      level: datass.level
+    }
+      let response:any = await this.dbops.postData(token,body,'api.php').toPromise()
+      if(response === null){
+        console.log('could not reach server')
+      }else{
+        if(response.success){
+          if(response.result === null){
+            console.log('reached server buh I didn\'t get any results')
+          }
+          else{
+            return response.result
+          }
+        }
+      }
+    }
+    async get_other_classes(courseCode){
+      let token = await this.storage.get('login_access_token')
+      let datass = await this.storage.get('stud_loggedin_data')
+      let body = {
+        function: 'get_other_class',
+        level: datass.level,
+        courseCode
+      }
+        let response:any = await this.dbops.postData(token,body,'api.php').toPromise()
+        if(response === null){
+          console.log('could not reach server')
+        }else{
+          if(response.success){
+            if(response.result === null){
+              console.log('reached server buh I didn\'t get any results')
+            }
+            else{
+              console.log(response.result)
+              return response.result
+            }
+          }
+        }
+      }
+    
+    async leaveClass(courseCode){
+      this.socket.emit('leave_class',courseCode)
+    }
+    async endClass(hoc,courseCode,date_started){
+      let token = await this.storage.get('login_access_token')
+      let datass = await this.storage.get('stud_loggedin_data')
+      let body = {
+       function: 'end_class',
+       course_code: courseCode,
+       department: datass.department,
+       level: datass.level,
+       date_started
+      }
+      console.log(body, 'get_student_course',token)
+      let response:any = await this.dbops.postData(token,body,'api.php').toPromise()
+      if(response === null){
+       console.log('invalid response from server')
+      }else{
+       if(response.success === true){
+         console.log(response.msg)
+         this.socket.emit('end_class',hoc,(courseCode))
+         this.doToast("class ended","middle",2000)
+       }else{
+        console.log(response.msg)
+       }
+      }
+    }
+    async cancelClass(department,course_code,date_started,hoc){
+      let token = await this.storage.get('login_access_token')
+      let body = {
+        function: 'cancel_class',
+        department,
+        course_code,
+        date_started
+      }
+      let response:any = await this.dbops.postData(token,body,'api.php').toPromise()
+      if(response === null){
+       console.log('invalid response from server')
+      }else{
+       if(response.success === true){
+         console.log(response.msg)
+         this.socket.emit('cancel_class',hoc,(course_code))
+         this.doToast("class cancelled","middle",2000)
+       }else{
+        console.log(response.msg)
+       }
+      }
+    }
+    async getClassHistory(course_code,department){
+      let token =  await this.storage.get('login_access_token')
+      let body = {
+        function: 'get_class_history',
+        course_code,
+        department
+      }
+      let response:any = await this.dbops.postData(token,body,'api.php').toPromise()
+      if(response === null){
+        this.doToast("no class history","middle",2000)
+      }else{
+        if(response.result === null){
+          this.doToast("no class history","middle",2000)
+        }else{
+          console.log(response.result)
+          return response.result
+        }
+      }
+    }
+    async check_course_attendance(course_code){
+      let token =  await this.storage.get('login_access_token')
+      let datass = await this.storage.get('stud_loggedin_data')
+      let body = {
+        function: 'check_course_attendance',
+        matric_number: datass.matric_number,
+        department: datass.department,
+        course_code
+      }
+      let response:any = await this.dbops.postData(token,body,'api.php').toPromise()
+      if(response === null){
+        this.doToast("no response from server","middle",2000)
+      }else{
+        if(response.success === true){
+          return true
+        }else if(response.success === false){
+          return false
+        }
+      }
+    }
+    async get_ongoing_classID(courseCode){
+      //for students
+      //this function collects all student's course from storage, picks the one it's interested in and look it up on the db to get it's ID if it's on going
+      let token =  await this.storage.get('login_access_token')
+      let courseData =  await this.storage.get('student_course_data') //get student course data from storage
+      let theCourse  = courseData.find(courseInfo=>{
+        return courseCode == courseInfo.course_code
+      })
+      let body = {
+        function: 'get_class_id',
+        course_code: theCourse.course_code,
+        course_department: theCourse.department
+      }
+      console.log(body)
+      let response:any = await this.dbops.postData(token,body,'api.php').toPromise()
+      if(response === null){
+        this.doToast("no response from server","middle",2000)
+      }else{
+        if(response.success === true){
+          console.log(response.result,response.msg)
+          return response.result
+        }else if(response.success === false){
+          this.doToast("null request","middle",2000)
+        }
+      }
+    }
+    async checkOngoingClass(courseCode){
+      //this function checks on going class via class_ID
+      //it checks if a class has already been started by the MAIN HOC.
+      let token =  await this.storage.get('login_access_token')
+      //
+      let courseData =  await this.storage.get('student_course_data') //get student course data from storage
+      let theCourse  = courseData.find(courseInfo=>{
+        return courseCode == courseInfo.course_code
+      }) //filters out the selected course from all courses, registered by the HOC
+      // console.log(theCourse)
+          let body = {
+            function: 'check_ongoing_class',
+            class_id: await this.get_ongoing_classID(theCourse.course_code),
+            course_department: theCourse.department
+          }
+          console.log(body)
+          let request:any = await this.dbops.postData(token,body,'api.php').toPromise()
+          if(request === null){
+            this.doToast("no response from server","middle",2000)
+          }else{
+            if(request.success === true){
+              console.log(request.result,await this.get_ongoing_classID(theCourse.course_code))
+              await this.storage.set('ogc_id',request.result) //get on going class details that'd be used to extract details for hoc join class function
+              return true
+            }else if(request.success === false){
+              return false
+            }
+          }
+    }
+     get_class_id(courseCode){
+      return courseCode + '/' + moment().dayOfYear() + '/' + moment().year();
+    }
+    async hoc_join_class(courseCode){
+      let token =  await this.storage.get('login_access_token')
+      let data = await this.storage.get('ogc_id')
+      let stud_data = await this.storage.get('stud_loggedin_data')
+      let body = {
+        function: 'hoc_join_class',
+        department: stud_data.department,
+        course_code: courseCode,
+        class_id: data[0].class_id,
+        matric_number: stud_data.matric_number,
+        hoc: stud_data.full_name,
+        duration: data[0].duration,
+        lecturers: data[0].course_lecturer,
+        level: stud_data.level,
+        date_started: data[0].date,
+        course_title: data[0].course_title
+      }
+      let request:any = await this.dbops.postData(token,body,'api.php').toPromise();
+      if(request){
+        if(request.success === true){
+          this.doToast(request.msg,'middle',1000)
+        }else{
+          this.doToast(request.msg,'middle',1000)
+        }
+      }else{
+        this.doToast('could not connect to server','middle',1000)
+      }
+    }
   //=====================================================================
   //Lecturer stuffs
   incomplete_profile = true //manages the state of lecturer's complete profile
@@ -668,6 +892,7 @@ export class ProviderService {
       }
     }
   }
+  
   async complete_lecturer_signup(Campus,Faculty,Department){
     //registers the academic data for the lecturer
     let token =  await this.storage.get('login_access_token')
@@ -768,11 +993,107 @@ export class ProviderService {
       console.log('could not reach server')
     }else{
       if(request.success === true){
-        console.log(request.msg)
+        console.log(request.msg,request.result)
         return request.result
       }else{
         console.log(request.msg)
       }
     }
   }
+  async get_lect_other_classes(courseCode){
+    console.log(courseCode)
+    let token = await this.storage.get('login_access_token')
+    let datass = await this.storage.get('loggedin_lecturer_data')
+    let body = {
+      function: 'get_lect_other_classes',
+      lecturer: datass.full_name,
+      courseCode
+    }
+      let response:any = await this.dbops.postData(token,body,'api.php').toPromise()
+      if(response === null){
+        console.log('could not reach server')
+      }else{
+        if(response.success){
+          if(response.result === null){
+            console.log('reached server buh I didn\'t get any results')
+          }
+          else{
+            console.log(response)
+            return response.result
+          }
+        }
+      }
+    }
+    async cancelLecClass(course_code){
+      let datass = await this.storage.get('loggedin_lecturer_data')
+      let token = await this.storage.get('login_access_token')
+      let body = {
+        function: 'cancel_lec_class',
+        course_code
+      }
+      let response:any = await this.dbops.postData(token,body,'api.php').toPromise()
+      if(response === null){
+       console.log('invalid response from server')
+      }else{
+       if(response.success === true){
+         console.log(response.msg)
+         this.socket.emit('lecturer_cancel_class',datass.full_name,(course_code))
+        //  this.socket.emit('end_class',hoc,(courseCode))
+         this.doToast("class cancelled","middle",2000)
+       }else{
+        console.log(response.msg)
+       }
+      }
+    }
+    async endLecClass(course_code){
+      let datass = await this.storage.get('loggedin_lecturer_data')
+      let token = await this.storage.get('login_access_token')
+      let body = {
+        function: 'end_lec_class',
+        course_code
+      }
+      let response:any = await this.dbops.postData(token,body,'api.php').toPromise()
+      if(response === null){
+       console.log('invalid response from server')
+      }else{
+       if(response.success === true){
+         console.log(response.msg)
+         this.socket.emit('lecturer_end_class',datass.full_name,(course_code))
+        //  this.socket.emit('end_class',hoc,(courseCode))
+         this.doToast("class cancelled","middle",2000)
+       }else{
+        console.log(response.msg)
+       }
+      }
+    }
+    async uploadAssignmentService(course_code,in_class,class_id,image_url,description,url,start_date,end_date,level){
+      let token = await this.storage.get('login_access_token')
+      let datass = await this.storage.get('loggedin_lecturer_data')
+      let body = {
+        function: 'upload_assignment',
+        course_code,
+        in_class,
+        class_id,
+        image_url,
+        description,
+        url,
+        start_date,
+        end_date,
+        level,
+        lecturer: datass.full_name
+      }
+      console.log(body)
+      let response:any = await this.dbops.postData(token,body,'api.php').toPromise()
+      if(response === null){
+        console.log('invalid response from server')
+       }else{
+        if(response.success === true){
+          console.log(response.msg)
+          this.doToast("assignment sent","middle",2000)
+          this.route.navigateByUrl('lecturer-profile-tab')
+        }else{
+         console.log(response.msg)
+        }
+       }
+    }
 }

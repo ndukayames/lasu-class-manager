@@ -1,0 +1,26 @@
+<ion-header *ngIf="backButton">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+  <ion-text color="danger">
+    <h5 class="ion-margin">{{department}}</h5>
+  </ion-text>
+  <ion-list>
+    <ion-list-header lines="inset">
+      <ion-label>Students in this class</ion-label>
+    </ion-list-header>
+  </ion-list>
+  <ion-virtual-scroll [items]="items" approxItemHeight="320px">
+    <ion-item *virtualItem="let item;">
+      <ion-label class="ion-text-wrap">
+        <p>Matric number: {{item.matric_number}}  </p>
+        <p>Name: {{item.name}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-virtual-scroll>
+</ion-content>

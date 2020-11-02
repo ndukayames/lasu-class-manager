@@ -21,12 +21,8 @@ const routes: Routes = [
       {
         path: 'complete-registration',
         loadChildren: () => import('../complete-profile-signup/complete-profile-signup.module').then(m=>m.CompleteProfileSignupPageModule)
-      }
-      ]
       },
-      {
-        path: 'attendance',
-        loadChildren: () => import('../attendance/attendance.module').then(m=>m.AttendancePageModule)
+      ]
       },
       {
         path: 'hoc',
@@ -58,6 +54,20 @@ const routes: Routes = [
 
           }
         ]
+      },
+      {
+        path: 'assignments',
+        children: [
+          {
+          path: '',
+          loadChildren: () => import('../profile-tab/assignment/assignment.module').then(m=>m.AssignmentPageModule)
+          },
+          {
+            path: ':courseCode',
+            loadChildren: () => import('../profile-tab/assignment/assignment-info/assignment-info.module').then(m=>m.AssignmentInfoPageModule)
+          }
+      ]
+        
       },
       {
         path: '',

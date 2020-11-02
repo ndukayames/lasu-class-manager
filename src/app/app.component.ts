@@ -28,13 +28,14 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
-  //   this.storage.get('loggedin_student').then((res)=>{
-  //     if(res==null){
-  //       this.navCtrl.navigateRoot('/home');
-  //     }
-  //     else{
-  //       this.navCtrl.navigateRoot('/student-profile-tab');
-  //     }
-  //   })
+    this.storage.get('stud_loggedin_data').then((res)=>{
+      if(res==null){
+        this.navCtrl.navigateRoot('/home');
+      }
+      else{
+        //remain in that page
+        
+      }
+    })
   }
 }

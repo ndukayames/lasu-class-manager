@@ -1,17 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { MenuController, ModalController, IonRouterOutlet } from '@ionic/angular';
+import { MenuController, ModalController, IonRouterOutlet, IonItemSliding } from '@ionic/angular';
 import { ProviderService } from 'src/app/shared/provider.service';
 import { ViewPage } from '../student-course-reg/view/view.page';
 import * as moment from 'moment'
-
 import * as _ from 'lodash'
+import { Socket } from 'ngx-socket-io';
+import { OngoingClassComponent } from './ongoing-class/ongoing-class.component';
+import { ClassHistoryComponent } from './class-history/class-history.component';
+
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
+
+  @ViewChild('mysliding',{static:false}) private myslid:IonItemSliding
   
   data;
   name = '';
@@ -25,50 +31,205 @@ export class ProfilePage implements OnInit {
   onGoingClasses = []
   matric_number: any;
   ogc: any[] = [];
+  inClass: boolean;
+  inClassStatus: string;
   constructor(
     private storage: Storage,
     private menuController: MenuController, 
     private prvdr:ProviderService,
     private  modalController: ModalController,
     private routerOutlet: IonRouterOutlet,
+    private socket: Socket
     ){}
 
   async ngOnInit(){
-    let courseData = await this.storage.get('student_course_data');
-        console.log(courseData)
+        this.socket.fromEvent('joined_classroom').subscribe((res:any)=>{
+          this.prvdr.doToast("Joined Class with #ID ","bottom",2000)
+        })
+        this.socket.fromEvent('left_class').subscribe((res:any)=>{
+          this.prvdr.doToast("You left the class at " + res.timeleft, "middle",2000)
+        })
+        this.socket.fromEvent('class_ended').subscribe((res:any)=>{
+          this.ogc.forEach(courses=>{
+            if(courses.course_code === res.courseCode && res.hoc === courses.hoc){
+              this.prvdr.doToast(res.courseCode + " ended","bottom",2000)
+              this.getOngoingClass()
+              // this.check_if_in_class()
+              // this.getOngoingClass()
+            }
+          })
+        })
+        this.socket.fromEvent('class_canceled').subscribe((res:any)=>{
+          console.log(res)
+          this.ogc.forEach(courses=>{
+            if(courses.course_code === res.courseCode && res.hoc === courses.hoc){
+              this.prvdr.doToast(res.courseCode + " canceled","bottom",2000)
+              this.getOngoingClass()
+              // this.check_if_in_class()
+              // this.getOngoingClass()
+            }
+          })
+        })
+        this.socket.fromEvent('lecturer_class_canceled').subscribe((res:any)=>{
+          this.ogc.forEach(courses=>{
+            if(courses.course_lecturer === res.lecturer && res.courseCode === courses.course_code){
+              this.prvdr.doToast(res.courseCode + " canceled by lecturer","bottom",2000)
+              this.getOngoingClass()
+              // this.check_if_in_class()
+              // this.getOngoingClass()
+            }
+          })
+        })
+        this.socket.fromEvent('lecturer_class_ended').subscribe((res:any)=>{
+          this.ogc.forEach(courses=>{
+            if(courses.course_lecturer === res.lecturer && res.courseCode === courses.course_code){
+              this.prvdr.doToast(res.courseCode + " ended by lecturer","bottom",2000)
+              this.getOngoingClass()
+              // this.check_if_in_class()
+              // this.getOngoingClass()
+            }
+          })
+        })
   }
 
-  joinClass(Hoc,courseCode){
-    console.log(Hoc,courseCode)
+  async presentModal(courseCode) {
+    let ongc = await this.storage.get('ongoingclass2')
+    ongc = ongc.filter(res=>{
+      return res.course_code === courseCode
+    })
+    const modal = await this.modalController.create({
+      component: OngoingClassComponent,
+      componentProps: {
+        'ogc': ongc,
+        'hoc': this.hoc,
+        swipeToClose: true,
+        presentingElement: this.routerOutlet.nativeEl
+      }
+    });
+    return await modal.present();
+  }
+
+  async joinClass(Hoc,courseCode,lecturer){
+
+    let datass = await this.storage.get('stud_loggedin_data');
+    let class_mark = {
+      matric_number: datass.matric_number,
+      full_name : datass.full_name,
+      department: datass.department,
+      courseCode,
+      Hoc,
+      lecturer
+    }
+    console.log(class_mark)
+    this.socket.emit('join_class',class_mark)
+    this.myslid.closeOpened()
+    this.prvdr.socket.emit('check_if_in_class',datass.matric_number,(courseCode))
+    this.inClass = true;
+    return class_mark;
    }
-   async endClass(courseCode){
-     let token = await this.storage.get('login_access_token')
-     let datass = await this.storage.get('stud_loggedin_data')
-     let body = {
-       function: 'end_class',
-       course_code: courseCode,
-       department: datass.department,
-       level: datass.level
-     }
-     console.log(body, 'get_student_course',token)
-     let response:any = await this.prvdr.dbops.postData(token,body,'api.php').toPromise()
-     if(response === null){
-       console.log('invalid response from server')
-     }else{
-       if(response.success === true){
-         console.log(response.msg)
-       }else{
-        console.log(response.msg)
-       }
-     }
+
+   leaveClass(courseCode){
+     this.prvdr.leaveClass(courseCode)
+     this.check_if_in_class()
+     this.myslid.closeOpened()
+   }
+
+   async endClass(hoc,courseCode,date_started){
+     this.prvdr.endClass(hoc,courseCode,date_started)     
+     this.myslid.closeOpened()
+    //  this.getOngoingClass()
    }
 
   async logout(){
     this.prvdr.stud_logout()
   }
 
+  async cancelClass(department,course_code,date_started,hoc){
+    this.prvdr.cancelClass(department,course_code,date_started,hoc)
+    this.getOngoingClass()
+  }
+
+  async check_if_in_class(){
+    let datas:any = await this.storage.get('stud_loggedin_data')
+    let ongc = await this.storage.get('ongoingclass')
+        ongc.forEach(element=>{
+          this.prvdr.socket.emit('check_if_in_class',datas.matric_number,(element.course_code))
+        })
+        this.socket.fromEvent('checked_if_in_class').subscribe((response:any)=>{
+          if(response.status === "present"){
+            this.ogc.forEach(async element => {
+              if(element.course_code === response.class){
+                element.joined = true;
+              }
+              await this.storage.set('ongoingclass2',this.ogc)
+            });
+          }else if(response.status === "absent") {
+            this.ogc.forEach(async elements => {
+              if(elements.course_code === response.class){
+                elements.joined = false;
+                this.modalController.dismiss({
+                  'dismissed': true
+                });
+              }
+              await this.storage.set('ongoingclass2',this.ogc)
+            });
+          }else if(response.status === "class not started"){
+            this.ogc.forEach(async elements => {
+              if(elements.course_code === response.class){
+                elements.joined = false;
+                this.modalController.dismiss({
+                  'dismissed': true
+                });
+              }
+              await this.storage.set('ongoingclass2',this.ogc)
+            });
+          }
+          
+        })
+  }
+  
+  async getOngoingClass(){
+    this.ogc = []
+    this.onGoingClasses = await this.prvdr.get_classes()
+    console.log(this.onGoingClasses)
+    if(!this.onGoingClasses){
+      this.isOngoingClass = false
+    }else{
+      this.registered_courses.forEach(course=>{
+        let onGoingClasses = this.onGoingClasses.filter(res=>{
+          return res.course_code === course
+        })
+        this.ogc.push(...onGoingClasses)
+        if(this.ogc.length !== 0){
+          console.log(this.ogc)
+          this.isOngoingClass = true;
+        }else{
+          this.isOngoingClass = false;
+        }
+      })
+    }
+    
+    this.check_if_in_class()
+  }
+  async courseInfo(ev){
+    console.log(ev)
+  }
+  async getCourseHistory(courseCode){
+    const modal = await this.modalController.create({
+      component: ClassHistoryComponent,
+      componentProps: {
+        courseCode,
+        'hoc':this.hoc
+      }
+    });
+    return await modal.present();
+  }
   async ionViewWillEnter(){
-    let token = await this.storage.get('login_access_token')
+    const loading = await this.prvdr.loadingCtrl.create({
+      message: 'Please wait...',
+      // duration: 2000
+    });
+    await loading.present();
     let datas:any = await this.storage.get('stud_loggedin_data')
     this.name = datas.full_name;
     this.matric_number = datas.matric_number
@@ -81,63 +242,55 @@ export class ProfilePage implements OnInit {
     this.menuController.enable(true, 'profile')
     this.registered_courses = await this.prvdr.get_registered_courses()
     if(!this.registered_courses){
-      console.log('no courses found')
       this.isRegisteredCourses = false
     }else{
       this.registered_courses = this.registered_courses.registered_courses.split(',')
-      console.log(this.registered_courses)
       this.isRegisteredCourses = true
     }
-    //this function gets on going courses from the server
-    let datass = await this.storage.get('stud_loggedin_data')
-    let body = {
-      function: 'get_class',
-     department: datass.department,
-     level: datass.level
-    }
-    let response:any = await this.prvdr.dbops.postData(token,body,'api.php').toPromise()
-      if(response === null){
-        console.log('could not reach server')
-      }else{
-        if(response.success){
-          if(response.result === null){
-            // this.onGoingClasses = [""];
-            console.log('reached server buh I didn\'t get any results')
-          }
-          else{
-            this.onGoingClasses.push(...response.result)
-            this.onGoingClasses = _.uniqBy(this.onGoingClasses,'course_code');
-          }
-          if(!this.registered_courses){
-            console.log('can\'t execute the function to get ongoing classes becaause the student hasn\'t registered any course')
-          }else{
-            this.registered_courses.forEach(async courses => {
-              let onGoingClasses = this.onGoingClasses.filter(res=>{
-                return res.course_code === courses
-              })
-              this.ogc.push(...onGoingClasses)
-              this.ogc = _.uniqBy(this.ogc, 'course_code')
-              console.log(this.ogc,this.registered_courses)
-              let courseData = await this.storage.get('student_course_data');
-              let classes = courseData.filter(res=>{
-                res.class_time = moment(res.class_time).format("hh:mm a")
-                return res.course_code === courses
+    //get on going classes in the department and level
+    this.onGoingClasses = await this.prvdr.get_classes()
+    //filter out on going classes for registered
+    if(!this.registered_courses) {
+      //
+    }else{
+      try {
+        this.registered_courses.forEach(async courses=>{
+          if(this.onGoingClasses === undefined){
+            console.log("no classes")
+            let courseData = await this.storage.get('student_course_data');
+            let classes = courseData.filter(res=>{
+              res.class_time = moment(res.class_time).format("hh:mm a")
+              return res.course_code === courses
             })
-            
             this.rows.push(...classes)
             this.rows = [...this.rows]
-            console.log(this.rows)
-            });
-            
-            this.isOngoingClass = true;
-            
+          }else{
+            let onGoingClasses = this.onGoingClasses.filter(res=>{
+              return res.course_code === courses
+            })
+            this.ogc.push(...onGoingClasses)
+            if(this.ogc.length !== 0){
+              console.log(this.ogc)
+              this.isOngoingClass = true;
+            }
+            let courseData = await this.storage.get('student_course_data');
+            let classes = courseData.filter(res=>{
+              res.class_time = moment(res.class_time).format("hh:mm a")
+              return res.course_code === courses
+            })
+            this.rows.push(...classes)
+            this.rows = [...this.rows]
+            await this.storage.set('ongoingclass',this.ogc)
+            await this.check_if_in_class()
           }
-        }else{
-          console.log('error fetching class')
-        }
+        });
+      } catch (error) {
+        console.log(error)
       }
-      console.log(this.ogc)
-  }
+      //get rows data for the class schedule table
+      }
+      loading.dismiss()
+    }
   async goto(courseCode) {
       const modal = await this.modalController.create({
         component: ViewPage,
@@ -150,8 +303,8 @@ export class ProfilePage implements OnInit {
       return await modal.present();
     }
   ionViewWillLeave(){
-    this.onGoingClasses.length = 0
-    this.rows.length = 0
-    console.log('left')
+    this.rows.length = 0;
+    this.ogc.length = 0;
   }
+
 }

@@ -18,15 +18,27 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { JwtModule } from "@auth0/angular-jwt";
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { MoreDetailsComponent } from './lecturer/lectuer-profile-tab/classes/more-details/more-details.component';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { OngoingClassComponent } from './student/profile/ongoing-class/ongoing-class.component';
+import { ClassMoreDetailsComponent } from './lecturer/lectuer-profile-tab/classes/class-more-details/class-more-details.component';
+import { ClassHistoryComponent } from './student/profile/class-history/class-history.component';
+import { LecClassHistoryComponent } from './lecturer/lectuer-profile-tab/classes/class-history/lect-class-history.component';
+import { Camera } from '@ionic-native/camera/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { FilePath } from '@ionic-native/file-path/ngx';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 
 
-// const config: SocketIoConfig = { url: 'http://localhost:3001/', options: {}};
+
+const config: SocketIoConfig = { url: 'https://nigairspacedata.com/', options: {} };
 
 @NgModule({
-  declarations: [AppComponent,PopoverComponent,LecPopComponent,MoreDetailsComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  entryComponents: [PopoverComponent,LecPopComponent,MoreDetailsComponent],
+  declarations: [AppComponent,PopoverComponent,LecPopComponent,MoreDetailsComponent, OngoingClassComponent,ClassMoreDetailsComponent,ClassHistoryComponent,LecClassHistoryComponent,],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA], 
+  entryComponents: [PopoverComponent,LecPopComponent,MoreDetailsComponent,OngoingClassComponent,ClassMoreDetailsComponent,ClassHistoryComponent,LecClassHistoryComponent],
   imports: [
+    SocketIoModule.forRoot(config),
     NgxDatatableModule,
     BrowserModule, 
     IonicStorageModule.forRoot(), 
@@ -38,11 +50,16 @@ import { MoreDetailsComponent } from './lecturer/lectuer-profile-tab/classes/mor
     }),
   ],
   providers: [
-    StatusBar,
+    StatusBar, 
     SplashScreen,
     Device,
+    File,
+    Camera,
     DatePicker,
     JwtHelperService,
+    WebView,
+    FilePath,
+    FileTransfer,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

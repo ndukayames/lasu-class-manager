@@ -60,16 +60,16 @@
     </ion-col>
     <ion-col size="12">
       <ion-card id="ongoingclasses">
-        <ion-card-header>
-          <ion-item lines="none">
+        <ion-card-header color="light">
+          <ion-item color="light" lines="none">
           <ion-card-subtitle color="dark">ongoing classes</ion-card-subtitle>
             <ion-badge slot="end" color="secondary">{{ogc.length}}</ion-badge>
           </ion-item>
         </ion-card-header>
         <ion-card-content>
           <ion-list *ngIf="isOngoingClass; else elseBlock2">
-            <ion-item-sliding *ngFor="let classes of ogc">
-                <ion-item>
+            <ion-item-sliding #mysliding *ngFor="let classes of ogc">
+                <ion-item (click)="presentModal(classes.course_code)" detail lines="none">
                   <ion-label class="ion-text-wrap">
                     <ion-text color="primary">
                       <h3>{{classes.course_code}}</h3>
@@ -77,14 +77,23 @@
                     <p>{{classes.course_title}}</p>
                   </ion-label>
                 </ion-item>
-                <ion-item-options side="end">
-                  <ion-item-option color="secondary" (click)="joinClass(classes.hoc,classes.course_code)">Join
+                <ion-item-options lines="none" side="end">
+                  <ion-item-option *ngIf="classes.joined === false" color="secondary" (click)="joinClass(classes.hoc,classes.course_code,classes.course_lecturer)">Join
                     <ion-icon slot="bottom" name="enter"></ion-icon>
+                  </ion-item-option>
+                  <ion-item-option color="danger" *ngIf="classes.joined === true && hoc === false" (click)="leaveClass(classes.course_code)">Leave
+                    <ion-icon name="log-out-outline" slot="bottom"></ion-icon>
                   </ion-item-option>
                 </ion-item-options>
                 <ion-item-options *ngIf="hoc" side="start">
-                  <ion-item-option color="secondary" (click)="endClass(classes.hoc,classes.course_code)">end
+                  <ion-item-option color="danger" *ngIf="classes.joined === true" color="secondary" (click)="endClass(classes.hoc,classes.course_code,classes.date)">end
                     <ion-icon slot="bottom" name="enter"></ion-icon>
+                  </ion-item-option>
+                  <ion-item-option color="danger" *ngIf="hoc && classes.joined === true" (click)="cancelClass(classes.department,classes.course_code,classes.date,classes.hoc)">Cancel
+                    <ion-icon name="log-out-outline" slot="bottom"></ion-icon>
+                  </ion-item-option>
+                  <ion-item-option *ngIf="classes.joined === true" color="danger" (click)="leaveClass(classes.course_code)">Leave
+                    <ion-icon name="log-out-outline" slot="bottom"></ion-icon>
                   </ion-item-option>
                 </ion-item-options>
             </ion-item-sliding>
@@ -105,6 +114,13 @@
         <ngx-datatable-column name= "Day" prop="class_day"></ngx-datatable-column>
         <ngx-datatable-column name= "Class" prop="course_code"></ngx-datatable-column>
         <ngx-datatable-column name= "Time" prop="class_time"></ngx-datatable-column>
+        <ngx-datatable-column name="Actions" prop="name">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <ion-button size="small" (click)="getCourseHistory(row.course_code)" color="medium">
+              <ion-icon name="alert-outline"></ion-icon>
+            </ion-button>
+          </ng-template>
+        </ngx-datatable-column>
       </ngx-datatable>
      </ion-col>
   </ion-row>

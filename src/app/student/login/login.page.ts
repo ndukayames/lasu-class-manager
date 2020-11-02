@@ -11,7 +11,7 @@ import { ProviderService } from 'src/app/shared/provider.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  type;
+  type; //variable used to check against the ngSwitch function on the html page, type can be student or lecturer
   user_name: any;
     constructor(
       private toastCtrl: ToastController,
@@ -32,7 +32,6 @@ async presentToast(msg){
   toast.present()
 }
   async stud_login(){
-    console.log("login working")
     if(!this.matric_number){
       this.presentToast("Your matric number is required")
     }
@@ -40,7 +39,6 @@ async presentToast(msg){
       this.presentToast("Your password is required")
     }
     else{
-     await this.storage.clear();
      this.prvdr.stud_login(this.matric_number,this.password)
     }
   }
@@ -53,15 +51,16 @@ async presentToast(msg){
       this.presentToast("Your password is required")
     }
     else{
+      await this.storage.clear();
       this.prvdr.lecturer_login(this.user_name, this.password);
     }
   }
  async  ngOnInit() {
     this.type = 'student'
     let token = await this.storage.get('access_token');
-    console.log(token)
   }
   segment(ev){
+    //this function takes the value from the segment component and set it as the type value, segment value is either student or lecturer
     this.type = ev.detail.value
     console.log(this.type)
   }

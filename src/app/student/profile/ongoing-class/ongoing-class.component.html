@@ -1,0 +1,72 @@
+<ion-header *ngFor="let item of ogc">
+  <ion-toolbar>
+    <ion-icon slot="start" name="arrow-back-outline" (click) = "closeModal()"></ion-icon>
+    <ion-title>On Going Class - {{item.course_code}} </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div id="loginContainer">
+    <ion-card *ngFor="let item of ogc">
+      <ion-card-header>
+        <img src="../../../../assets/images/on going class.jpg" alt="on going classes">
+        <ion-card-subtitle></ion-card-subtitle>
+        <ion-card-title></ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item-divider>
+          <ion-label>Course Info</ion-label>
+        </ion-item-divider>
+        <ion-item>
+          <ion-label>Status: {{classStatus}} </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Lecturer: {{item.course_lecturer}} </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="ion-text-wrap">
+            Other Departments in this class: 
+            <ion-chip *ngFor="let department of ogcDepartment" color="medium" mode="ios">
+              <ion-label>
+                {{department.department}}
+              </ion-label>
+            </ion-chip>
+          </ion-label>
+        </ion-item>
+      </ion-card-content>
+      <ion-footer>
+        <ion-toolbar>
+          <ion-grid fixed>
+            <ion-row *ngIf="hoc;else elseBlock">
+              <ion-col size="6">
+                <ion-button *ngIf="item.joined === false" (click)="joinClass()" expand="block" fill="clear">
+                  Join Class
+                </ion-button>
+                <ion-button *ngIf="item.joined === true" (click)="markAttendance(item.course_code,item.department,item.date,item.h,item.event,item.joined)" expand="block" fill="clear">
+                  mark attendance
+                </ion-button>
+              </ion-col>
+              <ion-col size="6">
+                <ion-button *ngIf="item.joined === true" (click)="endClass(item.hoc,item.course_code,item.date)" expand="block" fill="clear">
+                  End Class
+                </ion-button>
+              </ion-col>
+            </ion-row>
+            <ng-template #elseBlock>
+              <ion-row>
+                <ion-col size="12">
+                  <ion-button *ngIf="item.joined === false" (click)="joinClass()" expand="block" fill="clear">
+                    Join Class
+                  </ion-button>
+                  <ion-button *ngIf="item.joined === true" (click)="markAttendance()" expand="block" fill="clear">
+                    mark attendance
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ng-template>
+          </ion-grid>
+        </ion-toolbar>
+      </ion-footer>
+    </ion-card>
+  </div>
+  
+</ion-content>

@@ -1,0 +1,39 @@
+<ion-icon style="font-size: x-large;margin-left: 10%;margin-top: 5%;" (click)="closeModal()" name="arrow-back-outline"></ion-icon>
+<ion-content>
+  <div>
+    <ion-virtual-scroll [ngClass]="{'putMiddle': theView}" [items]="class_history">
+      <ion-card  *virtualItem="let item; let itemBounds = bounds;">
+      <ion-card-content>
+        <ion-item (click)="openorhide(item,item.identifier)" detail lines="none">
+          <ion-label [ngClass]="{'canceled': item.event === '2', 'ended':item.event ==='1'}" class="ion-text-wrap">
+            <ion-text>
+              <h3>{{ item.date | date:'fullDate'}}</h3>
+            </ion-text>
+            <p>{{item.course_title}}</p>
+          </ion-label>
+        </ion-item>
+        <div *ngIf="item.theView">
+          <ion-label>Class Info</ion-label>
+          <ion-item>
+            <ion-label>Status: {{item.events}}</ion-label>
+          </ion-item>
+          <ion-label>Departments in this class: </ion-label>
+          <ion-item lines="none" *ngFor="let department of item.departments">
+            <ion-chip (click)="openDepartmentAttendance(item.class_day,item.course_code,department)" outline="true">
+              <ion-label>{{department}}</ion-label>
+            </ion-chip>
+          </ion-item>
+        <ion-item>
+          <ion-label>Assignment: </ion-label>
+        </ion-item>
+        </div>
+      </ion-card-content>
+      </ion-card>
+    </ion-virtual-scroll>
+  </div>
+  <ion-fab (click)="createAssignment()" vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button color="danger">
+      <ion-icon name="document-attach-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

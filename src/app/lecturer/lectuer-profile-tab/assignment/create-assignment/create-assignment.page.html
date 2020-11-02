@@ -1,0 +1,63 @@
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Create Assignment</ion-card-subtitle>
+      <ion-card-title class="ion-text-wrap">{{course_code}} - {{course_title}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      
+      <ion-item class="fields">
+        <ion-label>Select Course</ion-label>
+        <ion-select (ionChange)="getTitle(selected_course)"  #selected_course>
+          <ion-select-option *ngFor="let course of course_data">
+            {{course.course_code}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item class="fields">
+        <ion-label position="floating">Title</ion-label>
+        <ion-input [(ngModel)]="assignment_title"></ion-input>
+      </ion-item>
+      <ion-item class="fields">
+        <ion-label position="floating">Content</ion-label>
+          <ion-textarea auto-grow='true' enterkeyhint="next" placeholder="Enter more information here..." [(ngModel)]="assignment_content"></ion-textarea>
+      </ion-item>
+      <ion-item class="fields">
+        <ion-label position="floating">External URL</ion-label>
+        <ion-input [(ngModel)]="assignment_url" type="URL" placeholder="eg.. https://example.tcom"></ion-input>
+      </ion-item>
+      <ion-item class="fields">
+        <ion-label position="floating">Level</ion-label>
+        <ion-input [(ngModel)]="level_for" type="number" placeholder="numbers only"></ion-input>
+      </ion-item>
+      <ion-item class="fields">
+        <ion-label>Due Date</ion-label>
+        <ion-datetime [(ngModel)]="due_date" display-format="DD.MM.YYYY HH:mm"></ion-datetime>
+      </ion-item>
+      <ion-item class="fields">
+        <ion-label>Upload Images</ion-label>
+        <ion-button fill="clear" expand="full" (click)="selectImage()">
+          <ion-icon slot="start" name="camera"></ion-icon>
+          Select Image</ion-button>
+      </ion-item>
+      <!-- <ion-item class="fields">
+        <!-- <ion-input #imgfile type="file" placeholder="Awesome Input" (ionChange) ="preview()"></ion-input> -->
+      <!-- </ion-item>  -->
+      <ion-item *ngIf="imageURL">
+        <div class="imgContainer">
+          <img [src]="imageURL" height="200" *ngIf="imageURL">
+          <ion-button class="clearbtn" (click) = "clearImg()">
+            <ion-icon name="trash-bin-sharp"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-item>
+      <ion-item class="fields">
+        <ion-button class="clearbtn" (click) = "submitAssignment()">
+          <ion-icon name="checkmark-done-outline"></ion-icon>
+          Submit Assignment
+        </ion-button>      
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

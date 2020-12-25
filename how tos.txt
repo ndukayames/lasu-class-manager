@@ -1,0 +1,39 @@
+This file contains techniques and algorithms I used throughout the app's development
+I started late so it might not contain details chronologically.
+
+=================================================================================================================================
+
+1 => How I was able to create a unique class ID for all departments sharing a course
+     I wanted a situation where different departments offering one course can be identified
+     using one ID, this would enable me target actions to a particular class for it to affect
+     everyone offering that class, for example, the lecturer might decide to end his class and it
+     would be reflected across all the departments, I don't have too many ideas about this feature yet but
+     i feel it's important to have one identifier for all departments offering the course.
+     
+     WHAT I DID
+     File://lasu-class-manager/src/app/student/hoc/view/view.page.ts
+     - Allow only the main HOC to start a class
+     - Assign a class ID to that class with course_code/day_of_year/year as the formular
+     - Subsidiary HOCs are now allowed to join the ongoing class, by fetching the class_id from the DB
+     - other clsas details are also collected via the class_ID
+
+=================================================================================================================================
+
+2 => How I was able to make only main HOCs start a class before Subsidiary HOCs
+     I wanted a situation where only the main HOC of a class can start a class, then other departments can join.
+     Instead of making it independent, which could result in misleading details on class info and so much more.
+
+     WHAT I DID
+     File://lasu-class-manager/src/app/student/hoc/view/view.page.ts
+     - On the class creation page, Subsidiary HOCs are unable to set class because a checker 'class_started' is set to false if the class is not yet on the database, this is being checked by isClassOn() function, which triggers on ionViewWillEnter()
+     the isClassOn() returns the class_ID to confirm that the class exists or not
+     - The main HOC is able to create a class if the class belongs to it's department, this is confirmed by checking the hoc department in storage against the class department.
+     - class_started checker will be set to true now Subsidiary HOC can now create their class using the class_ID returned by the isClassOn()
+
+
+
+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+Functions, variables and other definitions
+
+ongoingclass2 => is a storage value that is used to store the ongoing class, almost the same as the ongoingclass storage but this also contains an identifier - ongoingclass2.joined, which checks if the student has joined the class.
+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+

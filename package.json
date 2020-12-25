@@ -105,7 +105,9 @@
       "cordova-plugin-datepicker": {},
       "cordova-plugin-camera": {},
       "cordova-plugin-file": {},
-      "cordova-plugin-telerik-imagepicker": {},
+      "cordova-plugin-telerik-imagepicker": {
+        "PHOTO_LIBRARY_USAGE_DESCRIPTION": " "
+      },
       "cordova-plugin-filepath": {},
       "cordova-plugin-file-transfer": {}
     },

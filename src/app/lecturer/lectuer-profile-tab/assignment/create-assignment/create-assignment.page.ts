@@ -43,10 +43,11 @@ export class CreateAssignmentPage implements OnInit {
       // selected_course.trim()
       return res.course_code === selected_course.value.trim()
     })
-    const {course_title,course_code} = dat
+    const {course_title,course_code,level} = dat
     this.course_title = course_title
     this.course_code = course_code
-    console.log(this.course_title)
+    this.level_for = level
+    console.log(dat)
   }
   
   clearImg(){
@@ -90,15 +91,15 @@ takePicture(sourceType: PictureSourceType) {
 
   this.camera.getPicture(options).then(imagePath => {
     this.imageURL = 'data:image/jpeg;base64,' + imagePath
-  });
+  }); 
   }
   submitAssignment(){
     if(!this.course_title || !this.course_code || !this.assignment_content || !this.assignment_title || !this.level_for || !this.due_date){
       this.prvdr.doToast('some fields are empty','middle',3000)
       console.log(this.course_code,this.course_title,this.assignment_title,this.assignment_content,this.due_date,this.level_for)
     }else{
-      this.start_date = new Date();
-      this.prvdr.uploadAssignmentService(this.course_code,true,1233,this.imageURL,this.assignment_content,this.assignment_url,this.start_date,this.due_date,this.level_for)
+      this.start_date = new Date();  
+      this.prvdr.uploadAssignmentService(this.course_code,false,"none",this.imageURL,this.assignment_content,this.assignment_url,this.start_date,this.due_date,this.level_for)
     }
   }
 }

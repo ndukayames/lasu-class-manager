@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import { Storage } from '@ionic/storage';
 import { ProviderService } from '../shared/provider.service';
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { Socket } from 'ngx-socket-io';
 
 export function tokenGetter() {
   
@@ -23,29 +24,15 @@ export class SocketPage implements OnInit {
   message = '';
   messages = [];
   currentUser = '';
-  constructor(private toastCtrl: ToastController,private http: HttpClient, private dbops:DbopsService, private storage:Storage, private prvdr:ProviderService, private jwt:JwtHelperService) { }
-
-  async ngOnInit() {
-    let a  = await this.storage.get('login_access_token')
-      console.log(a)
+  constructor(private socket: Socket) { }
+  async testSocket(){
+    this.socket.emit('test_socket_connection')
+    console.log('testing connextion ...')
   }
-  // async getToken(){
-  //   await this.prvdr.get_stud_data()
-  // }
-  // async validateToken(){
-  //   let token =  await this.storage.get('login_access_token')
-  //   let a = await this.storage.get('access_token')
-  //   const decodedToken = this.jwt.isTokenExpired(a);
-  //   console.log('decodedToken',decodedToken)
-  //   let body = {
-  //     function: 'testjwt',
-  //     token: a
-  //   }
-  //  this.dbops.postData(token,body,'api.php').then(res=>{
-  //    console.log(res)
-  //  }).catch(error=>{
-  //    console.log(error)
-  //  }).finally(()=>console.log('finally'))
-  // }
+  async ngOnInit() {
+    this.socket.fromEvent('connection_status').subscribe(res=>{
+      console.log(res)
+    })
+  }
 }
 

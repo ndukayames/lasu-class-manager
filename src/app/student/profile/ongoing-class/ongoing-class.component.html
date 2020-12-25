@@ -1,4 +1,5 @@
 <ion-header *ngFor="let item of ogc">
+  <!-- this opens when the user taps the on going class list -->
   <ion-toolbar>
     <ion-icon slot="start" name="arrow-back-outline" (click) = "closeModal()"></ion-icon>
     <ion-title>On Going Class - {{item.course_code}} </ion-title>
@@ -37,15 +38,12 @@
         <ion-toolbar>
           <ion-grid fixed>
             <ion-row *ngIf="hoc;else elseBlock">
-              <ion-col size="6">
-                <ion-button *ngIf="item.joined === false" (click)="joinClass()" expand="block" fill="clear">
-                  Join Class
-                </ion-button>
-                <ion-button *ngIf="item.joined === true" (click)="markAttendance(item.course_code,item.department,item.date,item.h,item.event,item.joined)" expand="block" fill="clear">
+              <ion-col size="12">
+                <ion-button *ngIf="item.joined === false" (click)="markAttendance(item.course_code,item.department,item.date,item.h,item.event,item.joined)" expand="block" fill="clear">
                   mark attendance
                 </ion-button>
               </ion-col>
-              <ion-col size="6">
+              <ion-col size="12">
                 <ion-button *ngIf="item.joined === true" (click)="endClass(item.hoc,item.course_code,item.date)" expand="block" fill="clear">
                   End Class
                 </ion-button>
@@ -54,10 +52,7 @@
             <ng-template #elseBlock>
               <ion-row>
                 <ion-col size="12">
-                  <ion-button *ngIf="item.joined === false" (click)="joinClass()" expand="block" fill="clear">
-                    Join Class
-                  </ion-button>
-                  <ion-button *ngIf="item.joined === true" (click)="markAttendance()" expand="block" fill="clear">
+                  <ion-button *ngIf="item.joined === false" (click)="markAttendance(item.course_code,item.department,item.date,item.h,item.event,item.joined)" expand="block" fill="clear">
                     mark attendance
                   </ion-button>
                 </ion-col>

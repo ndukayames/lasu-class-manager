@@ -651,6 +651,7 @@ export class ProviderService {
       }
     
     async leaveClass(courseCode){
+      console.log('leave class function')
       this.socket.emit('leave_class',courseCode)
     }
     async endClass(hoc,courseCode,date_started){
@@ -691,6 +692,7 @@ export class ProviderService {
       }else{
        if(response.success === true){
          console.log(response.msg)
+         console.log(hoc,course_code)
          this.socket.emit('cancel_class',hoc,(course_code))
          this.doToast("class cancelled","middle",2000)
        }else{
@@ -740,6 +742,8 @@ export class ProviderService {
     async get_ongoing_classID(courseCode){
       //for students
       //this function collects all student's course from storage, picks the one it's interested in and look it up on the db to get it's ID if it's on going
+      //this function checks on going class via class_ID
+      //it checks if a class has already been started by the MAIN HOC.
       let token =  await this.storage.get('login_access_token')
       let courseData =  await this.storage.get('student_course_data') //get student course data from storage
       let theCourse  = courseData.find(courseInfo=>{
@@ -763,8 +767,8 @@ export class ProviderService {
         }
       }
     }
-    async checkOngoingClass(courseCode){
-      //this function checks on going class via class_ID
+    async get_ongoing_class_details(courseCode){
+      //this function collects the selected ongoing class details and store them for reuse by subsidiary HOCs
       //it checks if a class has already been started by the MAIN HOC.
       let token =  await this.storage.get('login_access_token')
       //
@@ -774,7 +778,7 @@ export class ProviderService {
       }) //filters out the selected course from all courses, registered by the HOC
       // console.log(theCourse)
           let body = {
-            function: 'check_ongoing_class',
+            function: 'get_ongoing_class_details',
             class_id: await this.get_ongoing_classID(theCourse.course_code),
             course_department: theCourse.department
           }
@@ -799,20 +803,21 @@ export class ProviderService {
       let token =  await this.storage.get('login_access_token')
       let data = await this.storage.get('ogc_id')
       let stud_data = await this.storage.get('stud_loggedin_data')
-      let body = {
-        function: 'hoc_join_class',
-        department: stud_data.department,
-        course_code: courseCode,
-        class_id: data[0].class_id,
-        matric_number: stud_data.matric_number,
-        hoc: stud_data.full_name,
-        duration: data[0].duration,
-        lecturers: data[0].course_lecturer,
-        level: stud_data.level,
-        date_started: data[0].date,
-        course_title: data[0].course_title
-      }
-      let request:any = await this.dbops.postData(token,body,'api.php').toPromise();
+      try {
+        let body = {
+          function: 'hoc_join_class',
+          department: stud_data.department,
+          course_code: courseCode,
+          class_id: data[0].class_id,
+          matric_number: stud_data.matric_number,
+          hoc: stud_data.full_name,
+          duration: data[0].duration,
+          lecturers: data[0].course_lecturer,
+          level: stud_data.level,
+          date_started: data[0].date,
+          course_title: data[0].course_title
+        }
+        let request:any = await this.dbops.postData(token,body,'api.php').toPromise();
       if(request){
         if(request.success === true){
           this.doToast(request.msg,'middle',1000)
@@ -821,6 +826,9 @@ export class ProviderService {
         }
       }else{
         this.doToast('could not connect to server','middle',1000)
+      }
+      } catch (error) {
+        this.doToast('class doesn\'t exist','middle',1000)
       }
     }
   //=====================================================================
@@ -1096,4 +1104,5 @@ export class ProviderService {
         }
        }
     }
+    
 }

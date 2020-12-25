@@ -29,10 +29,10 @@
             <ion-select-option *ngFor="let day of class_days">{{day}}</ion-select-option>
           </ion-select>
       </ion-item>
-    <ion-item>
+    <ion-item class="item-text-wrap">
       <ion-label position="floating">Select Lecturer</ion-label>
-      <ion-select multiple="true" [(ngModel)]="selected_class_lecturer" placeholder="Select lecturer">
-        <ion-select-option  *ngFor="let lecturer of hoc_department_lecturer" >{{lecturer}}</ion-select-option>
+      <ion-select [(ngModel)]="selected_class_lecturer" placeholder="Select lecturer">
+        <ion-select-option *ngFor="let lecturer of hoc_department_lecturer">{{lecturer}}</ion-select-option>
       </ion-select>
     </ion-item>
   </div>

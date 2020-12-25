@@ -45,10 +45,11 @@ async schedule(){
         level: this.courseData[0].level,
         department: this.courseData[0].my_hoc_department,
         lecturers: this.selectedLecturer,
-        date_started: this.courseData[0].course_time,
+        date_started: moment().format("YYYY-MM-DDTHH:mm.SSSZ"),
         matric_number: datass.matric_number,
         class_id: this.classID
       }
+      console.log(body)
       let request:any = await this.prvdr.dbops.postData(token,body,'api.php').toPromise()
       if(request===null){
         console.log('error reaching server')
@@ -65,7 +66,7 @@ async schedule(){
 }
 
 async join_class(){
-  let checker = await this.prvdr.checkOngoingClass(this.course)
+  let checker = await this.prvdr.get_ongoing_class_details(this.course)
   console.log(checker)
   if(checker){
     this.prvdr.hoc_join_class(this.course)

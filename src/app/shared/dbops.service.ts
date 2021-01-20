@@ -38,5 +38,14 @@ export class DbopsService {
     let httpRequest = await this.http.get<any>(this.server+file,options).toPromise()
     return httpRequest
   }
-
+  register(body,file){
+    let headers = new HttpHeaders({
+      'content-type' : 'application/json; charset=UTF-8',
+    });
+    let options = {
+      headers : headers,
+    }
+     return  this.http.post(this.server+file, JSON.stringify(body),options).map(res=>res)
+    
+  }
 }

@@ -15,10 +15,11 @@
         <ion-icon slot="start" name="happy"></ion-icon>
         <ion-label class="ion-text-wrap">View Profile</ion-label>
       </ion-item>
-      <ion-item [routerLink]="['/student-profile-tab/profile/edit-profile']">
+      <ion-item *ngIf="!inCompleteProfile" [routerLink]="['/student-profile-tab/profile/edit-profile']">
         <ion-icon slot="start" name="hammer"></ion-icon>
         <ion-label class="ion-text-wrap">Edit Profile</ion-label>
       </ion-item>
+      
       <ion-item *ngIf="inCompleteProfile" [routerLink]="['/student-profile-tab/profile/complete-registration']">
         <ion-icon slot="start" name="help"></ion-icon>
           <ion-label class="ion-text-wrap">Complete Profile</ion-label>

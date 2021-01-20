@@ -12,7 +12,11 @@ import * as moment from 'moment';
   providedIn: 'root'
 })
 export class ProviderService {
-  constructor(public storage:Storage, public route:Router, public navCtrl: NavController, public dbops:DbopsService, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public jwt:JwtHelperService, public socket:Socket) { }
+  constructor(public storage:Storage, public route:Router, public navCtrl: NavController, public dbops:DbopsService, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public jwt:JwtHelperService, public socket:Socket) { 
+    this.socket.fromEvent('respondent').subscribe(res=>{
+      console.log(res)
+    })
+  }
   async doToast(message,position,time) {
     const toast = await this.toastCtrl.create({
       message: message,
@@ -215,7 +219,6 @@ export class ProviderService {
   }
   async stud_register(full_name, matric_number, password){
     // Registers student to the database and redirects to login page
-    let token =  await this.storage.get('login_access_token')
     const loading = await this.loadingCtrl.create({
       message: 'Please wait...',
       duration: 2000
@@ -227,7 +230,7 @@ export class ProviderService {
         matric_number   : matric_number,
         password        : password,         
       }
-      let request:any = await this.dbops.postData(token,body, 'api.php').toPromise()
+      let request:any = await this.dbops.register(body, 'api.php').toPromise()
         if(request.success === true){
             loading.dismiss();
             this.doToast(request.msg,"middle",1500);
@@ -626,6 +629,7 @@ export class ProviderService {
         }
       }
     }
+    
     async get_other_classes(courseCode){
       let token = await this.storage.get('login_access_token')
       let datass = await this.storage.get('stud_loggedin_data')
@@ -671,8 +675,8 @@ export class ProviderService {
       }else{
        if(response.success === true){
          console.log(response.msg)
-         this.socket.emit('end_class',hoc,(courseCode))
          this.doToast("class ended","middle",2000)
+         return true;
        }else{
         console.log(response.msg)
        }
@@ -693,8 +697,9 @@ export class ProviderService {
        if(response.success === true){
          console.log(response.msg)
          console.log(hoc,course_code)
-         this.socket.emit('cancel_class',hoc,(course_code))
+        //  this.socket.emit('cancel_class',hoc,(course_code))
          this.doToast("class cancelled","middle",2000)
+         return true;
        }else{
         console.log(response.msg)
        }
@@ -820,6 +825,7 @@ export class ProviderService {
         let request:any = await this.dbops.postData(token,body,'api.php').toPromise();
       if(request){
         if(request.success === true){
+          this.socket.emit('start_class',body)
           this.doToast(request.msg,'middle',1000)
         }else{
           this.doToast(request.msg,'middle',1000)
@@ -830,6 +836,36 @@ export class ProviderService {
       } catch (error) {
         this.doToast('class doesn\'t exist','middle',1000)
       }
+    }
+    async checkCompleteProfile(status){
+      let token =  await this.storage.get('login_access_token')
+      let stud_data = await this.storage.get('stud_loggedin_data')
+      try{
+        let body = {
+          function: 'checkCompleteProfile',
+          matric_number: stud_data.matric_number
+        }
+        let request:any = await this.dbops.postData(token,body,'api.php').toPromise();
+        if(request){
+          if(request.success === true){
+            this.doToast(request.msg,'middle',1000)
+            return status = true
+          }else{
+            this.doToast(request.msg,'middle',1000)
+            return status = false
+          }
+        }else{
+          this.doToast('could not connect to server','middle',1000)
+          return status = false
+        }
+        } catch (error) {
+          this.doToast('class doesn\'t exist','middle',1000)
+          return status = false
+        }
+      
+    }
+    testsocket(){
+      this.socket.emit('test_socket')
     }
   //=====================================================================
   //Lecturer stuffs

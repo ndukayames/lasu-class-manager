@@ -31,7 +31,7 @@ import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 
 
 
-const config: SocketIoConfig = { url: 'http://localhost:3001/', options: {} };
+const config: SocketIoConfig = { url: 'https://nigairspacedata.com/', options: {} };
 
 @NgModule({
   declarations: [AppComponent,PopoverComponent,LecPopComponent,MoreDetailsComponent, OngoingClassComponent,ClassMoreDetailsComponent,ClassHistoryComponent,LecClassHistoryComponent,],

@@ -2,7 +2,11 @@
   <!-- this opens when the user taps the on going class list -->
   <ion-toolbar>
     <ion-icon slot="start" name="arrow-back-outline" (click) = "closeModal()"></ion-icon>
-    <ion-title>On Going Class - {{item.course_code}} </ion-title>
+    <ion-title >
+      <div class="ion-text-wrap">
+        On Going Class - {{item.course_code}}
+      </div> 
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>

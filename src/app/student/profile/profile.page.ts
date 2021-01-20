@@ -27,7 +27,7 @@ export class ProfilePage implements OnInit {
   isOngoingClass = false // check if there's any ongoing classes
   hoc = true;
   onGoingClasshoc = []
-  registered_courses;
+  registered_courses ;
   onGoingClasses = []
   matric_number: any;
   ogc: any[] = [];
@@ -54,10 +54,25 @@ export class ProfilePage implements OnInit {
         this.socket.fromEvent('left_class').subscribe((res:any)=>{
           this.prvdr.doToast("You left the class at " + res.timeleft, "middle",2000)
         })
+        this.socket.fromEvent('new_class').subscribe(async (res:any)=>{
+          console.log(res)
+          let stud_data = await this.storage.get('stud_loggedin_data')
+          this.registered_courses.forEach(course=>{
+            if(course === res.classDetails.course_code && stud_data.department === res.classDetails.department && stud_data.level === res.classDetails.level){
+              console.log('one of my class just got started')
+              console.log(res.classDetails.course_code,course,res.classDetails.department,stud_data.department,res.classDetails.level,stud_data.level)
+              this.getOngoingClass()
+            }else{
+              console.log(res.classDetails.course_code,course,res.classDetails.department,stud_data.department,res.classDetails.level,stud_data.level)
+              console.log('a class got started but not mine')
+            }
+          })
+        })
         this.socket.fromEvent('class_ended').subscribe((res:any)=>{
           console.log('class eneded socket')
           this.ogc.forEach(courses=>{
             if(courses.course_code === res.courseCode && res.hoc === courses.hoc){
+              console.log('class ended')
               this.prvdr.doToast(res.courseCode + " ended","bottom",2000)
               this.getOngoingClass()
               // this.check_if_in_class()
@@ -66,9 +81,10 @@ export class ProfilePage implements OnInit {
           })
         })
         this.socket.fromEvent('class_canceled').subscribe((res:any)=>{
-          // console.log(res)
+          console.log(res)
           this.ogc.forEach(courses=>{
             if(courses.course_code === res.courseCode && res.hoc === courses.hoc){
+              console.log('class canceled')
               this.prvdr.doToast(res.courseCode + " canceled","bottom",2000)
               this.getOngoingClass()
               // this.check_if_in_class()
@@ -124,8 +140,12 @@ export class ProfilePage implements OnInit {
     return await modal.present();
   }
    async endClass(hoc,courseCode,date_started){
-     this.prvdr.endClass(hoc,courseCode,date_started)     
-     this.myslid.closeOpened()
+     let ender = await this.prvdr.endClass(hoc,courseCode,date_started)  
+     if(ender === true){
+      console.log(ender)
+      this.socket.emit('end_class',hoc,(courseCode))
+      this.myslid.closeOpened()
+     }   
     //  this.getOngoingClass()
    }
 
@@ -134,7 +154,12 @@ export class ProfilePage implements OnInit {
   }
 
   async cancelClass(department,course_code,date_started,hoc){
-    this.prvdr.cancelClass(department,course_code,date_started,hoc)
+    let canceler = await this.prvdr.cancelClass(department,course_code,date_started,hoc)
+    if(canceler === true){
+      console.log(canceler)
+      this.socket.emit('cancel_class',hoc,(course_code))
+      this.myslid.closeOpened()
+    }
     // this.getOngoingClass()
   }
 
@@ -209,10 +234,11 @@ export class ProfilePage implements OnInit {
       // duration: 2000
     });
     await loading.present();
+    let completeprofilechecker = await this.prvdr.checkCompleteProfile(status)
     let datas:any = await this.storage.get('stud_loggedin_data')
     this.name = datas.full_name;
     this.matric_number = datas.matric_number
-    if(datas.complete_profile==='1'){
+    if(datas.complete_profile==='1' || completeprofilechecker === true){
       this.inCompleteProfile = false;
     }
     if(datas.type !== 'hoc'){

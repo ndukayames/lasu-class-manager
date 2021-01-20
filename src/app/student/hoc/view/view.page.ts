@@ -56,6 +56,7 @@ async schedule(){
       }else{
         if(request.success ===true){
           console.log(endDate - newStartDate)
+          this.prvdr.socket.emit('start_class',body)
           this.prvdr.route.navigateByUrl('student-profile-tab/profile')
         }else{
           this.prvdr.doToast(request.msg,'bottom',2000)
@@ -70,6 +71,7 @@ async join_class(){
   console.log(checker)
   if(checker){
     this.prvdr.hoc_join_class(this.course)
+    this.prvdr.route.navigateByUrl('student-profile-tab/profile')
   }
 }
 

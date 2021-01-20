@@ -24,15 +24,16 @@ export class SocketPage implements OnInit {
   message = '';
   messages = [];
   currentUser = '';
-  constructor(private socket: Socket) { }
+  constructor(private socket: Socket,private prvdr:ProviderService  ) { }
   async testSocket(){
-    this.socket.emit('test_socket_connection')
+    // this.socket.emit('test_socket')
+    this.prvdr.testsocket()
     console.log('testing connextion ...')
   }
   async ngOnInit() {
-    this.socket.fromEvent('connection_status').subscribe(res=>{
-      console.log(res)
-    })
+    // this.socket.fromEvent('respondent').subscribe(res=>{
+    //   console.log(res)
+    // })
   }
 }
 

@@ -42,4 +42,7 @@ I'm trying to setup a system that disallows other HOCs to schedule a class until
 
 Now I have to open up the menu for main HOCs to schedule a class and still hide it from external HOC [done]
 
+FIX class schedule 1hour time difference to calculate the minutes, ie the difference between 11:29pm and 12:29pm is not seen as 1hr
 
+192.168.0.104:8100
+192.168.0.104:8100hhj
